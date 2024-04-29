@@ -1,0 +1,20 @@
+<div class="main-container">
+    <div class="form-container">
+        <h2>Inicio de sesión</h2>
+        <div class="form">
+            <img src="../../../../assets/img/user-logo-default.png" class="img-user-default">
+            <mat-form-field class="input">
+                <mat-label>Usuario</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field class="input">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button (click)="hide = !hide" matSuffix>
+                    <mat-icon [fontIcon]="hide ? 'visibility_off': 'visibility'"></mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button class="login-button">Iniciar sesión</button>
+        </div>
+    </div>
+</div>
