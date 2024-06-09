@@ -9,10 +9,14 @@ export const routes: Routes = [
         }),
     },
     {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home.component').then(component => {
-            return component.Home;
-        })
+        path: '',
+        loadComponent: () => import('./layout/admin/admin.component').then((c) => c.AdminComponent),
+        // children: [
+        //     {
+        //         path: 'admin',
+        //         loadComponent: () => import('')
+        //     }
+        // ]
     },
     {
         path: '',

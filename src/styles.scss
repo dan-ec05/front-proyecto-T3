@@ -1,3 +1,66 @@
 @import "primeicons/primeicons.css";
+// @import "primeng/resources/themes/lara-light-blue/theme.css";
+// @import "primeng/resources/primeng.css";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f3f3f9;}
+
+.separator{
+    width: 100%;
+    border: 1px solid #90A4AE;
+}
+
+.wrapper-layout{
+    --wSidebar: 300px;
+
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    z-index: 1;
+
+    &--content,
+    &--sidebar{
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        max-height: 100%;
+        background: transparent;
+        overflow: hidden;
+        transition: all .25s ease-in-out;
+    }
+
+    &--sidebar{
+        position: relative;
+        width: var(--wSidebar);
+        background: #fff;
+        transform: translateX(0);
+        box-shadow: 0px 0px 10px rgba(168, 166, 166, 0.482);
+
+        &.no-sidebar{
+            width: 0;
+            transform: translateX(-100%);
+        }
+    }
+
+    &--content {
+        .header {
+            height: 60px;
+            background: var(--thrity-color);
+        }
+    }
+
+    &.fullscreen {
+        .wrapper-layout--content {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<div class="wrapper-layout">
+  <div class="wrapper-layout--sidebar" [ngClass]="{'no-sidebar': !(layoutService.showSidebar | async)}">
+    <sidebar></sidebar>
+  </div>
+  <div class="wrapper-layout--content">
+    <div class="header">
+      <header></header>
+    </div>
+
+    <div class="router-outlet">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    // background-color: gray;
+    
+    .header{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        
+        .title{
+            width: 80%;
+            // background-color: green;
+            margin: 0px;
+        }
+    }
+    
+    .section{
+        // background-color: yellow;
+        padding: 10px;
+        
+        
+        .list-options{
+            list-style-type: none;
+            
+            ul:hover{
+                transform: translateX(10%);
+                color: #546E7A;
+            }
+        }
+        
+        .list-options > ul{
+            width: 100%;
+            cursor: pointer;
+            font-size: 17px;
+            border-radius: 10px;
+            color: #78909C;
+            margin: 0px 5px 5px 5px;
+            padding: 6px;
+            transition: .5s ease;
+            text-align: left;
+            font-weight: 500;
+        }
+    }
+}
