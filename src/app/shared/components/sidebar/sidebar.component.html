@@ -1,18 +1,34 @@
 <div class="sidebar">
   <div class="header">
-    <h3 class="title">Menú</h3>
+    <h4>Logo de la comunidad</h4>
   </div>
   <div class="separator"></div>
   <div class="section">
-    <li class="list-options">
-      <ul>Gestión de pagos</ul>
-      <ul>Médicos</ul>
-    </li>
+    <ul class="list-options">
+      <li routerLink="/inicio" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex flex-row justify-content-start">
+          <img src="../../../../assets/icons/home.png" alt="">
+          <span class="ms-2">Inicio</span>
+        </div>
+        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+      </li>
+      
+      <li routerLink="gestion-pagos" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex flex-row justify-content-start">
+          <img src="../../../../assets/icons/payment.png" alt="">
+          <span class="ms-2">Gestión de pagos</span>
+        </div>
+        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+      </li>
+
+      <li routerLink="doctores" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex flex-row justify-content-start">
+          <img src="../../../../assets/icons/doctors.png" alt="">
+          <span class="ms-2">Médicos</span>
+        </div>
+        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+      </li>
+
+    </ul>
   </div>
 </div>
-<!-- 
-<div class="wrapper-sidebar">
-  <div class="header">
-    <h3 class="title">Menú</h3>
-  </div>
-</div> -->

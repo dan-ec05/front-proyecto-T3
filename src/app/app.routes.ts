@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/container/login/login.component';
 
 export const routes: Routes = [
     {
@@ -9,14 +8,22 @@ export const routes: Routes = [
         }),
     },
     {
-        path: '',
-        loadComponent: () => import('./layout/admin/admin.component').then((c) => c.AdminComponent),
-        // children: [
-        //     {
-        //         path: 'admin',
-        //         loadComponent: () => import('')
-        //     }
-        // ]
+        path: 'inicio',
+        loadComponent: () => import('./layout/main/main.component').then((c) => c.MainComponent),
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./pages/home/home.component').then((c) => c.HomeComponent)
+            },
+            {
+                path: 'gestion-pagos',
+                loadComponent: () => import('./pages/payment-management/payment-management.component').then((c) => c.PaymentManagementComponent)
+            },
+            {
+                path: 'doctores',
+                loadComponent: () => import('./pages/doctors/doctors.component').then((c) => c.DoctorsComponent)
+            }
+        ]
     },
     {
         path: '',
