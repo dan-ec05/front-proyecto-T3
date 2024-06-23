@@ -1,19 +1,24 @@
 <div class="main-container">
-    <h2>Iniciar sesión</h2>
+    <h2>Bienvenido</h2>
     <div class="form-container">
         <div class="form">
-            <mat-form-field class="input">
-                <mat-label>Usuario o correo</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field class="input">
-                <mat-label>Contraseña</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button (click)="hide = !hide" matSuffix>
-                    <mat-icon [fontIcon]="hide ? 'visibility_off': 'visibility'"></mat-icon>
-                </button>
-            </mat-form-field>
-            <button mat-raised-button class="login-button">Iniciar sesión</button>
+            <div class="username-input">
+                <label class="label">Usuario o correo</label>
+                <div class="input" #inputText>
+                    <span class="pi pi-user"></span>
+                    <input (focus)="focus(0)" (blur)="notFocus(0)" type="text">
+                </div>
+            </div>
+            <div class="password-input">
+                <label class="label">Contraseña</label>
+                <div class="input" #inputPass>
+                    <span (click)="hide = !hide" style="cursor: pointer;" class="pi" [ngClass]="hide ? 'pi-eye-slash' : 'pi-eye'"></span>
+                    <input (focus)="focus(1)" (blur)="notFocus(1)" [type]="hide ? 'password' : 'text'">
+                </div>
+            </div>
+            <div class="btn-section">
+                <button class="login-button">Iniciar sesión</button>
+            </div>
         </div>
     </div>
 </div>

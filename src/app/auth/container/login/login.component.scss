@@ -15,7 +15,7 @@
     }
 
     .form-container{
-        width: 40%;
+        width: 400px;
         height: 40%;
         background-color: #fff;
         border-radius: 3px;
@@ -33,69 +33,85 @@
             align-items: center;
             justify-content: center;
 
-            .input-text{
-                border-radius: 2px;
-                border: 1.5px solid #90A4AE;
-                color: #546e7a9e;
-                font-weight: bold;
+            .username-input, .password-input{
+                width: 90%;
+                padding: 0.5rem;
                 display: flex;
-                flex-direction: row;
-                align-items: center;
+                flex-direction: column;
+                justify-content: flex-start;
 
-                .icon{
-                    padding: 0.5rem;
-                    border-right: 1.5px solid #90a4ae30;
+                .label{
+                    font-family: "Inter";
+                    font-weight: 600;
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                    color: #546e7aca;
                 }
+            }
 
+            .username-input, .password-input{
                 .input{
-                    width: 90%;
-                    height: 100%;
+                    border: 1.5px solid #455a648a;
+                    border-radius: 2px;
                     display: flex;
-                    align-items: center;
-                    justify-content: center;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    gap: 10px;
+                    transition: .3s ease;
+
+
+                    span{
+                        border-right: 1px solid #607d8b70;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 12px;
+                        width: 14%;
+                        color: #455a64;
+                    }
 
                     input{
-                        width: 90%;
-                        height: 90%;
-                        font-size: 15px;
                         border: none;
-                        color: #546e7a9e;
-                        font-weight: bold;
+                        width: 80%;
+                        margin: 5px 0px;
+                        color: #546e7acf;
+                        font-family: "Kanit";
                     }
+                    
                     input:focus{
                         outline: none;
-
-                        // .input-focus{
-                        //     border-color: #455a64c0;
-                        //     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.146);
-                        // }
                     }
                 }
-
             }
 
-            // .input-text:focus{
-            //     outline: none;
-            //     border-color: #455a64c0;
-            //     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.146);
-            // }
-
-            .input{
-                width: 90%;
+            .input-focus{
+                border-color: #455A64;
+                box-shadow: 0px 0px 7px #546e7a81;
             }
-            .login-button{
-                width: 50%;
-                padding: 0.5rem;
-                color: #fff;
-                font-weight: bold;
-                letter-spacing: 2px;
-                background-color: #19ae21;
-                border-radius: 20px;
-            }   
-            .img-user-default{
-                width: 100px;
-                position: absolute;
-                top: 150px;
+
+            .btn-section{
+                width: 100%;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .login-button{
+                    width: 80%;
+                    padding: 0.5rem;
+                    color: #fff;
+                    font-weight: bold;
+                    letter-spacing: 2px;
+                    background: linear-gradient(to right, #01ae0a, #17e651);
+                    border-radius: 20px;
+                    border: none;
+                    transition: .3s ease;
+                }   
+                
+                .login-button:hover{
+                    transform: scale(102%);
+                    box-shadow: 0px 0px 5px #546e7a72;
+                }
             }
         }
     }
