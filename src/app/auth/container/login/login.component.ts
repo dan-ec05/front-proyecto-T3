@@ -1,31 +1,63 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { NgClass } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { loginResponse } from '../../interfaces/auth.interface';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, NgClass],
+  imports: [
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    NgClass,
+    RouterModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
-  @ViewChild('inputText') input_text!: ElementRef;
-  @ViewChild('inputPass') inputPass!: ElementRef;
+export class LoginComponent implements OnInit {
 
+  loginForm!: FormGroup;
   hide: boolean = true;
 
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ){}
 
-  focus(i: number){
-    if (!i) this.input_text.nativeElement.classList.add("input-focus");
-    else this.inputPass.nativeElement.classList.add("input-focus");
+  ngOnInit(): void {
+    this.initForm();
   }
 
-  notFocus(i: number){
-    if (!i) this.input_text.nativeElement.classList.remove("input-focus");
-    else this.inputPass.nativeElement.classList.remove("input-focus");
+  login(){
+    console.log(this.loginForm.valid);
+    let data = {
+      username: this.loginForm.get("username")?.value,
+      password: this.loginForm.get("password")?.value
+    }
+
+    console.log(data);
+
+    this.authService.login(data).subscribe((res: loginResponse) => {
+      if (res.token){
+        this.router.navigateByUrl("/inicio");
+      }
+    });
+  }
+
+  initForm(){
+    this.loginForm = new FormGroup({
+      username: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
+    });
   }
 }

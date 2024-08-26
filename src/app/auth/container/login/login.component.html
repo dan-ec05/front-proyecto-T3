@@ -1,24 +1,24 @@
 <div class="main-container">
     <h2>Bienvenido</h2>
     <div class="form-container">
-        <div class="form">
+        <form class="form" [formGroup]="loginForm">
             <div class="username-input">
                 <label class="label">Usuario o correo</label>
                 <div class="input" #inputText>
                     <span class="pi pi-user"></span>
-                    <input (focus)="focus(0)" (blur)="notFocus(0)" type="text">
+                    <input type="text" formControlName="username">
                 </div>
             </div>
             <div class="password-input">
                 <label class="label">Contraseña</label>
                 <div class="input" #inputPass>
                     <span (click)="hide = !hide" style="cursor: pointer;" class="pi" [ngClass]="hide ? 'pi-eye-slash' : 'pi-eye'"></span>
-                    <input (focus)="focus(1)" (blur)="notFocus(1)" [type]="hide ? 'password' : 'text'">
+                    <input [type]="hide ? 'password' : 'text'" formControlName="password">
                 </div>
             </div>
             <div class="btn-section">
-                <button class="login-button">Iniciar sesión</button>
+                <button class="login-button" (click)="(loginForm.valid) ? login() : ''">Iniciar sesión</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
