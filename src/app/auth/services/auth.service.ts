@@ -21,11 +21,17 @@ export class AuthService {
     return this.http.post<loginResponse>(`${this.url_api}/auth/login`, data);
   }
 
-  setDataUser(data: any){
+  setUserData(data: any){
     localStorage.setItem("userInfo", JSON.stringify(data));
   }
 
-  logout(){
+  removeUserData(){
     localStorage.removeItem("userInfo");
+  }
+
+  logout(id_user: number){
+    return this.http.post(`${this.url_api}/auth/logout`, {
+      id_user
+    });
   }
 }

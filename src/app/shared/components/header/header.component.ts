@@ -8,6 +8,8 @@ import { of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { userDataInterface } from '../../interfaces/user.interface';
+import { responseInterface } from '../../interfaces/response.interface';
 
 @Component({
   selector: 'header',
@@ -43,8 +45,13 @@ export class HeaderComponent {
   }
 
   logout(){
-    this.authService.logout();
-    this.router.navigateByUrl("/login");
+    let userData: userDataInterface = JSON.parse(localStorage.getItem("userInfo")!);
+    this.authService.logout(userData.id).subscribe((res: responseInterface) => {
+      if (res.ok){
+        this.authService.removeUserData();
+        this.router.navigateByUrl("/login");
+      }
+    });
   }
 
 }

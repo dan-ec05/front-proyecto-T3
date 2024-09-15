@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(data).subscribe((res: loginResponse) => {
       if (res.token){
-        this.authService.setDataUser(res.userData);
+        this.authService.setUserData(res.userData);
         this.router.navigateByUrl("/inicio");
       }
     });
