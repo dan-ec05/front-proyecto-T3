@@ -1,4 +1,5 @@
 @import "primeicons/primeicons.css";
+// @import "primeng/resources/themes/lara-light-blue/theme.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f3f3f9;}
@@ -96,5 +97,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 
     &--6c > *{
         width: calc((100%) / 6);
+    }
+}
+
+.p-dialog-mask{
+    background: #00000039;
+    cursor: default;
+}
+
+.dialog-info-user{
+    background-color: #fff;
+    width: 15rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column !important;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 1rem;
+
+    .p-dialog-header{
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .p-dialog-content{
+        width: 100%;
+    }
+
+    .separator{
+        border: none;
+        border-top: 1px solid #90a4ae62;
+        margin: 0.2rem 0px;
     }
 }

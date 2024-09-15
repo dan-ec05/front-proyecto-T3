@@ -52,6 +52,7 @@
         margin-right: 4%;
         color: #212529;
         font-family: 'Poppins';
+        cursor: pointer;
 
         .user-info{
             margin-left: 8px;
@@ -66,6 +67,28 @@
 
             .usertype{
                 color: #878a99;
+            }
+
+            .btn{
+                background: none;
+                border: none;
+                outline: none;
+                width: 100%;
+                font-size: 14px;
+                padding: 0.35rem;
+                transition: 0.3s ease;
+
+                &--logout{
+                    color: red;
+                }
+
+                &--profile{
+                    color: black;
+                }
+            }
+
+            .btn:hover{
+                background-color: #89868628;
             }
         }
     }

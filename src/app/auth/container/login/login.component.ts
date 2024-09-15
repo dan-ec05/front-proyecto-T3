@@ -39,16 +39,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log(this.loginForm.valid);
     let data = {
       username: this.loginForm.get("username")?.value,
       password: this.loginForm.get("password")?.value
     }
 
-    console.log(data);
-
     this.authService.login(data).subscribe((res: loginResponse) => {
       if (res.token){
+        this.authService.setDataUser(res.userData);
         this.router.navigateByUrl("/inicio");
       }
     });

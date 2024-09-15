@@ -9,6 +9,18 @@ export interface loginResponse{
     token?: String,
     userData?: {
         id: number,
-        username: String
+        username: String,
+        email: String,
+        password: String,
+        first_name: String,
+        last_name: String,
+        phonenumber: String,
+        created_at: String,
+        id_security_question: number,
+        id_security_answer: number,
+        id_user_rol: number,
+        question: String,
+        answer: String,
+        name: String
     }
 }
