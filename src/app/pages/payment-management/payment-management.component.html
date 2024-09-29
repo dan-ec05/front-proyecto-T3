@@ -1,3 +1,48 @@
-<p>
-  payment-management works!
-</p>
+<div class="body">
+  
+  <section>
+    <div class="header">
+      <h4>Gestión de pagos</h4>
+    </div>
+    <div class="d-flex flex-row justify-content-start align-items-center gap-4 mb-2">
+      <label>Filtrar por año</label>
+      <p-dropdown
+      [placeholder]="yearSelected"
+      [options]="yearsSelect"
+      [(ngModel)]="yearSelected"
+      optionLabel="year"></p-dropdown>
+    </div>
+    <p-table [value]="exampleDataTable" [columns]="columns">
+      <ng-template pTemplate="header">
+        <tr>
+          @for (c of columns; track c) {
+            <th [class]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''"
+            [style]="c.width ? 'min-width: ' + c.width + ';' : ''"
+            scope="col">
+              {{c.title}}
+            </th> 
+          }
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item let-index="rowIndex">
+        <tr>
+          @for (c of columns; track c) {
+            <td [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+              @if (c.key == 'name' || c.key == 'amount' || c.key == 'currency') {
+                <span [style]="c.key == 'name' ? 'font-weight: 500;' : ''">
+                  {{item[c.key]}}
+                </span>
+              }
+              @else if (c.key == 'schedule') {
+                {{item[c.key].work}}
+              }
+              @else {
+                <span class="pi" [ngClass]="item.months[c.key] ? 'pi-check-circle icon--green' : 'pi-times-circle icon--red'"></span>
+              }
+            </td>
+          }
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
+</div>

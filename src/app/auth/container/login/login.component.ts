@@ -8,6 +8,8 @@ import { Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { loginResponse } from '../../interfaces/auth.interface';
+import { MessageService } from 'primeng/api';
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,8 @@ import { loginResponse } from '../../interfaces/auth.interface';
     MatButtonModule, 
     NgClass,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -31,7 +34,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private message: MessageService
   ){}
 
   ngOnInit(): void {
@@ -45,9 +49,34 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.login(data).subscribe((res: loginResponse) => {
-      if (res.token){
+      if (res.token && res.ok){
+        res.userData!.name_rol = res.userData?.name;
         this.authService.setUserData(res.userData);
-        this.router.navigateByUrl("/inicio");
+        this.message.add({
+          severity: "success",
+          summary: "Sesión iniciada",
+          detail: "Se le redigirá a la página de inicio en unos segundos..."
+        })
+        setTimeout(() => {
+          this.router.navigateByUrl("/inicio");
+        }, 3000);
+
+      }
+    }, (error) => {
+      console.log(error);
+      if (!(error.ok) && error.error.error){
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: error.error.error,
+        });
+      }
+      else{
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al iniciar sesión"
+        });
       }
     });
   }

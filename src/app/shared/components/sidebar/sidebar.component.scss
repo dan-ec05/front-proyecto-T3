@@ -26,6 +26,15 @@
     
     .section{
         width: 100%;
+
+        .subtitle{
+            padding: 0px;
+            font-size: 13px;
+            margin: 10px 8px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            color: #5f6d86;
+        }
         
         .list-options{
             font-family: 'Inter';
@@ -42,7 +51,7 @@
             border-radius: 5px;
             color: #283c50;
             font-weight: 600;
-            margin: 5px 5px 5px 5px;
+            margin: 5px;
             padding: 10px;
             transition: .3s ease;
             text-align: left;

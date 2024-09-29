@@ -17,6 +17,15 @@ export class AuthService {
     this.url_api = `${environment.API}/api`
   }
 
+  public get _getUserData(){
+    let userData = localStorage.getItem("userInfo");
+
+    if (userData) userData = JSON.parse(userData);
+    else userData = null;
+
+    return userData;
+  }
+
   login(data: loginInterface): Observable<any>{
     return this.http.post<loginResponse>(`${this.url_api}/auth/login`, data);
   }

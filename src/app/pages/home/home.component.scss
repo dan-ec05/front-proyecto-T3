@@ -1,0 +1,22 @@
+.body{
+    padding: 2rem;
+
+    section{
+        padding: 1rem;
+        border-radius: 15px;
+        background-color: #fff;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+
+        .header{
+            height: auto;
+
+            h4{
+                margin-bottom: 0.75rem;
+            }
+        }
+
+        p{
+            margin: 0.5rem 0px;
+        }
+    }
+}

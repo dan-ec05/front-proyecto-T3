@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { LayoutService } from '../../services/layout.service';
 import {DialogModule} from "primeng/dialog";
 import { of } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { userDataInterface } from '../../interfaces/user.interface';
@@ -19,14 +19,18 @@ import { responseInterface } from '../../interfaces/response.interface';
     ButtonModule, 
     MatSidenavModule, 
     AsyncPipe,
-    DialogModule
+    DialogModule,
+    NgClass
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
-  sidebarVisible: boolean = false;
+export class HeaderComponent implements OnInit{
+
+  sidebarVisible: boolean = true;
   dialogVisible: boolean = false;
+
+  userData!: userDataInterface | any;
 
   constructor(
     public layoutService: LayoutService,
@@ -35,8 +39,14 @@ export class HeaderComponent {
     public router: Router
   ){}
 
+  ngOnInit(): void {
+    this.userData = this.authService._getUserData;
+
+  }
+
 
   toggleSidebar(){
+    this.sidebarVisible = !this.sidebarVisible;
     this.layoutService.showSidebar = of(!(this.async.transform(this.layoutService.showSidebar)));
   }
 

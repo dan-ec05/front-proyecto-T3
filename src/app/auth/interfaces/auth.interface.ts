@@ -21,6 +21,7 @@ export interface loginResponse{
         id_user_rol: number,
         question: String,
         answer: String,
-        name: String
+        name: String,
+        name_rol?: String
     }
 }

@@ -20,6 +20,10 @@ export const routes: Routes = [
             {
                 path: 'doctores',
                 loadComponent: () => import('./pages/doctors/doctors.component').then((c) => c.DoctorsComponent)
+            },
+            {
+                path: "usuarios",
+                loadComponent: () => import("./pages/users/users.component").then((c) => c.UsersComponent)
             }
         ]
     },

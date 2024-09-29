@@ -42,7 +42,7 @@
     }
 
     .user-section{
-        width: 15%;
+        width: 20%;
         padding: 8px 0px;
         display: flex;
         flex-direction: row;
@@ -62,11 +62,13 @@
 
             .username{
                 font-weight: 500;
+                font-size: 16px;
                 margin-bottom: 2px;
             }
 
             .usertype{
                 color: #878a99;
+                font-size: 15px;
             }
 
             .btn{
@@ -90,6 +92,13 @@
             .btn:hover{
                 background-color: #89868628;
             }
+
         }
     }
+}
+
+.img-user{
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
 }
