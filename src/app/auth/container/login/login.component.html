@@ -17,7 +17,8 @@
                 </div>
             </div>
             <div class="btn-section">
-                <button class="login-button" (click)="(loginForm.valid) ? login() : ''">Iniciar sesión</button>
+                <button class="login-button"
+                [ngClass]="loginForm.invalid ? 'btn-disabled' : ''" (click)="(loginForm.valid) ? login() : ''">Iniciar sesión</button>
             </div>
         </form>
     </div>

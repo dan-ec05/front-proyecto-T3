@@ -12,10 +12,11 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        
-        .title{
-            width: 80%;
-            margin: 0px;
+        width: 100%;
+        padding: 0.25rem;
+
+        img{
+            width: 85%;
         }
     }
 
@@ -32,7 +33,7 @@
             font-size: 13px;
             margin: 10px 8px;
             font-family: "Open Sans";
-            font-weight: 600;
+            font-weight: 700;
             color: #5f6d86;
         }
         

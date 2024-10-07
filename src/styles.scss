@@ -1,6 +1,10 @@
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 
+:root{
+    --main-color: #fe6603;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f3f3f9;}
 
@@ -138,6 +142,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
         border-radius: 50% !important;
         border-color: #ff575700;
     }
+
+    .p-toast-message.p-toast-message-error{
+        background-color: #fff;
+    }
+
+    .p-toast-message.p-toast-message-success{
+        background-color: #fff;
+    }
+
 }
 
 
@@ -179,6 +192,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
 }
 
+.p-multiselect{
+    width: 120px;
+    height: 30px;
+}
+
+.input-dropdown{
+    min-width: 200px;
+    min-height: 40px;
+    ul{
+        margin-bottom: 0px;
+        padding-left: 0px;
+    }
+
+    .p-inputtext{
+        padding: 0.25rem 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .p-dropdown-items{
+        padding: 0.5rem 0px;
+        width: 200px;
+        max-width: 250px;
+    }
+
+    &--specialism{
+        min-width: 220px;
+        max-width: 220px;
+
+        .p-dropdown-items{
+            width: 220px;
+        }
+    }
+}
+
 .p-button{
     padding: 0.5rem 0.75rem;
     display: flex;
@@ -200,6 +248,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
 }
 
+.btn-main-color{
+    border-color: var(--main-color);
+    color: var(--main-color);
+    align-items: center;
+}
+
 .p-button:hover{
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 }
@@ -210,18 +264,88 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     padding: 0.30rem;
     border-radius: 0.25rem;
     transition: .3s ease;
+    font-family: "Poppins";
 
     &--icon{
         display: flex;
         flex-direction: row;
         align-items: center;
+        background: transparent;
 
         span, i{
             font-size: 1.15rem;
         }
     }
+
+    &--cancel{
+        border: 1px solid #CFD8DC;
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    &--save{
+        background: var(--main-color);
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    &--save:hover{
+        background-color: #de610e !important;
+    }
+
+    &--blue{
+        background-color: #3B82F6;
+    }
+
+    &--blue:hover{
+        background-color: #1a61d3 !important;
+    }
+}
+
+.btn-disabled{
+    background: #a09f9f !important;
+    color: #4d4c4c !important;
+    cursor: not-allowed !important;
+}
+
+.btn-disabled:hover{
+    background: #a09f9f !important;
+    color: #4d4c4c !important;
+    cursor: not-allowed !important;
 }
 
 .button:hover{
     background-color: #bababa82;
+}
+
+.p-dialog{
+    .title{
+        font-size: 18px;
+        font-family: "Poppins";
+        font-weight: 600;
+    }
+    .p-button{
+        padding: 0px;
+        color: black;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.form-date{
+    width: 200px !important;
+    height: 40px;
+}
+
+.p-inputnumber{
+    height: 40px;
+
+    .p-inputtext{
+        max-width: 200px;
+    }
 }

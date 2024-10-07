@@ -24,6 +24,10 @@ export const routes: Routes = [
             {
                 path: "usuarios",
                 loadComponent: () => import("./pages/users/users.component").then((c) => c.UsersComponent)
+            },
+            {
+                path: "consultorios",
+                loadComponent: () => import("./pages/offices/offices.component").then((c) => c.OfficesComponent)
             }
         ]
     },

@@ -40,8 +40,17 @@ export class HeaderComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.userData = this.authService._getUserData;
-
+    if(!(this.authService._getUserData == null)){
+      console.log('por aca');
+      this.userData = this.authService._getUserData;
+    }
+    else{
+      console.log("por acass");
+      this.userData = {
+        first_name: "Usuario",
+        name: "Admin"
+      }
+    }
   }
 
 

@@ -48,22 +48,23 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.get("password")?.value
     }
 
-    this.authService.login(data).subscribe((res: loginResponse) => {
-      if (res.token && res.ok){
-        res.userData!.name_rol = res.userData?.name;
-        this.authService.setUserData(res.userData);
-        this.message.add({
-          severity: "success",
-          summary: "Sesión iniciada",
-          detail: "Se le redigirá a la página de inicio en unos segundos..."
-        })
-        setTimeout(() => {
-          this.router.navigateByUrl("/inicio");
-        }, 3000);
+    this.authService.login(data).subscribe({
+      next: (res: loginResponse) => {
+        if (res.token || res.ok){
+          res.userData!.name_rol = res.userData?.name;
+          this.authService.setUserData(res.userData);
+          this.message.add({
+            severity: "success",
+            summary: "Sesión iniciada",
+            detail: "Se le redigirá a la página de inicio en unos segundos..."
+          })
+          setTimeout(() => {
+            this.router.navigateByUrl("/inicio");
+          }, 3000);
 
-      }
-    }, (error) => {
-      console.log(error);
+        }
+      }, 
+    error: (error) => {
       if (!(error.ok) && error.error.error){
         this.message.add({
           severity: "error",
@@ -78,7 +79,7 @@ export class LoginComponent implements OnInit {
           detail: "Error al iniciar sesión"
         });
       }
-    });
+    }});
   }
 
   initForm(){

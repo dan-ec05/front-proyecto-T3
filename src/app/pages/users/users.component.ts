@@ -3,6 +3,7 @@ import { TableModule } from 'primeng/table';
 import { tableColumnInterface } from '../../shared/interfaces/table-columns.interface';
 import moment from 'moment';
 import { ButtonModule } from 'primeng/button';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @Component({
   selector: 'app-users',
@@ -11,7 +12,8 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [
     TableModule,
-    ButtonModule
+    ButtonModule,
+    UserFormComponent
   ]
 })
 export class UsersComponent implements OnInit {
@@ -23,11 +25,15 @@ export class UsersComponent implements OnInit {
       full_name: "Daniel Camacho",
       phonenumber: "04126858439",
       created_at: "2024-08-25 16:52:32",
-      name_rol: "Super Admin"
+      name_rol: "Admin"
     }
   ];
 
   columns: tableColumnInterface[] = [];
+
+  show: boolean = false;
+  dataForm: any = {};
+  titleForm: String = "";
 
   constructor() { }
 
@@ -39,8 +45,14 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  newUser(){
-    console.log("Nada por ahora");
+  showForm(data: any = {}, title: String = "Crear nuevo usuario"){
+    this.dataForm = data;
+    this.titleForm = title;
+    this.show = true;
+  }
+
+  closeForm(e: any){
+    this.show = false;
   }
 
   private getTableColumns(): tableColumnInterface[]{

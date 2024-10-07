@@ -1,0 +1,39 @@
+<p-dialog
+[(visible)]="show" [modal]="true" [style]="{'width': '50rem'}" [draggable]="false"
+(onHide)="closeModal(false)">
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center justify-content-between">
+      <span class="title">{{title}}</span>
+    </div>
+  </ng-template>
+  <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4">
+    <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <label class="label">Correo</label>
+      <input formControlName="email" type="text" class="form-control w-100">
+    </div>
+    <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <label class="label">Usuario</label>
+      <input formControlName="username" type="text" class="form-control w-100">
+    </div>
+    <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <label class="label">Nombre y apellido</label>
+      <input formControlName="full_name" type="text" class="form-control w-100">
+    </div>
+    <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <label class="label">Teléfono</label>
+      <input formControlName="phone" type="text" class="form-control w-100">
+    </div>
+    <!-- <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <label class="label">Rol</label>
+      <p-dropdown formControlName="username" scrollHeight="140px" styleClass="input-dropdown" optionLabel="name"></p-dropdown>
+    </div> -->
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="d-flex flex-row justify-content-end w-100 gap-4">
+      <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
+      <button class="button button--save button--blue"
+      [ngClass]="form.invalid ? 'btn-disabled' : ''"
+      (click)="form.valid ? save() : ''">Guardar</button>
+    </div>
+  </ng-template>
+</p-dialog>

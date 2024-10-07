@@ -8,7 +8,7 @@
       <p-button 
         label="Nuevo usuario" 
         icon="pi pi-user-plus" 
-        (onClick)="newUser()" />
+        (onClick)="showForm()" />
     </div>
     <p-table [value]="rows" [columns]="columns">
       <ng-template pTemplate="header">
@@ -26,7 +26,7 @@
           @for (c of columns; track c) {
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
-                <button class="button button--icon">
+                <button (click)="showForm(item, 'Editar usuario')" class="button button--icon">
                   <span class="pi pi-user-edit"></span>
                 </button>
                 <button class="button button--icon">
@@ -45,3 +45,7 @@
     </p-table>
   </section>
 </div>
+
+@if (show) {
+  <user-form (close)="closeForm($event)" [show]="show" [data]="dataForm" [title]="titleForm"></user-form>
+}

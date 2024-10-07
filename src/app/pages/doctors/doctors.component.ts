@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { tableColumnInterface } from '../../shared/interfaces/table-columns.interface';
 import { TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { FormDoctorComponent } from './form-doctor/form-doctor.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-doctors',
@@ -10,7 +13,9 @@ import { NgClass } from '@angular/common';
   standalone: true,
   imports: [
     TableModule,
-    NgClass
+    NgClass,
+    ButtonModule,
+    FormDoctorComponent  
   ]
 })
 export class DoctorsComponent  implements OnInit {
@@ -50,6 +55,10 @@ export class DoctorsComponent  implements OnInit {
     }
   ];
 
+  showFormDoctor: boolean = false;
+  dataForm: any = {};
+  titleForm: String = "Crear médico";
+
   columns: tableColumnInterface[] = [];
 
   constructor() { }
@@ -58,13 +67,20 @@ export class DoctorsComponent  implements OnInit {
     this.columns = this.getTableColumn();
   }
 
+  showForm(data: any, title: String){
+    console.log(data);
+    this.dataForm = data;
+    this.titleForm = title;
+    this.showFormDoctor = true;
+  }
+
+  closeForm(e: any){
+    this.dataForm = {};
+    this.showFormDoctor = false;
+  }
+
   private getTableColumn(): tableColumnInterface[] {
     return [
-      {
-        key: 'id_consultory',
-        title: "N° consultorio",
-        textAlign: "center"
-      },
       {
         key: "full_name",
         title: "Nombre y apellido",
@@ -81,14 +97,9 @@ export class DoctorsComponent  implements OnInit {
         textAlign: "center"
       },
       {
-        key: "schedule",
-        title: "Horario",
-        textAlign: "center"
-      },
-      {
-        key: "status",
-        title: "Condición",
-        textAlign: "center"
+        key: 'actions',
+        title: "Acciones",
+        textAlign: 'center'
       }
     ]
   }

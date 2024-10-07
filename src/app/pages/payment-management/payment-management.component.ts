@@ -4,6 +4,8 @@ import { TableModule } from 'primeng/table';
 import { tableColumnInterface } from '../../shared/interfaces/table-columns.interface';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { PaymentFormComponent } from './components/payment-form/payment-form.component';
 
 @Component({
   selector: 'app-payment-management',
@@ -15,7 +17,9 @@ import { FormsModule } from '@angular/forms';
     NgClass,
     NgStyle,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    ButtonModule,
+    PaymentFormComponent
   ]
 })
 export class PaymentManagementComponent  implements OnInit {
@@ -44,70 +48,29 @@ export class PaymentManagementComponent  implements OnInit {
     {
       id: 0,
       name: "Juan Riquelme",
-      months: {
-        january: true,
-        february: true,
-        march: false,
-        april: false,
-        may: true,
-        june: true,
-        july: false,
-        august: false,
-        september: true,
-        october: true,
-        november: true,
-        december: false
-      },
+      paidMonth: "Enero",
       amount: "2000 Bs.",
-      schedule: {
-        work: "TODOS LOS DÍAS"
-      }
+      created_at: "2023-11-05"
     },
     {
       id: 1,
       name: "Ángel María",
-      months: {
-        january: false,
-        february: true,
-        march: false,
-        april: false,
-        may: true,
-        june: true,
-        july: false,
-        august: false,
-        september: true,
-        october: true,
-        november: true,
-        december: false
-      },
+      paidMonth: "Marzo",
       amount: "6000 Bs.",
-      schedule: {
-        work: "LUNES - JUEVES"
-      }
+      created_at: "1992-04-18"
     },
     {
       id: 2,
       name: "Mariano Closs",
-      months: {
-        january: true,
-        february: true,
-        march: true,
-        april: false,
-        may: true,
-        june: true,
-        july: false,
-        august: false,
-        september: true,
-        october: true,
-        november: true,
-        december: false
-      },
+      paidMonth: "Diciembre",
       amount: "12000 Bs.",
-      schedule: {
-        work: "LUNES - VIERNES"
-      }
+      created_at: "2045-07-29"
     }
   ];
+
+  showPayForm: boolean = false;
+  dataForm: any = {};
+  titleForm: String = "";
 
   columns: tableColumnInterface[] = [];
 
@@ -117,95 +80,46 @@ export class PaymentManagementComponent  implements OnInit {
     this.columns = this.getTableColumn();
   }
 
+  showPaymentForm(data: any = {}, title: String){
+    this.dataForm = data;
+    this.titleForm = title;
+    this.showPayForm = true;
+  }
+
+  closePaymentForm(event: any){
+    console.log(event);
+    this.showPayForm = false;
+  }
+
   private getTableColumn(): tableColumnInterface[] {
     return [
       {
         key: 'name',
         title: 'Nombre y apellido',
-        width: "180px"
+        width: "100px"
       },
       {
-        key: 'january',
-        title: 'E.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'february',
-        title: 'F.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'march',
-        title: 'M.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'april',
-        title: 'A.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'may',
-        title: 'M.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'june',
-        title: 'J.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'july',
-        title: 'J.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'august',
-        title: 'A.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'september',
-        title: 'S.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'october',
-        title: 'O.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'november',
-        title: 'N.',
-        width: "70px",
-        textAlign: "center"
-      },
-      {
-        key: 'december',
-        title: 'D.',
-        width: "70px",
+        key: "paidMonth",
+        title: "Mes",
+        width: "60px",
         textAlign: "center"
       },
       {
         key: "amount",
         title: "Monto",
-        width: "120px",
+        width: "150px",
         textAlign: "center"
       },
       {
-        key: "schedule",
-        title: "Horario",
-        width: "200px",
+        key: "created_at",
+        title: "Fecha de pago",
+        width: "100px",
+        textAlign: "center"
+      },
+      {
+        key: "actions",
+        title: "Acciones",
+        width: "100px",
         textAlign: "center"
       }
     ]
