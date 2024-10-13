@@ -53,14 +53,7 @@ export class LoginComponent implements OnInit {
         if (res.token || res.ok){
           res.userData!.name_rol = res.userData?.name;
           this.authService.setUserData(res.userData);
-          this.message.add({
-            severity: "success",
-            summary: "Sesión iniciada",
-            detail: "Se le redigirá a la página de inicio en unos segundos..."
-          })
-          setTimeout(() => {
-            this.router.navigateByUrl("/inicio");
-          }, 3000);
+          this.router.navigateByUrl("/inicio");
 
         }
       }, 

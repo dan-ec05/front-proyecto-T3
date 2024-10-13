@@ -1,6 +1,39 @@
 <div class="body">
-  <div class="d-flex justify-content-between flex-wrap mb-5">
+  <div class="d-flex flex-row align-items-center gap-2 mb-4" style="width: max-content;">
+    <label class="label">Filtrar por año</label>
+    <p-dropdown
+    [placeholder]="yearSelected"
+    [options]="yearsSelect"
+    [(ngModel)]="yearSelected"
+    optionLabel="year"></p-dropdown>
+  </div>
+
+  <div class="d-flex gap-3 mb-3">
     <cards style="width: 32%;" 
+    [border-color]="'green'"
+    [icon]="'dollar'"
+    [title]="'Ingresos totales'"
+    [value]="'200$'"></cards>
+
+    <div class="vertical-separator"></div>
+
+    <cards style="width: 32%;" 
+    [border-color]="'#00ACC1'"
+    [icon]="'dollar'"
+    [title]="'Ingresos septiembre'"
+    [value]="'70$'"></cards>
+
+    <cards style="width: 32%;" 
+    [border-color]="'#006064'"
+    [icon]="'dollar'"
+    [title]="'Ingresos octubre'"
+    [value]="'130$'"></cards>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="d-flex justify-content-between flex-wrap mb-5 mt-3 row-gap-3">
+    <!-- <cards style="width: 32%;" 
     [border-color]="'red'"
     [icon]="'dollar'"
     [title]="'Consultorios pagados'"
@@ -16,14 +49,57 @@
     [border-color]="'blue'"
     [icon]="'user'"
     [title]="'Médicos al día'"
+    [value]="15"></cards> -->
+
+    <cards style="width: 32%;"
+    [border-color]="'orange'"
+    [icon]="'building'"
+    [title]="'Consultorios en total'"
     [value]="15"></cards>
+
+    <cards style="width: 32%;"
+    [border-color]="'blue'"
+    [icon]="'money-bill'"
+    [title]="'Consultorios alquilados'"
+    [value]="12"></cards>
+
+    <cards style="width: 32%;"
+    [border-color]="'red'"
+    [icon]="'building'"
+    [title]="'Consultorios libres'"
+    [value]="3"></cards>
   </div>
 
   <section>
     <div class="header">
-      <h4>Historia de la comunidad</h4>
+      <h5>Resumen consultorios</h5>
+
+      <div class="d-flex gap-3 align-items-center">
+        <label class="label">Filtrar por mes</label>
+        <p-dropdown
+        [placeholder]="monthSelected"
+        [options]="monthsSelect"
+        [(ngModel)]="monthSelected"
+        optionLabel="name"></p-dropdown>
+      </div>
     </div>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Assumenda, ratione. Possimus nulla quod corrupti! Sunt quia recusandae sapiente reprehenderit, iste ab, quam in reiciendis atque asperiores porro natus maxime fuga.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi praesentium labore ipsa neque consectetur officia repellat architecto! Maxime architecto dicta pariatur id commodi facilis adipisci temporibus repellendus totam, natus corporis.</p>
+    <div class="separator"></div>
+    <div class="d-flex w-100 justify-content-center my-3">
+      <ngx-charts-pie-chart
+      [results]="data"
+      [legend]="true"
+      [view]="[700, 300]"
+      [legendTitle]="'Infor.'"
+      >
+      </ngx-charts-pie-chart>
+    </div>
+    <div class="footer">
+      <div class="card-small">
+        <span>Pagados - <b>10</b></span>
+      </div>
+      <div class="card-small">
+        <span>Pendientes - <b>5</b></span>
+      </div>
+    </div>
   </section>
 </div>

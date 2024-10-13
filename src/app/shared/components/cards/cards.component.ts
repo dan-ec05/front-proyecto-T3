@@ -11,7 +11,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CardsComponent  implements OnInit {
 
   @Input("title") title!: String;
-  @Input("value") value!: Number;
+  @Input("value") value!: Number | String;
   @Input("border-color") border_color!: String;
   @Input("icon") icon!: String;
 

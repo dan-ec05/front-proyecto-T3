@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit {
       full_name: "Daniel Camacho",
       phonenumber: "04126858439",
       created_at: "2024-08-25 16:52:32",
-      name_rol: "Admin"
+      name_rol: "Super Admin"
     }
   ];
 
@@ -64,12 +64,6 @@ export class UsersComponent implements OnInit {
         textAlign: "center"
       },
       {
-        key: "username",
-        title: "Usuario",
-        width: "100px",
-        textAlign: "center"
-      },
-      {
         key: "full_name",
         title: "Nombre y apellido",
         width: "200px",
@@ -79,18 +73,6 @@ export class UsersComponent implements OnInit {
         key: "phonenumber",
         title: "Teléfono",
         width: "150px",
-        textAlign: "center"
-      },
-      {
-        key: "created_at",
-        title: "Creación",
-        width: "200px",
-        textAlign: "center"
-      },
-      {
-        key: "name_rol",
-        title: "Rol",
-        width: "140px",
         textAlign: "center"
       },
       {
