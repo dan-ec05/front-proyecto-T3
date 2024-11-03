@@ -1,27 +1,33 @@
 <p-dialog
-[(visible)]="show" [modal]="true" [style]="{'width': '50rem'}" [draggable]="false"
+[(visible)]="show" [modal]="true" [closeOnEscape]="false" [style]="{'width': 'max-content'}" [draggable]="false"
 (onHide)="closeModal(false)">
   <ng-template pTemplate="header">
     <div class="d-flex align-items-center justify-content-between">
       <span class="title">{{title}}</span>
     </div>
   </ng-template>
-  <form [formGroup]="form" class="d-flex py-4 flex-row justify-content-around flex-wrap gap-5">
-    <div class="d-flex justify-content-between gap-4 align-items-center" style="width: 43%;">
-      <label class="label">Mes</label>
-      <p-dropdown formControlName="month" scrollHeight="140px" [showClear]="true" styleClass="input-dropdown" [options]="monthsList" optionLabel="name"></p-dropdown>
+  <form [formGroup]="form" class="d-flex py-4 flex-column justify-content-around flex-wrap gap-5">
+    <div class="d-flex justify-content-start gap-4 align-items-center justify-content-between" style="width: 100%;">
+      <label class="label">Horario</label>
+      <p-dropdown formControlName="horario" scrollHeight="140px" [ngStyle]="{'width': '100%'}" styleClass="input-dropdown input-dropdown--schedule" [options]="updateForm ? allSchedules : schedulesList" optionLabel="name"></p-dropdown>
     </div>
-    <div class="d-flex justify-content-between gap-4 align-items-center" style="width: 43%;">
-      <label class="label">Médico</label>
-      <p-dropdown formControlName="doctor" scrollHeight="140px" styleClass="w-50 input-dropdown" [options]="doctorsList" optionLabel="name"></p-dropdown>
+    <div class="d-flex justify-content-between gap-4 align-items-center">
+      <label class="label">Fecha de corte</label>
+      <input formControlName="fecha_corte" [max]="dateToday" type="date" class="form-control form-date w-100">
     </div>
-    <div class="d-flex justify-content-between gap-4 align-items-center" style="width: 43%;">
-      <label class="label">Fecha</label>
-      <input formControlName="date" type="date" class="form-control form-date w-50">
+    <div class="d-flex justify-content-between gap-4 align-items-center">
+      <label class="label">Fecha de pago</label>
+      <input formControlName="fecha_pago" [max]="dateToday" type="date" class="form-control form-date w-100">
     </div>
-    <div class="d-flex justify-content-between gap-1 align-items-center" style="width: 43%;">
-      <label class="label">Monto (Bs.)</label>
-      <p-inputNumber formControlName="amount"></p-inputNumber>
+    <div class="d-flex justify-content-between gap-3 align-items-center">
+      <label class="label">Monto ($)</label>
+      <p-inputNumber formControlName="monto" styleClass="w-100"></p-inputNumber>
+      <p-selectButton
+      class="select-buttons w-75"
+      [options]="typePayment"
+      formControlName="solvente"
+      optionLabel="name"
+      optionValue="id"></p-selectButton>
     </div>
   </form>
   <ng-template pTemplate="footer">

@@ -1,0 +1,41 @@
+<p-dialog
+[(visible)]="show" [modal]="true" [style]="{'width': '50rem'}" [draggable]="false"
+(onHide)="closeModal(false)">
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center justify-content-between">
+      <span class="title">{{title}}</span>
+    </div>
+  </ng-template>
+  <form [formGroup]="form" class="d-flex py-4 flex-row justify-content-around align-items-start flex-wrap gap-2">
+    <div class="d-flex flex-row flex-wrap justify-content-start gap-4 w-auto mb-3">
+      <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
+        <label class="label">Especialidad</label>
+        <p-dropdown formControlName="especialidad" type="text" scrollHeight="150px" [options]="specialismList" optionLabel="descripcion" styleClass="input-dropdown input-dropdown--specialism"></p-dropdown>
+      </div>
+      <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
+        <label class="label">Nombre completo</label>
+        <input formControlName="nombre_completo" type="text" class="form-control w-100">
+      </div>
+      <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
+        <label class="label">Cédula</label>
+        <input [maxlength]="9" formControlName="cedula" type="text" class="form-control w-100">
+      </div>
+      <div class="d-flex flex-column justify-content-start align-items-start" style="width: 45%;">
+        <label class="label">Teléfono</label>
+        <input formControlName="num_telefono" type="text" class="form-control w-100">
+      </div>
+      <div class="d-flex flex-column justify-content-start align-items-start" style="width: 45%;">
+        <label class="label">Correo</label>
+        <input formControlName="correo" type="text" class="form-control w-100">
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="d-flex flex-row justify-content-end w-100 gap-4">
+      <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
+      <button class="button button--save button--blue"
+      [ngClass]="form.invalid ? 'btn-disabled' : ''"
+      (click)="form.valid ? save() : ''">{{edited ? 'Actualizar' : 'Guardar'}}</button>
+    </div>
+  </ng-template>
+</p-dialog>

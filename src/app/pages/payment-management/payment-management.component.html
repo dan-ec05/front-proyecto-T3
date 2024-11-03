@@ -19,7 +19,7 @@
         optionLabel="year"></p-dropdown>
       </div>
     </div>
-    <p-table [value]="exampleDataTable" [columns]="columns">
+    <p-table [value]="paymentsList" [columns]="columns">
       <ng-template pTemplate="header">
         <tr>
           @for (c of columns; track c) {
@@ -37,9 +37,9 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button class="button button--icon" (click)="showPaymentForm(item, 'Editar pago')">
-                  <span class="pi pi-user-edit"></span>
+                  <span class="pi pi-pen-to-square"></span>
                 </button>
-                <button class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
+                <button (click)="deletePayment(item.id, item.id_consultorios_medicos, $event)" class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
                   <span class="pi pi-trash"></span>
                 </button>
               </td>
@@ -57,6 +57,11 @@
     </p-table>
   </section>
 </div>
+
+<p-confirmDialog></p-confirmDialog>
+
+<p-toast></p-toast>
+
 @if (showPayForm) {
   <payment-form [data]="dataForm" [title]="titleForm" [show]="showPayForm" (close)="closePaymentForm($event)"></payment-form>
 }

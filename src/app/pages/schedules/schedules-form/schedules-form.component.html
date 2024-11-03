@@ -1,0 +1,47 @@
+<p-dialog
+[(visible)]="show" [modal]="true" [style]="{'width': '30rem'}" [draggable]="false"
+(onHide)="closeModal(false)">
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center justify-content-between">
+      <span class="title">{{title}}</span>
+    </div>
+  </ng-template>
+  <form [formGroup]="form" class="d-flex py-4 flex-column justify-content-around flex-wrap gap-5">
+    <div class="d-flex justify-content-between align-items-center">
+      <label class="label">Médico</label>
+      <p-dropdown [options]="doctorsList" formControlName="id_medico" scrollHeight="150px" styleClass="input-dropdown input-dropdown--specialism" optionLabel="name"></p-dropdown>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <label class="label">N° consultorio</label>
+      <p-dropdown formControlName="id_consultorio" scrollHeight="150px" [options]="doctorsOffices" styleClass="input-dropdown input-dropdown--specialism" optionLabel="num_consultorio"></p-dropdown>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <label class="label">Condición</label>
+      <p-dropdown [options]="conditionList" formControlName="condicion" scrollHeight="150px" styleClass="input-dropdown input-dropdown--specialism" optionLabel="name"></p-dropdown>
+    </div>
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <label class="label">Hora de inicio</label>
+      <p-calendar formControlName="hora_inicio" inputId="calendar-timeonly" [hourFormat]="'12'" styleClass="input-calendar" [timeOnly]="true"></p-calendar>
+    </div>
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <label class="label">Hora fin</label>
+      <p-calendar [minDate]="form.get('hora_inicio')?.value" formControlName="hora_fin" inputId="calendar-timeonly" [hourFormat]="'12'" styleClass="input-calendar input-calendar--top" [timeOnly]="true"></p-calendar>
+    </div>
+    <!-- <div class="d-flex justify-content-between align-items-center w-100">
+      <label class="label">Solvente</label>
+      <p-selectButton formControlName="solvente" [options]="selectButtonOptions" optionLabel="name">
+        <ng-template pTemplate let-item>
+          <i style="font-size: 20px;" [ngClass]="item.icon" [style]="'color: ' + item.color"></i>
+        </ng-template>
+      </p-selectButton>
+    </div> -->
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="d-flex flex-row justify-content-end w-100 gap-4">
+      <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
+      <button class="button button--save"
+      [ngClass]="form.invalid ? 'btn-disabled' : ''"
+      (click)="form.valid ? save() : ''">{{updateForm ? 'Actualizar' : 'Guardar'}}</button>
+    </div>
+  </ng-template>
+</p-dialog>

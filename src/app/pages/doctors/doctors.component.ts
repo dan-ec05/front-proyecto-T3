@@ -3,8 +3,13 @@ import { tableColumnInterface } from '../../shared/interfaces/table-columns.inte
 import { TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { FormDoctorComponent } from './form-doctor/form-doctor.component';
-import { TooltipModule } from 'primeng/tooltip';
+import { AdminService } from '../../shared/services/admin.service';
+import { commonResponse } from '../../shared/interfaces/response.interface';
+import { FormDoctorComponent } from './components/form-doctor/form-doctor.component';
+import { FormSpecialtyComponent } from './components/form-specialty/form-specialty.component';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-doctors',
@@ -15,45 +20,18 @@ import { TooltipModule } from 'primeng/tooltip';
     TableModule,
     NgClass,
     ButtonModule,
-    FormDoctorComponent  
+    FormDoctorComponent,
+    FormSpecialtyComponent,
+    ToastModule,
+    ConfirmDialogModule
   ]
 })
 export class DoctorsComponent  implements OnInit {
 
-  exampleDataTable: any = [
-    {
-      id_consultory: 1,
-      full_name: "Enrique Iglesias",
-      dni: "999-999-222",
-      main: "Pediatría",
-      schedule: "7:00AM - 11:00AM",
-      status: "EXCLUSIVO"
-    },
-    {
-      id_consultory: 2,
-      full_name: "Marc Anthony",
-      dni: "666-102-122",
-      main: "Médico Cirujano",
-      schedule: "10:00AM - 5:00PM",
-      status: "EXCLUSIVO"
-    },
-    {
-      id_consultory: 3,
-      full_name: "Cris Valencia",
-      dni: "111-222-333",
-      main: "Ginecología",
-      schedule: "9:00AM - 11:00AM",
-      status: "EXCLUSIVO"
-    },
-    {
-      id_consultory: 4,
-      full_name: "Nathan Drake",
-      dni: "293-238-233",
-      main: "Estética",
-      schedule: "5:00AM - 8:00PM",
-      status: "EXCLUSIVO"
-    }
-  ];
+  doctorsList: any = [];
+
+  showSpecialtiesList: boolean = false;
+  titleSpecialtiesList: String = "";
 
   showFormDoctor: boolean = false;
   dataForm: any = {};
@@ -61,39 +39,106 @@ export class DoctorsComponent  implements OnInit {
 
   columns: tableColumnInterface[] = [];
 
-  constructor() { }
+  constructor(
+    public adminService: AdminService,
+    public confirmationService: ConfirmationService,
+    public message: MessageService
+  ) { }
 
   ngOnInit() {
     this.columns = this.getTableColumn();
+    this.get()
+  }
+
+  get(){
+    this.adminService.getAllDoctors().subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        this.doctorsList = data.object;
+      },
+      error: (e: any) => {
+        console.log(e);
+      }
+    });
   }
 
   showForm(data: any, title: String){
-    console.log(data);
     this.dataForm = data;
     this.titleForm = title;
     this.showFormDoctor = true;
   }
 
+  showSpecialties(){
+    this.showSpecialtiesList = true;
+    this.titleSpecialtiesList = "Especialidades";
+  }
+
   closeForm(e: any){
     this.dataForm = {};
     this.showFormDoctor = false;
+    this.showSpecialtiesList = false;
+    this.get();
+  }
+
+  deleteDoctor(id: Number, e: any){
+    this.confirmationService.confirm({
+      target: e.target as EventTarget,
+      message: "¿Estás seguro de borrar el médico?",
+      header: "Eliminar médico",
+      icon: 'pi pi-exclamation-circle',
+      rejectButtonStyleClass: "btn-reject",
+      acceptButtonStyleClass: "btn-acept",
+      acceptLabel: "Aceptar",
+      rejectLabel: "Cancelar",
+      accept: () =>{
+        this.adminService.deleteDoctor(id).subscribe({
+          next: (data: commonResponse) => {
+            this.message.add({
+              severity: "success",
+              summary: "Éxito",
+              detail: "El médico se ha eliminado correctamente"
+            });
+            this.get();
+          },
+          error: (e) => {
+            console.log(e);
+            this.message.add({
+              severity: "error",
+              summary: "Error",
+              detail: "Ha ocurrido un error al eliminar el médico"
+            });
+          }
+        })
+      },
+      
+    })
   }
 
   private getTableColumn(): tableColumnInterface[] {
     return [
       {
-        key: "full_name",
-        title: "Nombre y apellido",
+        key: "correo",
+        title: "Correo",
         textAlign: "center"
       },
       {
-        key: "dni",
+        key: "nombre_completo",
+        title: "Nombre completo",
+        textAlign: "center"
+      },
+      {
+        key: "descripcion",
+        title: "Especialidad",
+        textAlign: "center"
+      },
+      {
+        key: "cedula",
         title: "Cédula",
         textAlign: "center"
       },
       {
-        key: "main",
-        title: "Especialidad",
+        key: "num_telefono",
+        title: "Teléfono",
         textAlign: "center"
       },
       {

@@ -8,9 +8,9 @@
       <p-button 
         label="Nuevo usuario" 
         icon="pi pi-user-plus" 
-        (onClick)="showForm()" />
+        (onClick)="showForm({}, 'Crear nuevo usuario', true, false)" />
     </div>
-    <p-table [value]="rows" [columns]="columns">
+    <p-table [value]="userList" [columns]="columns">
       <ng-template pTemplate="header">
         <tr>
           @for (c of columns; track c) {
@@ -26,15 +26,17 @@
           @for (c of columns; track c) {
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
-                <button (click)="showForm(item, 'Editar usuario')" class="button button--icon">
+                <button (click)="showForm(item, 'Detalles de usuario', false, true)" class="button button--icon">
                   <span class="pi pi-eye"></span>
                 </button>
-                <button (click)="showForm(item, 'Editar usuario')" class="button button--icon">
+                <button (click)="showForm(item, 'Editar usuario', true, false)" class="button button--icon">
                   <span class="pi pi-user-edit"></span>
                 </button>
-                <button class="button button--icon">
-                  <span class="pi pi-trash"></span>
-                </button>
+                @if (item.cargo != "superadmin") {
+                  <button (click)="deleteUser(item.id, $event)" class="button button--icon">
+                    <span class="pi pi-trash"></span>
+                  </button>
+                }
               </td>
             }
             @else {
@@ -48,6 +50,10 @@
     </p-table>
   </section>
 </div>
+
+<p-toast></p-toast>
+
+<p-confirmDialog></p-confirmDialog>
 
 @if (show) {
   <user-form (close)="closeForm($event)" [show]="show" [data]="dataForm" [title]="titleForm"></user-form>

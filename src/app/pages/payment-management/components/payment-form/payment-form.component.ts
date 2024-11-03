@@ -1,10 +1,14 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import moment from 'moment';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { AdminService } from '../../../../shared/services/admin.service';
+import { commonResponse } from '../../../../shared/interfaces/response.interface';
+import { MessageService } from 'primeng/api';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
   selector: 'payment-form',
@@ -16,7 +20,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DropdownModule,
     InputNumberModule,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    NgStyle,
+    SelectButtonModule
   ]
 })
 export class PaymentFormComponent  implements OnInit {
@@ -54,43 +60,133 @@ export class PaymentFormComponent  implements OnInit {
   ];
 
   form!: FormGroup;
+  updateForm: boolean = false;
 
-  constructor() { }
+  dateToday: String = moment().format("YYYY-MM-DD");
+  schedulesList: any = [];
+
+  allSchedules: any = [];
+  typePayment: any = [
+    {id: 1, name: "Completo"},
+    {id: 2, name: "Abono"}
+  ];
+
+  constructor(
+    public adminService: AdminService,
+    public message: MessageService
+  ) { }
   
   ngOnInit() {
     this.initForm();
-
-    if(this.data.id != undefined){
-      this.setValues();
-    }
+    this.get();
   }
 
   initForm(){
     this.form = new FormGroup({
-      month: new FormControl("", Validators.required),
-      doctor: new FormControl("", Validators.required),
-      date: new FormControl(moment().format("YYYY-MM-DD"), Validators.required),
-      amount: new FormControl("", Validators.required)
+      horario: new FormControl("", Validators.required),
+      fecha_corte: new FormControl(moment().format("YYYY-MM-DD"), Validators.required),
+      fecha_pago: new FormControl(moment().format("YYYY-MM-DD"), Validators.required),
+      monto: new FormControl("", Validators.required),
+      solvente: new FormControl("", [Validators.required])
+    });
+  }
+
+  get(){
+    this.adminService.getAllSchedules().subscribe({
+      next: (data: commonResponse) => {
+        data.object.forEach((item: any) => {
+          item.name = `Consultorio ${item.num_consultorio} - ${item.nombre_completo}`;
+        });
+
+        this.allSchedules = data.object;
+
+        this.schedulesList = data.object.filter((item: any) => !(item.solvente));
+
+        if(this.data.id != undefined){
+          this.setValues();
+        }
+      },
+      error: () => {}
     });
   }
 
   setValues(){
+    this.updateForm = true;
 
-    let name = this.doctorsList.filter((item: any) => item.name == this.data.name)[0];
-    let month = this.monthsList.filter((item: any) => item.name == this.data.paidMonth)[0];
-
-    this.data.amount = String(this.data.amount).slice(0, String(this.data.amount).length - 4);
-    console.log(this.data);
     this.form.patchValue({
-      month: month,
-      doctor: name,
-      date: this.data.created_at,
-      amount: Number(this.data.amount)
+      horario: this.allSchedules.filter((item: any) => item.id == this.data.id_consultorios_medicos)[0],
+      fecha_corte: this.data.fecha_corte_formatted,
+      fecha_pago: this.data.fecha_pago_formatted,
+      monto: Number(this.data.monto.split("$")[1])
     });
   }
 
   save(){
-    console.log(this.form.value);
+    let body: any = {
+      id_consultorios_medicos: this.form.get("horario")?.value.id,
+      fecha_corte: this.form.get("fecha_corte")?.value,
+      fecha_pago: this.form.get("fecha_pago")?.value,
+      monto: this.form.get("monto")?.value,
+      solvente: this.form.get("solvente")?.value
+    };
+
+    console.log(body);
+
+    // if (this.updateForm){
+
+    //   if(this.data.id_consultorios_medicos != body.id_consultorios_medicos){
+    //     body.old_id_consultorios_medicos = this.data.id_consultorios_medicos;
+    //   }
+    //   body.id_payment = this.data.id;
+    //   console.log(body);
+      
+    //   this.adminService.editPayment(body).subscribe({
+    //     next: (data: commonResponse) => {
+    //       if (data.ok){
+    //         this.message.add({
+    //           severity: "success",
+    //           summary: "Éxito",
+    //           detail: "El pago se ha modificado correctamente"
+    //         });
+  
+    //         this.closeModal(false);
+    //       }
+    //     },
+    //     error: (e) => {
+    //       console.log(e);
+    //       this.message.add({
+    //         severity: "error",
+    //         summary: "Error",
+    //         detail: "Ha ocurrido un error al agregar el pago"
+    //       });
+    //     }
+    //   })
+
+    // }
+    // else{
+    //   this.adminService.addNewPayment(body).subscribe({
+    //     next: (data: commonResponse) => {
+    //       if (data.ok){
+    //         this.message.add({
+    //           severity: "success",
+    //           summary: "Éxito",
+    //           detail: "El pago se ha agregado correctamente"
+    //         });
+  
+    //         this.closeModal(false);
+    //       }
+    //     },
+    //     error: (e: any) => {
+    //       console.log(e);
+    //       this.message.add({
+    //         severity: "error",
+    //         summary: "Error",
+    //         detail: "Ha ocurrido un error al agregar el pago"
+    //       });
+    //     }
+    //   });
+    // }
+
   }
   
   closeModal(e: any){

@@ -4,13 +4,17 @@
     <div class="header">
       <h4>Médicos</h4>
     </div>
-    <div class="d-flex my-4">
+    <div class="d-flex my-4 gap-3">
       <p-button
           label="Nuevo médico"
           icon="pi pi-user-plus"
           (onClick)="showForm({}, 'Crear médico')"/>
+      <p-button
+      label="Especialidades"
+      icon="pi pi-user-plus"
+      (onClick)="showSpecialties()"/>
     </div>
-    <p-table [value]="exampleDataTable" [columns]="columns" [rowHover]="true">
+    <p-table [value]="doctorsList" [columns]="columns" [rowHover]="true">
       <ng-template pTemplate="header">
         <tr>
           @for (c of columns; track c) {
@@ -30,7 +34,7 @@
                 <button class="button button--icon" (click)="showForm(item, 'Editar médico')">
                   <span class="pi pi-user-edit"></span>
                 </button>
-                <button class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
+                <button (click)="deleteDoctor(item.id, $event)" class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
                   <span class="pi pi-trash"></span>
                 </button>
               </td>
@@ -46,6 +50,14 @@
     </p-table>
   </section>
 </div>
+
+<p-toast></p-toast>
+
+<p-confirmDialog></p-confirmDialog>
+
+@if(showSpecialtiesList){
+  <form-specialty [title]="titleSpecialtiesList" [show]="showSpecialtiesList" (close)="closeForm($event)"></form-specialty>
+}
 
 @if (showFormDoctor) {
   <form-doctor [data]="dataForm" [title]="titleForm" [show]="showFormDoctor" (close)="closeForm($event)"></form-doctor>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './auth/guards/login.guard';
 
 export const routes: Routes = [
     {
@@ -8,6 +9,7 @@ export const routes: Routes = [
     {
         path: 'inicio',
         loadComponent: () => import('./layout/main/main.component').then((c) => c.MainComponent),
+        canActivate: [loginGuard],
         children: [
             {
                 path: '',
@@ -28,6 +30,10 @@ export const routes: Routes = [
             {
                 path: "consultorios",
                 loadComponent: () => import("./pages/offices/offices.component").then((c) => c.OfficesComponent)
+            },
+            {
+                path: "horarios",
+                loadComponent: () => import("./pages/schedules/schedules.component").then((c) => c.SchedulesComponent)
             }
         ]
     },

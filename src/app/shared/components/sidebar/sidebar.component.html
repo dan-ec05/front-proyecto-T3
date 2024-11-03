@@ -6,45 +6,90 @@
   <div class="section">
     <p class="subtitle">NAVEGACIÓN</p>
     <ul class="list-options">
-      <li routerLink="/inicio" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
-        <div class="d-flex flex-row justify-content-start">
-          <img src="../../../../assets/icons/home.png" alt="">
-          <span class="ms-2">Inicio</span>
-        </div>
-        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
-      </li>
-      
-      <li routerLink="gestion-pagos" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
-        <div class="d-flex flex-row justify-content-start">
-          <img src="../../../../assets/icons/payment.png" alt="">
-          <span class="ms-2">Gestión de pagos</span>
-        </div>
-        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
-      </li>
+      @if (authService._getUserData.cargo == "admin" || authService._getUserData.cargo == "superadmin") {
 
-      <li routerLink="doctores" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
-        <div class="d-flex flex-row justify-content-start">
-          <img src="../../../../assets/icons/doctors.png" alt="">
-          <span class="ms-2">Médicos</span>
-        </div>
-        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
-      </li>
-      
-      <li routerLink="consultorios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
-        <div class="d-flex flex-row justify-content-start">
-          <img src="../../../../assets/icons/offices.png" alt="">
-          <span class="ms-2">Consultorios</span>
-        </div>
-        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
-      </li>
-
-      <li routerLink="usuarios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
-        <div class="d-flex flex-row justify-content-start">
-          <img src="../../../../assets/icons/users.png" alt="">
-          <span class="ms-2">Usuarios</span>
-        </div>
-        <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
-      </li>
+        <li routerLink="/inicio" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/home.png" alt="">
+            <span class="ms-2">Inicio</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+        
+        <li routerLink="gestion-pagos" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/payment.png" alt="">
+            <span class="ms-2">Gestión de pagos</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+  
+        <li routerLink="horarios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/schedule.png" alt="">
+            <span class="ms-2">Horarios</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+  
+        <li routerLink="doctores" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/doctors.png" alt="">
+            <span class="ms-2">Médicos</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+        
+        <li routerLink="consultorios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/offices.png" alt="">
+            <span class="ms-2">Consultorios</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+        @if (authService._getUserData.cargo == "superadmin") {
+          <li routerLink="usuarios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+            <div class="d-flex flex-row justify-content-start">
+              <img src="../../../../assets/icons/users.png" alt="">
+              <span class="ms-2">Usuarios</span>
+            </div>
+            <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+          </li>
+        }
+      }
+      @else {
+        <li routerLink="gestion-pagos" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/payment.png" alt="">
+            <span class="ms-2">Mis pagos</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+  
+        <li routerLink="horarios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/schedule.png" alt="">
+            <span class="ms-2">Horarios</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+  
+        <li routerLink="doctores" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/doctors.png" alt="">
+            <span class="ms-2">Médicos</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+        
+        <li routerLink="consultorios" routerLinkActive="active-route" class="d-flex flex-row justify-content-between align-items-center">
+          <div class="d-flex flex-row justify-content-start">
+            <img src="../../../../assets/icons/offices.png" alt="">
+            <span class="ms-2">Consultorios</span>
+          </div>
+          <img src="../../../../assets/icons/right-arrow.png" class="right-arrow" alt="">
+        </li>
+      }
     </ul>
   </div>
 </div>

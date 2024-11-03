@@ -3,6 +3,7 @@ import { CardsComponent } from '../../shared/components/cards/cards.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { HomeService } from '../../shared/services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -59,8 +60,21 @@ export class HomeComponent  implements OnInit {
     {name: "Pendientes", value: 5}
   ];
 
-  constructor() { }
+  constructor(
+    public homeService: HomeService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getTotalAmount();
+  }
+
+  getTotalAmount(){
+    this.homeService.getTotalAmount().subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: () => {}
+    });
+  }
 
 }

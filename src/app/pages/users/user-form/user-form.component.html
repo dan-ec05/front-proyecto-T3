@@ -6,34 +6,216 @@
       <span class="title">{{title}}</span>
     </div>
   </ng-template>
-  <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4">
-    <div class="d-flex flex-column align-items-start" style="width: 45%;">
-      <label class="label">Correo</label>
-      <input formControlName="email" type="text" class="form-control w-100">
-    </div>
-    <div class="d-flex flex-column align-items-start" style="width: 45%;">
-      <label class="label">Usuario</label>
-      <input formControlName="username" type="text" class="form-control w-100">
-    </div>
-    <div class="d-flex flex-column align-items-start" style="width: 45%;">
-      <label class="label">Nombre y apellido</label>
-      <input formControlName="full_name" type="text" class="form-control w-100">
-    </div>
-    <div class="d-flex flex-column align-items-start" style="width: 45%;">
-      <label class="label">Teléfono</label>
-      <input formControlName="phone" type="text" class="form-control w-100">
-    </div>
-    <!-- <div class="d-flex flex-column align-items-start" style="width: 45%;">
-      <label class="label">Rol</label>
-      <p-dropdown formControlName="username" scrollHeight="140px" styleClass="input-dropdown" optionLabel="name"></p-dropdown>
-    </div> -->
-  </form>
+  @if (editValues) {
+    @if (!nextStep) {
+      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;"
+        [ngClass]="form.get('email')?.errors && form.get('email')?.touched ? 'no-valid' : ''">
+          <label class="label">Correo
+            <span [ngStyle]="form.get('correo')?.errors && form.get('correo')?.touched ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span"> - El correo es inválido</span>
+          </label>
+          <input (keyup)="validators.onlyTextEmail($event)" 
+          (keydown)="validators.onlyTextEmail($event)" formControlName="correo" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Usuario</label>
+          <input formControlName="usuario" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Nombre</label>
+          <input formControlName="nombre" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Cargo</label>
+          <p-selectButton
+          class="select-buttons select-buttons--role"
+          [options]="rolesList"
+          [multiple]="false"
+          optionLabel="name"
+          (onChange)="changeRole($event)"
+          optionValue="value"
+          formControlName="cargo"
+          ></p-selectButton>
+        </div>
+      </form>
+      }
+    @else {
+      <form [formGroup]="securityForm" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Pregunta de seguridad</label>
+          <p-dropdown
+          [scrollHeight]="'110px'"
+          [options]="securityQList"
+          optionLabel="valor"
+          class="dropdown"
+          formControlName="id_pregunta_seguridad"
+          (onChange)="changeQuestion($event)"></p-dropdown>
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Respuesta</label>
+          <input formControlName="respuesta" type="text" class="form-control w-100">
+        </div>
+        @if (!setNewPassword) {
+          <button (click)="modifyPassword()" class="btn-add-specialty">
+            <span class="pi pi-pen-to-square"></span>Modificar contraseña
+          </button>
+        }
+        @else {
+          <div class="d-flex flex-column align-items-start" style="width: 45%;">
+            <label class="label">Nueva contraseña</label>
+            <div class="form-control--password">
+              <input (keyup)="validatePassword(); checkPasswords()" (blur)="focusPassword(false)" (focus)="focusPassword(true)" formControlName="pass" [type]="showPass ? 'text' : 'password'" class="form-control w-100">
+              <span (click)="showPass = !showPass" style="font-size: 20px; cursor: pointer;" class="pi" [ngClass]="showPass ? 'pi-eye' : 'pi-eye-slash'"></span>
+            </div>
+            <span [ngStyle]="!passwordValid && (passwordError) ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span">{{passwordError}}</span>
+          </div>
+          <div class="d-flex flex-column align-items-start" style="width: 45%;">
+            <label class="label">Repetir contraseña
+            </label>
+            <div class="form-control--password">
+              <input (keyup)="checkPasswords()" (blur)="focusPassword(false, 1)" (focus)="focusPassword(true, 1)" formControlName="pass_rpted" [type]="showPassRpted ? 'text' : 'password'" class="form-control w-100">
+              <span (click)="showPassRpted = !showPassRpted" style="font-size: 20px; cursor: pointer;" class="pi" [ngClass]="showPassRpted ? 'pi-eye' : 'pi-eye-slash'"></span>
+            </div>
+            <span [ngStyle]="!samePasswords && securityForm.get('pass_rpted')?.dirty ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span">Las contraseñas no coinciden</span>
+          </div>
+        }
+      </form>
+    }
+  }
+  @else if (onlyShow) {
+    @if (!nextStep) {
+      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Correo</label>
+          <input [readOnly]="true" formControlName="correo" type="text" class="form-control w-100 disabled">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Usuario</label>
+          <input [readOnly]="true" formControlName="usuario" type="text" class="form-control w-100 disabled">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Nombre</label>
+          <input [readOnly]="true" formControlName="nombre" type="text" class="form-control w-100 disabled">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Cargo</label>
+          <input [readOnly]="true" [value]="cargo_usuario" type="text" class="form-control w-100 disabled">
+        </div>
+      </form>
+      }
+    @else {
+      <form [formGroup]="securityForm" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Pregunta de seguridad</label>
+          <input [readOnly]="true" [value]="securityForm.get('id_pregunta_seguridad')?.value.valor" type="text" class="form-control w-100 disabled">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Respuesta</label>
+          <input [readOnly]="true" formControlName="respuesta" type="text" class="form-control w-100 disabled">
+        </div>
+      </form>
+    }
+  }
+  @else {
+    @if (!nextStep) {
+      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Correo
+            <span [ngStyle]="form.get('correo')?.errors && form.get('correo')?.touched ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span"> - El correo es inválido</span>
+          </label>
+          <input (keyup)="validators.onlyTextEmail($event)" 
+          (keydown)="validators.onlyTextEmail($event)" formControlName="correo" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Usuario</label>
+          <input formControlName="usuario" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Nombre</label>
+          <input formControlName="nombre" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Cargo</label>
+          <p-selectButton
+          class="select-buttons select-buttons--role"
+          [options]="rolesList"
+          [multiple]="false"
+          optionLabel="name"
+          (onChange)="changeRole($event)"
+          ></p-selectButton>
+        </div>
+      </form>
+      }
+    @else {
+      <form [formGroup]="securityForm" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Pregunta de seguridad</label>
+          <p-dropdown
+          [scrollHeight]="'110px'"
+          [options]="securityQList"
+          optionLabel="valor"
+          class="dropdown"
+          formControlName="id_pregunta_seguridad"
+          (onChange)="changeQuestion($event)"></p-dropdown>
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Respuesta</label>
+          <input formControlName="respuesta" type="text" class="form-control w-100">
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Contraseña</label>
+          <div class="form-control--password">
+            <input (keyup)="validatePassword(); checkPasswords()" (blur)="focusPassword(false)" (focus)="focusPassword(true)" formControlName="pass" [type]="showPass ? 'text' : 'password'" class="form-control w-100">
+            <span (click)="showPass = !showPass" style="font-size: 20px; cursor: pointer;" class="pi" [ngClass]="showPass ? 'pi-eye' : 'pi-eye-slash'"></span>
+          </div>
+          <span [ngStyle]="!passwordValid && (passwordError) ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span">{{passwordError}}</span>
+        </div>
+        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+          <label class="label">Repetir contraseña
+          </label>
+          <div class="form-control--password">
+            <input (keyup)="checkPasswords()" (blur)="focusPassword(false, 1)" (focus)="focusPassword(true, 1)" formControlName="pass_rpted" [type]="showPassRpted ? 'text' : 'password'" class="form-control w-100">
+            <span (click)="showPassRpted = !showPassRpted" style="font-size: 20px; cursor: pointer;" class="pi" [ngClass]="showPassRpted ? 'pi-eye' : 'pi-eye-slash'"></span>
+          </div>
+          <span [ngStyle]="!samePasswords && securityForm.get('pass_rpted')?.dirty ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span">Las contraseñas no coinciden</span>
+        </div>
+      </form>
+    }
+  }
   <ng-template pTemplate="footer">
-    <div class="d-flex flex-row justify-content-end w-100 gap-4">
-      <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
-      <button class="button button--save button--blue"
-      [ngClass]="form.invalid ? 'btn-disabled' : ''"
-      (click)="form.valid ? save() : ''">Guardar</button>
-    </div>
+    @if ((!editValues && !onlyShow) || (editValues && !onlyShow)) {
+      @if (nextStep) {
+        <div class="d-flex flex-row justify-content-end w-100 gap-4">
+          <button class="button button--cancel" (click)="back()">Regresar</button>
+          <button class="button button--save button--blue"
+          [ngClass]="!(securityForm.valid && passwordValid && samePasswords) ? 'btn-disabled' : ''"
+          (click)="(securityForm.valid && passwordValid && samePasswords) ? save() : ''">Guardar</button>
+        </div>
+      }
+      @else {
+        <div class="d-flex flex-row justify-content-end w-100 gap-4">
+          <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
+          <button class="button button--save button--blue"
+          [ngClass]="form.invalid ? 'btn-disabled' : ''"
+          (click)="form.valid ? next() : ''">Siguiente</button>
+        </div>
+      }
+    }
+    @else {
+      @if (nextStep) {
+        <div class="d-flex flex-row justify-content-end w-100 gap-4">
+          <button class="button button--cancel" (click)="back()">Regresar</button>
+          <button class="button button--save button--blue"
+          (click)="closeModal(false)">Aceptar</button>
+        </div>
+      }
+      @else {
+        <div class="d-flex flex-row justify-content-end w-100 gap-4">
+          <button class="button button--cancel" (click)="closeModal(false)">Cerrar</button>
+          <button class="button button--save button--blue"
+          (click)="next()">Siguiente</button>
+        </div>
+      }
+    }
   </ng-template>
 </p-dialog>

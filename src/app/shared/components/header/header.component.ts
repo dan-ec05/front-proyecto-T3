@@ -9,7 +9,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { userDataInterface } from '../../interfaces/user.interface';
-import { responseInterface } from '../../interfaces/response.interface';
+import { UserFormComponent } from '../../../pages/users/user-form/user-form.component';
 
 @Component({
   selector: 'header',
@@ -20,7 +20,8 @@ import { responseInterface } from '../../interfaces/response.interface';
     MatSidenavModule, 
     AsyncPipe,
     DialogModule,
-    NgClass
+    NgClass,
+    UserFormComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -31,6 +32,8 @@ export class HeaderComponent implements OnInit{
   dialogVisible: boolean = false;
 
   userData!: userDataInterface | any;
+  titleForm: String = "";
+  show: boolean = false;
 
   constructor(
     public layoutService: LayoutService,
@@ -53,6 +56,17 @@ export class HeaderComponent implements OnInit{
     }
   }
 
+  showForm(title: String = "Crear nuevo usuario", edit: boolean = false){
+    this.userData.editUser = edit;
+    this.userData.full_name = `${this.userData.first_name} ${this.userData.last_name}`;
+    this.titleForm = title;
+    this.show = true;
+  }
+
+  closeForm(e: any){
+    this.show = e;
+  }
+
 
   toggleSidebar(){
     this.sidebarVisible = !this.sidebarVisible;
@@ -65,7 +79,7 @@ export class HeaderComponent implements OnInit{
 
   logout(){
     let userData: userDataInterface = JSON.parse(localStorage.getItem("userInfo")!);
-    this.authService.logout(userData.id).subscribe((res: responseInterface) => {
+    this.authService.logout(userData.id).subscribe((res: any) => {
       if (res.ok){
         this.authService.removeUserData();
         this.router.navigateByUrl("/login");
