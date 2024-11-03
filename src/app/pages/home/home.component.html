@@ -13,7 +13,7 @@
     [border-color]="'green'"
     [icon]="'dollar'"
     [title]="'Ingresos totales'"
-    [value]="'200$'"></cards>
+    [value]="(cardsValues.totalAmount[0].total || 0) + '$'"></cards>
 
     <div class="vertical-separator"></div>
 
@@ -21,13 +21,13 @@
     [border-color]="'#00ACC1'"
     [icon]="'dollar'"
     [title]="'Ingresos mes pasado'"
-    [value]="'70$'"></cards>
+    [value]="(cardsValues.amountPastMonth[0].total || 0) + '$'"></cards>
 
     <cards style="width: 32%;" 
     [border-color]="'#006064'"
     [icon]="'dollar'"
     [title]="'Ingresos mes actual'"
-    [value]="'130$'"></cards>
+    [value]="(cardsValues.amountCurrentMonth[0].total || 0) + '$'"></cards>
   </div>
 
   <div class="separator"></div>
@@ -38,19 +38,19 @@
     [border-color]="'orange'"
     [icon]="'building'"
     [title]="'Consultorios en total'"
-    [value]="15"></cards>
+    [value]="cardsValues.totalOffices[0].total"></cards>
 
     <cards style="width: 32%;"
     [border-color]="'blue'"
     [icon]="'money-bill'"
     [title]="'Consultorios alquilados'"
-    [value]="12"></cards>
+    [value]="cardsValues.totalOfficesInUse[0].total"></cards>
 
     <cards style="width: 32%;"
     [border-color]="'red'"
     [icon]="'building'"
     [title]="'Consultorios libres'"
-    [value]="3"></cards>
+    [value]="cardsValues.totalFreeOffices[0].total"></cards>
   </div>
 
   <section>
@@ -69,7 +69,7 @@
     <div class="separator"></div>
     <div class="d-flex w-100 justify-content-center my-3">
       <ngx-charts-pie-chart
-      [results]="data"
+      [results]="summaryOfficesData"
       [legend]="true"
       [view]="[700, 300]"
       [legendTitle]="'Infor.'"
@@ -77,15 +77,11 @@
       </ngx-charts-pie-chart>
     </div>
     <div class="footer">
-      <div class="card-small">
-        <span>Pagados - <b>10</b></span>
-      </div>
-      <div class="card-small">
-        <span>Abonados - <b>5</b></span>
-      </div>
-      <div class="card-small">
-        <span>Pendientes - <b>5</b></span>
-      </div>
+      @for (item of summaryOfficesData; track $index) {
+        <div class="card-small">
+          <span>{{item.name}} - <b>{{item.value}}</b></span>
+        </div>
+      }
     </div>
   </section>
 </div>

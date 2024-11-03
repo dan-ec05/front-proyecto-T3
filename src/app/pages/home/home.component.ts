@@ -4,6 +4,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HomeService } from '../../shared/services/home.service';
+import { commonResponse } from '../../shared/interfaces/response.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
@@ -55,26 +57,61 @@ export class HomeComponent  implements OnInit {
     { id: 11, name: 'Diciembre'}
   ];
 
-  data: any = [
+  summaryOfficesData: any = [
     {name: "Pagados", value: 10},
-    {name: "Pendientes", value: 5}
+    {name: "Abonados", value: 5},
+    {name: "Sin pagar", value: 0}
   ];
 
+  cardsValues: any = [];
+
   constructor(
-    public homeService: HomeService
+    public homeService: HomeService,
+    public message: MessageService
   ) { }
 
   ngOnInit() {
     this.getTotalAmount();
+    this.getSummaryOffices();
   }
 
   getTotalAmount(){
     this.homeService.getTotalAmount().subscribe({
-      next: (data: any) => {
-        console.log(data);
+      next: (data: commonResponse) => {
+        if (data.ok){
+          this.cardsValues = data.object;
+        }
       },
-      error: () => {}
+      error: (e) => {
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Ha ocurrido un error al leer los datos"
+        });
+      }
     });
+  }
+
+  getSummaryOffices(){
+    this.homeService.getSummaryOffices().subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (data.ok){
+          this.summaryOfficesData = [
+            {name: "Pagados", value: data.object.paid[0].totalPagados || 0},
+            {name: "Abonados", value: data.object.halfPaid[0].totalAbonados || 0},
+            {name: "Sin pagar", value: data.object.notPaid[0].noPagados || 0}
+          ];
+        }
+      },
+      error: (e) => {
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Ha ocurrido un error al leer los datos"
+        });
+      }
+    })
   }
 
 }

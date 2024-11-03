@@ -19,4 +19,8 @@ export class HomeService {
   getTotalAmount(): Observable<any>{
     return this.http.get(`${this.url_api}/dashboard/get-total-amount`);
   }
+
+  getSummaryOffices(): Observable<any>{
+    return this.http.get(`${this.url_api}/dashboard/get-offices-summary`);
+  }
 }

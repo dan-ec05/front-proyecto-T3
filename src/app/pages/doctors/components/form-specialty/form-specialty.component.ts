@@ -93,14 +93,24 @@ export class FormSpecialtyComponent  implements OnInit {
   save(){
     let body = this.list;
 
-    console.log(body);
-
     this.adminService.addOrUpdateSpecialties(body).subscribe({
       next: (data: commonResponse) => {
-        console.log(data);
+        if (data.ok){
+          this.message.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "Los cambios se han guardado correctamente"
+          });
+        }
+
+        this.closeModal(false);
       },
       error: (error) => {
-        console.log(error);
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Ha ocurrido un error al guardar los cambios"
+        });
       }
     })
   }

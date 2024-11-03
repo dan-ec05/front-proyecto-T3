@@ -71,6 +71,13 @@ export class PaymentFormComponent  implements OnInit {
     {id: 2, name: "Abono"}
   ];
 
+  conditions: any = {
+    'not_used': 'No usado',
+    'M': 'Mañana',
+    'T': 'Tarde',
+    'E': 'Exclusivo'
+  };
+
   constructor(
     public adminService: AdminService,
     public message: MessageService
@@ -95,7 +102,7 @@ export class PaymentFormComponent  implements OnInit {
     this.adminService.getAllSchedules().subscribe({
       next: (data: commonResponse) => {
         data.object.forEach((item: any) => {
-          item.name = `Consultorio ${item.num_consultorio} - ${item.nombre_completo}`;
+          item.name = `Consultorio ${item.num_consultorio} - ${item.nombre_completo} - ${this.conditions[item.condicion]}`;
         });
 
         this.allSchedules = data.object;
@@ -117,7 +124,8 @@ export class PaymentFormComponent  implements OnInit {
       horario: this.allSchedules.filter((item: any) => item.id == this.data.id_consultorios_medicos)[0],
       fecha_corte: this.data.fecha_corte_formatted,
       fecha_pago: this.data.fecha_pago_formatted,
-      monto: Number(this.data.monto.split("$")[1])
+      monto: Number(this.data.monto.split("$")[0]),
+      solvente: this.data.solvente
     });
   }
 
@@ -130,62 +138,60 @@ export class PaymentFormComponent  implements OnInit {
       solvente: this.form.get("solvente")?.value
     };
 
-    console.log(body);
+    if (this.updateForm){
 
-    // if (this.updateForm){
-
-    //   if(this.data.id_consultorios_medicos != body.id_consultorios_medicos){
-    //     body.old_id_consultorios_medicos = this.data.id_consultorios_medicos;
-    //   }
-    //   body.id_payment = this.data.id;
-    //   console.log(body);
+      if(this.data.id_consultorios_medicos != body.id_consultorios_medicos){
+        body.old_id_consultorios_medicos = this.data.id_consultorios_medicos;
+      }
+      body.id_payment = this.data.id;
+      console.log(body);
       
-    //   this.adminService.editPayment(body).subscribe({
-    //     next: (data: commonResponse) => {
-    //       if (data.ok){
-    //         this.message.add({
-    //           severity: "success",
-    //           summary: "Éxito",
-    //           detail: "El pago se ha modificado correctamente"
-    //         });
+      this.adminService.editPayment(body).subscribe({
+        next: (data: commonResponse) => {
+          if (data.ok){
+            this.message.add({
+              severity: "success",
+              summary: "Éxito",
+              detail: "El pago se ha modificado correctamente"
+            });
   
-    //         this.closeModal(false);
-    //       }
-    //     },
-    //     error: (e) => {
-    //       console.log(e);
-    //       this.message.add({
-    //         severity: "error",
-    //         summary: "Error",
-    //         detail: "Ha ocurrido un error al agregar el pago"
-    //       });
-    //     }
-    //   })
+            this.closeModal(false);
+          }
+        },
+        error: (e) => {
+          console.log(e);
+          this.message.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Ha ocurrido un error al agregar el pago"
+          });
+        }
+      })
 
-    // }
-    // else{
-    //   this.adminService.addNewPayment(body).subscribe({
-    //     next: (data: commonResponse) => {
-    //       if (data.ok){
-    //         this.message.add({
-    //           severity: "success",
-    //           summary: "Éxito",
-    //           detail: "El pago se ha agregado correctamente"
-    //         });
+    }
+    else{
+      this.adminService.addNewPayment(body).subscribe({
+        next: (data: commonResponse) => {
+          if (data.ok){
+            this.message.add({
+              severity: "success",
+              summary: "Éxito",
+              detail: "El pago se ha agregado correctamente"
+            });
   
-    //         this.closeModal(false);
-    //       }
-    //     },
-    //     error: (e: any) => {
-    //       console.log(e);
-    //       this.message.add({
-    //         severity: "error",
-    //         summary: "Error",
-    //         detail: "Ha ocurrido un error al agregar el pago"
-    //       });
-    //     }
-    //   });
-    // }
+            this.closeModal(false);
+          }
+        },
+        error: (e: any) => {
+          console.log(e);
+          this.message.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Ha ocurrido un error al agregar el pago"
+          });
+        }
+      });
+    }
 
   }
   

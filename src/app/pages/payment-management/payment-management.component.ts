@@ -76,7 +76,8 @@ export class PaymentManagementComponent  implements OnInit {
       next: (data: commonResponse) => {
         data.object.forEach((item: any) => {
           item.fecha_corte_formatted = moment(item.fecha_corte).format("YYYY-MM-DD");
-          item.fecha_pago_formatted = moment(item.fecha_pago).format("YYYY-MM-DD")
+          item.fecha_pago_formatted = moment(item.fecha_pago).format("YYYY-MM-DD");
+          item.monto = item.monto + "$";
 
         });
         this.paymentsList = data.object;
