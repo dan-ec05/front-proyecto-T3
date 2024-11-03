@@ -7,10 +7,10 @@ import { commonResponse } from '../../shared/interfaces/response.interface';
 import { tableColumnInterface } from '../../shared/interfaces/table-columns.interface';
 import { TableModule } from 'primeng/table';
 import { NgClass } from '@angular/common';
-import { TooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 import moment from 'moment';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 
 @Component({
   selector: 'app-schedules',
@@ -23,8 +23,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SchedulesFormComponent,
     TableModule,
     NgClass,
-    TooltipComponent,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    tooltipComponent
   ]
 })
 export class SchedulesComponent  implements OnInit {

@@ -14,19 +14,21 @@
       </div>
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
         <label class="label">Nombre completo</label>
-        <input formControlName="nombre_completo" type="text" class="form-control w-100">
+        <input (keyup)="validators.onlyTextAndSpaces($event)" (keydown)="validators.onlyTextAndSpaces($event)" formControlName="nombre_completo" type="text" class="form-control w-100">
       </div>
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
         <label class="label">Cédula</label>
-        <input [maxlength]="9" formControlName="cedula" type="text" class="form-control w-100">
+        <input (keyup)="validators.onlyNumberAndPoints($event)" (keydown)="validators.onlyNumberAndPoints($event)" [maxlength]="9" formControlName="cedula" type="text" class="form-control w-100">
       </div>
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 45%;">
         <label class="label">Teléfono</label>
-        <input formControlName="num_telefono" type="text" class="form-control w-100">
+        <input (keyup)="validators.onlyNumberAndPoints($event)" (keydown)="validators.onlyNumberAndPoints($event)" formControlName="num_telefono" type="text" class="form-control w-100">
       </div>
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 45%;">
-        <label class="label">Correo</label>
-        <input formControlName="correo" type="text" class="form-control w-100">
+        <label class="label">Correo
+          <span [ngStyle]="form.get('correo')?.errors && form.get('correo')?.touched ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span"> - El correo es inválido</span>
+        </label>
+        <input (keyup)="validators.onlyTextEmail($event)" (keydown)="validators.onlyTextEmail($event)" formControlName="correo" type="text" class="form-control w-100">
       </div>
     </div>
   </form>

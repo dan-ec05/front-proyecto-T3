@@ -30,16 +30,20 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button class="button button--icon" (click)="showForm(item, 'Editar horario')">
+                  <tooltip [tooltipText]="'Editar horario'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-file-edit"></span>
                 </button>
                 <button (click)="deleteSchedule(item.id, $event)" class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
+                  <tooltip [tooltipText]="'Eliminar horario'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-trash"></span>
                 </button>
               </td>
             }
             @else if (c.key == 'solvente') {
-              <td [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
-                <span [style]="'font-size: 20px; color: ' + (item[c.key] == 1 ? 'green' : (item[c.key] == 2) ? 'orange' : 'red')" [ngClass]="item[c.key] == 1 ? 'pi pi-check' : item[c.key] == 2 ? 'pi pi-exclamation-circle' : 'pi pi-ban'"></span>
+              <td class="td-tooltip" [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+                <tooltip [tooltipText]="item[c.key] == 0 ? 'Sin pagar' : item[c.key] == 1 ? 'Pagado' : 'Abonado'" [tooltipPosition]="'top'"></tooltip>
+                <span [style]="'font-size: 20px; color: ' + (item[c.key] == 1 ? 'green' : (item[c.key] == 2) ? 'orange' : 'red')" [ngClass]="item[c.key] == 1 ? 'pi pi-check' : item[c.key] == 2 ? 'pi pi-exclamation-circle' : 'pi pi-ban'">
+                </span>
               </td>
             }
             @else {

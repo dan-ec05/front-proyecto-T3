@@ -4,7 +4,7 @@
     <div class="header">
       <h4>Consultorios</h4>
     </div>
-    <div class="d-flex flex-row justify-content-between mt-3">
+    <div class="d-flex flex-row justify-content-between my-3">
       <p-button
         styleClass="btn-main-color"
         label="Nuevo consultorio"
@@ -29,12 +29,15 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button (click)="showMaintenanceModal(item.id, item)" class="button button--icon">
+                  <tooltip [tooltipText]="'Mantenimientos'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-book"></span>
                 </button>
-                <button (click)="showForm(item)" class="button button--icon">
+                <button (click)="showForm('Editar consultorio', item)" class="button button--icon">
+                  <tooltip [tooltipText]="'Editar consultorio'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-file-edit"></span>
                 </button>
                 <button (click)="deleteOffice(item.id, $event)" class="button button--icon">
+                  <tooltip [tooltipText]="'Eliminar consultorio'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-trash"></span>
                 </button>
               </td>

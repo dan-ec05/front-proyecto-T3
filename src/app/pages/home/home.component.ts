@@ -63,7 +63,26 @@ export class HomeComponent  implements OnInit {
     {name: "Sin pagar", value: 0}
   ];
 
-  cardsValues: any = [];
+  cardsValues: any = {
+    totalAmount: [
+      {total: 0}
+    ],
+    amountPastMonth: [
+      {total: 0}
+    ],
+    amountCurrentMonth: [
+      {total: 0}
+    ],
+    totalOffices: [
+      {total: 0}
+    ],
+    totalOfficesInUse: [
+      {total: 0}
+    ],
+    totalFreeOffices: [
+      {total: 0}
+    ]
+  };
 
   constructor(
     public homeService: HomeService,
@@ -102,6 +121,8 @@ export class HomeComponent  implements OnInit {
             {name: "Abonados", value: data.object.halfPaid[0].totalAbonados || 0},
             {name: "Sin pagar", value: data.object.notPaid[0].noPagados || 0}
           ];
+
+          console.log(this.summaryOfficesData[0].value && this.summaryOfficesData[1].value && this.summaryOfficesData[2].value)
         }
       },
       error: (e) => {

@@ -11,6 +11,7 @@ import { MaintenanceFormComponent } from './components/maintenance-form/maintena
 import moment from 'moment';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 
 @Component({
   selector: 'app-offices',
@@ -24,7 +25,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ToastModule,
     NgClass,
     MaintenanceFormComponent,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    tooltipComponent
   ]
 })
 export class OfficesComponent  implements OnInit {
@@ -50,10 +52,10 @@ export class OfficesComponent  implements OnInit {
     this.get();
   }
 
-  showForm(data: any = {}){
+  showForm(title: String = 'Agregar nuevo consultorio', data: any = {}){
     this.showOfficesForm = true;
     this.dataForm = data;
-    this.titleForm = "Agregar nuevo consultorio";
+    this.titleForm = title;
   }
 
   showMaintenanceModal(id: Number, data: any){

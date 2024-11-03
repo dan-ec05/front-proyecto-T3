@@ -10,8 +10,9 @@
           icon="pi pi-user-plus"
           (onClick)="showForm({}, 'Crear médico')"/>
       <p-button
+      class="button--center"
       label="Especialidades"
-      icon="pi pi-user-plus"
+      icon="pi pi-list"
       (onClick)="showSpecialties()"/>
     </div>
     <p-table [value]="doctorsList" [columns]="columns" [rowHover]="true">
@@ -32,15 +33,17 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button class="button button--icon" (click)="showForm(item, 'Editar médico')">
+                  <tooltip [tooltipText]="'Editar médico'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-user-edit"></span>
                 </button>
                 <button (click)="deleteDoctor(item.id, $event)" class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
+                  <tooltip [tooltipText]="'Eliminar médico'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-trash"></span>
                 </button>
               </td>
             }
             @else {
-              <td [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+              <td [ngStyle]="c.key == 'descripcion' ? {'font-weight': '700'} : {}" [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
                 {{item[c.key]}}
               </td>
             }

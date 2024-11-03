@@ -17,19 +17,19 @@
           </label>
           <div class="d-flex flex-column" style="width: 45%;">
             <label>Técnico</label>
-            <input [(ngModel)]="maintenance.tecnico" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+            <input (keydown)="validators.onlyTextAndSpaces($event)" (keyup)="validators.onlyTextAndSpaces($event)" [(ngModel)]="maintenance.tecnico" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
           </div>
           <div class="d-flex flex-column" style="width: 45%;">
             <label>Fecha de mantenimiento</label>
-            <input [(ngModel)]="maintenance.ult_fecha_mantenimiento" [ngModelOptions]="{'standalone': true}" type="date" class="form-control w-100">
+            <input [max]="currentDate" [(ngModel)]="maintenance.ult_fecha_mantenimiento" [ngModelOptions]="{'standalone': true}" type="date" class="form-control w-100">
           </div>
           <div class="d-flex flex-column" style="width: 45%;">
-            <label>Precio</label>
-            <input [(ngModel)]="maintenance.precio_mant" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+            <label>Precio <b>($)</b></label>
+            <input (keydown)="validators.onlyNumberAndPoints($event)" (keyup)="validators.onlyNumberAndPoints($event)" [(ngModel)]="maintenance.precio_mant" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
           </div>
           <div class="d-flex flex-column" style="width: 45%;">
-            <label>Capacidad enfriamiento</label>
-            <input [(ngModel)]="maintenance.cap_enf" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+            <label>Cap. enfriamiento <b>(BTU)</b></label>
+            <input (keydown)="validators.onlyNumberAndPoints($event)" (keyup)="validators.onlyNumberAndPoints($event)" [(ngModel)]="maintenance.cap_enf" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
           </div>
           <div class="d-flex flex-column w-100">
             <label>Observación</label>

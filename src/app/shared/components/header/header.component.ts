@@ -44,21 +44,16 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     if(!(this.authService._getUserData == null)){
-      console.log('por aca');
       this.userData = this.authService._getUserData;
     }
     else{
-      console.log("por acass");
-      this.userData = {
-        first_name: "Usuario",
-        name: "Admin"
-      }
+      this.router.navigateByUrl("/login");
     }
   }
 
-  showForm(title: String = "Crear nuevo usuario", edit: boolean = false){
-    this.userData.editUser = edit;
-    this.userData.full_name = `${this.userData.first_name} ${this.userData.last_name}`;
+  showForm(title: String = "Detalles del usuario"){
+    this.userData.editUser = false;
+    this.userData.onlyShow = true;
     this.titleForm = title;
     this.show = true;
   }

@@ -9,8 +9,8 @@
             <img src="../../../../assets/profile-photo-default.jpeg" class="img-user">
         </div>
         <div class="user-info">
-            <span class="username">{{userData.first_name}}</span>
-            <span class="usertype">{{userData.name}}</span>
+            <span class="username">{{userData.nombre}}</span>
+            <span class="usertype">{{userData.cargo}}</span>
 
             <p-dialog [modal]="true" [(visible)]="dialogVisible" styleClass="dialog-info-user" [resizable]="false" [draggable]="false"
             [closable]="false">
@@ -18,12 +18,12 @@
                     <img src="../../../../assets/profile-photo-default.jpeg" class="img-user">
                 </div>
                 <div class="d-flex flex-column align-items-center w-100 justify-content-center">
-                    <span class="username">{{userData.first_name}}</span>
-                    <span class="usertype">{{userData.name}}</span>
+                    <span class="username">{{userData.nombre}}</span>
+                    <span class="usertype">{{userData.cargo}}</span>
                 </div>
                 <div class="separator"></div>
                 <div class="d-flex w-100 justify-content-center">
-                    <button (click)="showForm('Detalles de usuario')" class="btn btn--profile">Perfil</button>
+                    <button (click)="showForm()" class="btn btn--profile">Perfil</button>
                 </div>
                 <div class="separator"></div>
                 <div class="d-flex w-100">

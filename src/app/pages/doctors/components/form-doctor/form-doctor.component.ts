@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -6,6 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AdminService } from '../../../../shared/services/admin.service';
 import { commonResponse } from '../../../../shared/interfaces/response.interface';
 import { MessageService } from 'primeng/api';
+import { ValidatorsUtils } from '../../../../shared/utils/validators.utils';
 
 @Component({
   selector: 'form-doctor',
@@ -16,10 +17,13 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     DialogModule,
     ReactiveFormsModule,
-    NgClass
+    NgClass,
+    NgStyle
   ]
 })
 export class FormDoctorComponent  implements OnInit {
+	public EMAIL_REGEX: RegExp = /^[a-zA-Z0-9.!#$'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
+
   @Input("show") show: boolean = false;
   @Input("data") data: any = {};
   @Input("title") title: String = "";
@@ -32,7 +36,8 @@ export class FormDoctorComponent  implements OnInit {
 
   constructor(
     public adminService: AdminService,
-    public message: MessageService
+    public message: MessageService,
+    public validators: ValidatorsUtils
   ) { }
 
   ngOnInit() {
@@ -80,7 +85,7 @@ export class FormDoctorComponent  implements OnInit {
       cedula: new FormControl("", Validators.required),
       especialidad: new FormControl("", [Validators.required]),
       num_telefono: new FormControl("", Validators.required),
-      correo: new FormControl("", [Validators.required])
+      correo: new FormControl("", [Validators.required, Validators.pattern(this.EMAIL_REGEX)])
     });
   }
 

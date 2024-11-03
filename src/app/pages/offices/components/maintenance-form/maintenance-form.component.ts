@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import moment from 'moment';
 import { MessageService } from 'primeng/api';
+import { ValidatorsUtils } from '../../../../shared/utils/validators.utils';
 
 @Component({
   selector: 'maintenance-form',
@@ -26,10 +27,12 @@ export class MaintenanceFormComponent implements OnInit {
 
   maintenanceList: any = [];
   last_id!: number;
+  currentDate: String = moment().format("YYYY-MM-DD");
 
   constructor(
     public adminService: AdminService,
-    public message: MessageService
+    public message: MessageService,
+    public validators: ValidatorsUtils
   ) { }
 
   ngOnInit() {

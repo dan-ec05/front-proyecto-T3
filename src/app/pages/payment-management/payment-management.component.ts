@@ -12,6 +12,7 @@ import { commonResponse } from '../../shared/interfaces/response.interface';
 import moment from 'moment';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 
 @Component({
   selector: 'app-payment-management',
@@ -27,7 +28,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ButtonModule,
     PaymentFormComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    tooltipComponent
   ]
 })
 export class PaymentManagementComponent  implements OnInit {

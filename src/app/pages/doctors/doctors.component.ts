@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { tableColumnInterface } from '../../shared/interfaces/table-columns.interface';
 import { TableModule } from 'primeng/table';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { AdminService } from '../../shared/services/admin.service';
 import { commonResponse } from '../../shared/interfaces/response.interface';
@@ -10,6 +10,7 @@ import { FormSpecialtyComponent } from './components/form-specialty/form-special
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 
 @Component({
   selector: 'app-doctors',
@@ -23,7 +24,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormDoctorComponent,
     FormSpecialtyComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    tooltipComponent,
+    NgStyle
   ]
 })
 export class DoctorsComponent  implements OnInit {
@@ -42,7 +45,7 @@ export class DoctorsComponent  implements OnInit {
   constructor(
     public adminService: AdminService,
     public confirmationService: ConfirmationService,
-    public message: MessageService
+    public message: MessageService,
   ) { }
 
   ngOnInit() {

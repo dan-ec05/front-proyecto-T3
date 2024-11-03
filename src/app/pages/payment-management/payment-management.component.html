@@ -37,9 +37,12 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button class="button button--icon" (click)="showPaymentForm(item, 'Editar pago')">
-                  <span class="pi pi-pen-to-square"></span>
+                  <tooltip [tooltipText]="'Editar pago'" [tooltipPosition]="'left'"></tooltip>
+                  <span class="pi pi-pen-to-square">
+                  </span>
                 </button>
                 <button (click)="deletePayment(item.id, item.id_consultorios_medicos, $event)" class="button button--icon" pTooltip="Eliminar médico" tooltipPosition="top">
+                  <tooltip [tooltipPosition]="'left'" [tooltipText]="'Eliminar pago'"></tooltip>
                   <span class="pi pi-trash"></span>
                 </button>
               </td>
