@@ -9,6 +9,9 @@ import { SuperadminService } from '../../shared/services/superadmin.service';
 import { commonResponse } from '../../shared/interfaces/response.interface';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
+import { AuthService } from '../../auth/services/auth.service';
+import { UnlockUserComponent } from './unlock-user/unlock-user.component';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +23,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ButtonModule,
     UserFormComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    tooltipComponent,
+    UnlockUserComponent
   ]
 })
 export class UsersComponent implements OnInit {
@@ -37,11 +42,15 @@ export class UsersComponent implements OnInit {
   show: boolean = false;
   dataForm: any = {};
   titleForm: String = "";
+  
+  unlockUserModal: boolean = false;
+  idUserToUnlock: number = 0;
 
   constructor(
     private superadminService: SuperadminService,
     public confirmationService: ConfirmationService,
-    public message: MessageService
+    public message: MessageService,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -65,6 +74,49 @@ export class UsersComponent implements OnInit {
         console.log(e);
       }
     });
+  }
+
+  unlockUser(id_user: any){
+    this.unlockUserModal = true;
+    this.idUserToUnlock = id_user;
+
+    // let auth = {
+    //   password: '',
+    //   username: this.authService._getUserData.username
+    // };
+
+    // console.log(auth);
+    // this.confirmationService.confirm({
+    //   target: e.target as EventTarget,
+    //   // message: "Introduzca contraseña de superadmin",
+    //   header: "Desbloquear usuario",
+    //   icon: 'pi pi-exclamation-circle',
+    //   rejectButtonStyleClass: "btn-reject",
+    //   acceptButtonStyleClass: "btn-acept",
+    //   acceptLabel: "Aceptar",
+    //   rejectLabel: "Cancelar",
+    //   accept: () =>{
+    //     // this.superadminService.deleteUser(id_user).subscribe({
+    //     //   next: (data: commonResponse) => {
+    //     //     this.message.add({
+    //     //       severity: "success",
+    //     //       summary: "Éxito",
+    //     //       detail: "El usuario se ha eliminado correctamente"
+    //     //     });
+    //     //     this.get();
+    //     //   },
+    //     //   error: (e) => {
+    //     //     console.log(e);
+    //     //     this.message.add({
+    //     //       severity: "error",
+    //     //       summary: "Error",
+    //     //       detail: "Ha ocurrido un error al eliminar el usuario"
+    //     //     });
+    //     //   }
+    //     // })
+    //   },
+      
+    // })
   }
 
   deleteUser(id_user: number, e: any){
@@ -112,6 +164,7 @@ export class UsersComponent implements OnInit {
 
   closeForm(e: any){
     this.show = false;
+    this.unlockUserModal = false;
     this.get();
   }
 

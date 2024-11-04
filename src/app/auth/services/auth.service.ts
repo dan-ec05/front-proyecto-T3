@@ -46,6 +46,14 @@ export class AuthService {
     sessionStorage.setItem("userInfo", JSON.stringify(data));
   }
 
+  blockSesion(usuario: any): Observable<any>{
+    return this.http.get<commonResponse>(`${this.url_api}/auth/block-user/${usuario}`);
+  }
+
+  unlockUser(id_user: any, auth: {password: any, username: any}): Observable<any>{
+    return this.http.post<commonResponse>(`${this.url_api}/auth/unlock-user/${id_user}`, auth);
+  }
+
   removeUserData(){
     sessionStorage.removeItem("userInfo");
   }

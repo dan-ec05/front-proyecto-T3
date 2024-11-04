@@ -47,49 +47,66 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    if (false){
-      this.message.add({
-        severity: "error",
-        summary: "Sesión bloqueada",
-        detail: "Espere 5 minutos para seguir intentando"
-      });
+    let data = {
+      username: this.loginForm.get("username")?.value,
+      password: this.loginForm.get("password")?.value
     }
-    else{
-      let data = {
-        username: this.loginForm.get("username")?.value,
-        password: this.loginForm.get("password")?.value
-      }
-  
-      this.authService.login(data).subscribe({
-        next: (res: commonResponse) => {
-          if (res.object && res.ok){
-            localStorage.setItem("n_intentos_login_fallido", String(0));
-            this.authService.setUserData(res.object);
-            this.router.navigateByUrl("/inicio");
-          }
-        }, 
-        error: (error) => {
-          console.log(error);
+
+    this.authService.login(data).subscribe({
+      next: (res: commonResponse) => {
+        if (res.object && res.ok){
+          localStorage.setItem("n_intentos_login_fallido", String(0));
+          this.authService.setUserData(res.object);
+          this.router.navigateByUrl("/inicio");
+        }
+      }, 
+      error: (error) => {
+        console.log(error);
+        if (error.error?.estado == 0){
+          this.message.add({
+            severity: "error",
+            summary: "Sesión bloqueada",
+            detail: "Solicitar desbloqueo a soporte"
+          });
+          return;
+        }
+
+        console.log(this.n_tries);
+
+        if (this.n_tries >= 2){
+          this.authService.blockSesion(this.loginForm.get("username")?.value).subscribe({
+            next: () => {
+              this.message.add({
+                severity: "error",
+                summary: "Se ha bloqueado la sesión",
+                detail: "Solicitar desbloqueo a soporte"
+              });
+            },
+            error: () => {}
+          });
+          return;
+        }
+
+        if (!(error.ok) && error.error.error){
+          this.message.add({
+            severity: "error",
+            summary: "Error",
+            detail: error.error.error + String(this.n_tries >= 1 ? `. Quedan ${2 - this.n_tries} intentos restantes.` : ''),
+          });
           this.n_tries += 1;
           localStorage.setItem("n_intentos_login_fallido", String(this.n_tries));
-          if (!(error.ok) && error.error.error){
-            this.message.add({
-              severity: "error",
-              summary: "Error",
-              detail: error.error.error + String(this.n_tries > 2 ? `. Quedan ${5 - this.n_tries} intentos restantes.` : ''),
-            });
-          }
-          else{
-            this.message.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Error al iniciar sesión"
-            });
-          }
+          return;
         }
+
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al iniciar sesión"
+        });
+        return;
       }
-    );
     }
+  );
   }
 
   initForm(){

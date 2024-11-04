@@ -27,13 +27,22 @@
             @if (c.key == 'actions') {
               <td class="d-flex align-items-center justify-content-center gap-2">
                 <button (click)="showForm(item, 'Detalles de usuario', false, true)" class="button button--icon">
+                  <tooltip [tooltipText]="'Detalles de usuario'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-eye"></span>
                 </button>
                 <button (click)="showForm(item, 'Editar usuario', true, false)" class="button button--icon">
+                  <tooltip [tooltipText]="'Editar usuario'" [tooltipPosition]="'left'"></tooltip>
                   <span class="pi pi-user-edit"></span>
                 </button>
+                @if (!(item.estado)) {
+                  <button (click)="unlockUser(item.id)" class="button button--icon">
+                  <tooltip [tooltipText]="'Desbloquear usuario'" [tooltipPosition]="'left'"></tooltip>
+                    <span class="pi pi-lock-open"></span>
+                  </button>
+                }
                 @if (item.cargo != "superadmin") {
                   <button (click)="deleteUser(item.id, $event)" class="button button--icon">
+                  <tooltip [tooltipText]="'Eliminar usuario'" [tooltipPosition]="'left'"></tooltip>
                     <span class="pi pi-trash"></span>
                   </button>
                 }
@@ -57,4 +66,8 @@
 
 @if (show) {
   <user-form (close)="closeForm($event)" [show]="show" [data]="dataForm" [title]="titleForm"></user-form>
+}
+
+@if (unlockUserModal) {
+  <unlock-user [show]="unlockUserModal" [id_user_to_unlock]="idUserToUnlock" (close)="closeForm(false)"></unlock-user>
 }

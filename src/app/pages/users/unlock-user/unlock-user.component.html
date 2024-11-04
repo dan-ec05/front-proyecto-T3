@@ -1,0 +1,26 @@
+<p-dialog
+[(visible)]="show" [modal]="true" [style]="{'width': '30rem'}" [draggable]="false"
+(onHide)="closeModal(false)">
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center justify-content-between">
+      <span class="title">Desbloquear usuario</span>
+    </div>
+  </ng-template>
+  <p>Para desbloquear el usuario, introduzca su contraseña actual</p>
+  <form>
+    <div class="d-flex w-100 flex-column gap-1 align-items-start">
+      <label class="label">Contraseña</label>
+      <div class="form-control--password">
+        <input [formControl]="pass" [type]="showPass ? 'text' : 'password'" class="form-control w-100">
+        <span (click)="showPass = !showPass" style="font-size: 20px; cursor: pointer;" class="pi" [ngClass]="showPass ? 'pi-eye' : 'pi-eye-slash'"></span>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="d-flex flex-row justify-content-end w-100 gap-4">
+      <button class="button button--cancel" (click)="closeModal(false)">Cerrar</button>
+      <button [ngClass]="pass.invalid ? 'btn-disabled' : ''" class="button button--save button--blue"
+      (click)="pass.valid ? save() : ''">Desbloquear</button>
+    </div>
+  </ng-template>
+</p-dialog>
