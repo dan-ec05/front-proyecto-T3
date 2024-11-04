@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(data).subscribe({
         next: (res: commonResponse) => {
           if (res.object && res.ok){
+            localStorage.setItem("n_intentos_login_fallido", String(0));
             this.authService.setUserData(res.object);
             this.router.navigateByUrl("/inicio");
           }

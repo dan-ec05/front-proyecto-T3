@@ -127,27 +127,33 @@ export class SchedulesComponent  implements OnInit {
       {
         key: "nombre_completo",
         title: "Médico",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: "hora_inicio_formatted",
         title: "Hora de inicio",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: "hora_fin_formatted",
         title: "Hora fin",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: "condicion_formatted",
         title: "Condición",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
+
       },
       {
         key: 'solvente',
         title: "Solvente",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: 'actions',

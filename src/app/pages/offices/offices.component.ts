@@ -131,18 +131,20 @@ export class OfficesComponent  implements OnInit {
       {
         key: 'num_consultorio',
         title: 'N° Consultorio',
-        textAlign: 'center'
+        textAlign: 'center',
+        width: "150px"
       },
       {
         key: "observaciones",
         title: "Observaciones",
-        width: "60px",
+        width: "200px",
         textAlign: "center"
       },
       {
         key: "ult_fecha_mantenimiento",
         title: "Último mantenimiento",
-        textAlign: "center"
+        textAlign: "center",
+        width: "240px"
       },
       {
         key: "actions",

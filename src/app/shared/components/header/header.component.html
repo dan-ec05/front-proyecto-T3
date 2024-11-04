@@ -6,7 +6,7 @@
 
     <div class="user-section" (click)="toggleDialog()">
         <div class="img-profile">
-            <img src="../../../../assets/profile-photo-default.jpeg" class="img-user">
+            <img alt="Avatar" src="../../../../assets/img/profile-photo-default.png" class="img-user">
         </div>
         <div class="user-info">
             <span class="username">{{userData.nombre}}</span>
@@ -15,7 +15,7 @@
             <p-dialog [modal]="true" [(visible)]="dialogVisible" styleClass="dialog-info-user" [resizable]="false" [draggable]="false"
             [closable]="false">
                 <div class="d-flex w-100 justify-content-center">
-                    <img src="../../../../assets/profile-photo-default.jpeg" class="img-user">
+                    <img alt="Avatar" src="../../../../assets/img/profile-photo-default.png" class="img-user">
                 </div>
                 <div class="d-flex flex-column align-items-center w-100 justify-content-center">
                     <span class="username">{{userData.nombre}}</span>

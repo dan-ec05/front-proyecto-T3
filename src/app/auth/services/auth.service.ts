@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   public get _getUserData(){
-    let userData: any = localStorage.getItem("userInfo");
+    let userData: any = sessionStorage.getItem("userInfo");
 
     if (userData) userData = JSON.parse(userData);
     else userData = null;
@@ -33,18 +33,21 @@ export class AuthService {
     return userData;
   };
 
+  getToken(id_user: number): Observable<any>{
+    return this.http.get<any>(`${this.url_api}/auth/token/${id_user}`);
+  }
+
   login(data: loginInterface): Observable<any>{
     return this.http.post<commonResponse>(`${this.url_api}/auth/login`, data);
   }
 
   setUserData(data: any){
-    if (localStorage.getItem("userInfo")) localStorage.removeItem("userInfo");
-    console.log(data);
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    if (sessionStorage.getItem("userInfo")) sessionStorage.removeItem("userInfo");
+    sessionStorage.setItem("userInfo", JSON.stringify(data));
   }
 
   removeUserData(){
-    localStorage.removeItem("userInfo");
+    sessionStorage.removeItem("userInfo");
   }
 
   logout(id_user: number){

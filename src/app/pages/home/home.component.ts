@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CardsComponent } from '../../shared/components/cards/cards.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LegendPosition, NgxChartsModule } from '@swimlane/ngx-charts';
 import { HomeService } from '../../shared/services/home.service';
 import { commonResponse } from '../../shared/interfaces/response.interface';
 import { MessageService } from 'primeng/api';
@@ -62,6 +62,8 @@ export class HomeComponent  implements OnInit {
     {name: "Abonados", value: 5},
     {name: "Sin pagar", value: 0}
   ];
+  legendPosition: LegendPosition | any = 'right';
+  size: [number, number] = [700, 300]
 
   cardsValues: any = {
     totalAmount: [
@@ -87,7 +89,13 @@ export class HomeComponent  implements OnInit {
   constructor(
     public homeService: HomeService,
     public message: MessageService
-  ) { }
+  ) {
+    console.log(window.innerWidth);
+    if (window.innerWidth <= 730 ) {
+      this.legendPosition = 'bottom';
+      this.size = [(window.innerWidth - 100), 300];
+    }
+  }
 
   ngOnInit() {
     this.getTotalAmount();

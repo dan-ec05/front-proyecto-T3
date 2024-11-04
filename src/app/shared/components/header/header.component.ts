@@ -10,6 +10,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { userDataInterface } from '../../interfaces/user.interface';
 import { UserFormComponent } from '../../../pages/users/user-form/user-form.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'header',
@@ -73,7 +74,7 @@ export class HeaderComponent implements OnInit{
   }
 
   logout(){
-    let userData: userDataInterface = JSON.parse(localStorage.getItem("userInfo")!);
+    let userData: userDataInterface = JSON.parse(sessionStorage.getItem("userInfo")!);
     this.authService.logout(userData.id).subscribe((res: any) => {
       if (res.ok){
         this.authService.removeUserData();

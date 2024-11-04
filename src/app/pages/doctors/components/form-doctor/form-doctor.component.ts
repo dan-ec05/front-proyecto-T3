@@ -33,12 +33,15 @@ export class FormDoctorComponent  implements OnInit {
   edited: boolean = false;
 
   specialismList: any = [];
+  screenWidth: any;
 
   constructor(
     public adminService: AdminService,
     public message: MessageService,
     public validators: ValidatorsUtils
-  ) { }
+  ) {
+    this.screenWidth = window.innerWidth;
+  }
 
   ngOnInit() {
     this.initForm();

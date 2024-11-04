@@ -122,27 +122,32 @@ export class DoctorsComponent  implements OnInit {
       {
         key: "correo",
         title: "Correo",
-        textAlign: "center"
+        textAlign: "center",
+        width: "200px"
       },
       {
         key: "nombre_completo",
         title: "Nombre completo",
-        textAlign: "center"
+        textAlign: "center",
+        width: "220px"
       },
       {
         key: "descripcion",
         title: "Especialidad",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: "cedula",
         title: "Cédula",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: "num_telefono",
         title: "Teléfono",
-        textAlign: "center"
+        textAlign: "center",
+        width: "150px"
       },
       {
         key: 'actions',

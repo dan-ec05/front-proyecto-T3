@@ -1,4 +1,4 @@
-<div class="body">
+<div class="home-body">
   <!-- <div class="d-flex flex-row align-items-center gap-2 mb-4" style="width: max-content;">
     <label class="label">Filtrar por año</label>
     <p-dropdown
@@ -8,7 +8,7 @@
     optionLabel="year"></p-dropdown>
   </div> -->
 
-  <div class="d-flex gap-3 mb-3">
+  <div class="d-flex gap-3 mb-3 amount-div">
     <cards style="width: 32%;" 
     [border-color]="'green'"
     [icon]="'dollar'"
@@ -32,7 +32,7 @@
 
   <div class="separator"></div>
 
-  <div class="d-flex justify-content-between flex-wrap mb-5 mt-3 row-gap-3">
+  <div class="d-flex justify-content-between flex-wrap mb-5 mt-3 row-gap-3 offices-div">
 
     <cards style="width: 32%;"
     [border-color]="'orange'"
@@ -68,14 +68,15 @@
     </div>
     <div class="separator"></div>
     <div class="d-flex w-100 justify-content-center my-3">
-      @if (!(summaryOfficesData[0].value && summaryOfficesData[1].value && summaryOfficesData[2].value)) {
+      @if (!(summaryOfficesData[0].value || summaryOfficesData[1].value || summaryOfficesData[2].value)) {
         <h4 class="my-4">Sin datos</h4>
       }
       @else {
         <ngx-charts-pie-chart
         [results]="summaryOfficesData"
         [legend]="true"
-        [view]="[700, 300]"
+        [legendPosition]="legendPosition"
+        [view]="size"
         [legendTitle]="'Infor.'"
         >
         </ngx-charts-pie-chart>

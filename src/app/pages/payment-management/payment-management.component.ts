@@ -144,12 +144,13 @@ export class PaymentManagementComponent  implements OnInit {
       {
         key: 'num_consultorio',
         title: 'N° Consultorio',
+        width: "150px",
         textAlign: 'center'
       },
       {
         key: "fecha_corte_formatted",
         title: "Fecha de corte",
-        width: "60px",
+        width: "150px",
         textAlign: "center"
       },
       {

@@ -54,6 +54,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
         background: #fff;
         transform: translateX(0);
 
+        .sidebar{
+            .buttons-section{
+                display: none;
+            }
+        }
+
         &.no-sidebar{
             width: 0;
             transform: translateX(-100%);
@@ -252,7 +258,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
 
     &--schedule{
-        min-width: 340px;
+        // min-width: 340px;
         width: 100%;
 
         .p-dropdown-items{
@@ -280,7 +286,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 }
 
 .input-calendar{
-    max-width: 220px;
+    // max-width: 220px;
     max-height: 40px;
 
     &--top{
@@ -596,4 +602,221 @@ p-inputnumber{
 
 .form-control-active{
     box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
+// RESPONSIVE DESIGN
+@media screen and (width <= 600px) {
+    .main-container{
+        .form-container{
+            width: 100% !important;
+
+            .form{
+                gap: 0.5rem;
+            }
+        }
+    }
+}
+
+@media screen and (width <= 980px) {
+    .wrapper-layout{
+        &--sidebar{
+            position: absolute;
+            z-index: 999;
+            left: 0px;
+            box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
+
+            .sidebar{
+
+                .buttons-section{
+                    display: block;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    i{
+                        color: #78909C;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    .home-body{
+        .offices-div{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .offices-div > *{
+            width: 100% !important;
+        }
+    }
+}
+
+@media screen and (width <= 870px) {
+    .home-body{
+        padding: 0px !important; 
+        padding-bottom: 5rem !important;
+        padding-top: 2rem !important;
+
+        .offices-div{
+            padding: 0px 2rem !important;
+        }
+
+        .separator{
+            width: 95%;
+            margin: 0px auto;
+            border-width: 1.5px;
+        }
+
+        .amount-div{
+            display: flex;
+            flex-direction: column;
+            padding: 0px 2rem !important;
+        }
+
+        .amount-div > *{
+            width: 100% !important;
+        }
+
+        section{
+            width: 100%;
+            border-radius: 0px !important;
+
+            .separator{
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (width <= 730px) {
+    .home-body{
+        .offices-div, .amount-div{
+            padding: 0px 1rem !important;
+        }
+        section{
+            padding-bottom: 7rem !important;
+            .footer{
+                display: none !important;
+            }
+        }
+    }
+
+    .p-dialog{
+        width: 100% !important;
+
+        form{
+            padding-bottom: 5rem;
+            div{
+                width: 100% !important;
+                display: flex;
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+                align-items: start !important;
+                justify-content: start !important;
+
+                .p-dropdown{
+                    width: 100% !important;
+                    max-width: 1000px;
+                    display: flex !important;
+                    flex-direction: row !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+
+                    .p-dropdown-items{
+                        li{
+                            padding: 0.5rem;
+                        }
+                    }
+
+                    .p-dropdown-trigger{
+                        width: max-content !important;
+                    }
+                }
+
+                .input-dropdown{
+                    width: 100% !important;
+                    &--specialism{
+                        width: 100% !important;
+                        max-width: 1000px !important;
+                        // background-color: red !important;
+
+                        .p-dropdown{
+                            width: 100% !important;
+                        }
+                    }
+
+                    &--schedule{
+                        min-width: none !important; 
+                    }
+                }
+
+                .select-buttons{
+                    width: max-content !important;
+                    .p-selectbutton{
+                        display: flex;
+                        flex-direction: row !important;
+                    }
+                }
+
+                .p-calendar{
+                    width: 100% !important;
+
+                    div:first-child{
+                        flex-direction: row !important;
+                        align-items: center !important;
+                        
+                        div{
+                            flex-direction: column !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                        }
+                    }
+
+                    .input-calendar{
+                        // background-color: red !important;
+                        max-width: 1000px !important;
+                    }
+                }
+            }
+
+            .form-control--password{
+                display: flex;
+                flex-direction: row !important;
+                flex-wrap: nowrap;
+                justify-content: space-between !important;
+                align-items: center !important;
+
+                span{
+                    width: max-content !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width <= 500px) {
+    .payment-body, .schedules-body, .offices-body{
+        padding: 2rem 0px !important;
+        padding-bottom: 5rem !important;
+        section{
+            border-radius: 0px !important;
+        }
+    }
+}
+
+@media screen and (width <= 400px) {
+    .p-toast{
+        width: 95%;
+        margin: 0px auto !important;
+    }
+    .p-toast-top-right{
+        right: 0px;
+    }
+    .p-toast-message-content{
+        padding: 0px;
+    }
 }

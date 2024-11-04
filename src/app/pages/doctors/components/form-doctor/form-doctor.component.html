@@ -10,7 +10,7 @@
     <div class="d-flex flex-row flex-wrap justify-content-start gap-4 w-auto mb-3">
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
         <label class="label">Especialidad</label>
-        <p-dropdown formControlName="especialidad" type="text" scrollHeight="150px" [options]="specialismList" optionLabel="descripcion" styleClass="input-dropdown input-dropdown--specialism"></p-dropdown>
+        <p-dropdown [ngStyle]="screenWidth <= 730 ? {'width': '100%'} : {}"  formControlName="especialidad" type="text" scrollHeight="150px" [options]="specialismList" optionLabel="descripcion" styleClass="input-dropdown input-dropdown--specialism"></p-dropdown>
       </div>
       <div class="d-flex flex-column justify-content-start align-items-start" style="width: 30%;">
         <label class="label">Nombre completo</label>

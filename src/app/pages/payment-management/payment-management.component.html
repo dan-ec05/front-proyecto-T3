@@ -1,4 +1,4 @@
-<div class="body">
+<div class="payment-body">
   
   <section>
     <div class="header">
@@ -10,14 +10,14 @@
         label="Nuevo pago"
         icon="pi pi-plus" 
         (onClick)="showPaymentForm(0, 'Agregar nuevo pago')"/>
-      <div class="d-flex flex-row align-items-center gap-2">
+      <!-- <div class="d-flex flex-row align-items-center gap-2">
         <label>Filtrar por año</label>
         <p-dropdown
         [placeholder]="yearSelected"
         [options]="yearsSelect"
         [(ngModel)]="yearSelected"
         optionLabel="year"></p-dropdown>
-      </div>
+      </div> -->
     </div>
     <p-table [value]="paymentsList" [columns]="columns">
       <ng-template pTemplate="header">

@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -22,7 +22,8 @@ import { MessageService } from 'primeng/api';
     NgClass,
     DropdownModule,
     CalendarModule,
-    SelectButtonModule
+    SelectButtonModule,
+    NgStyle
   ]
 })
 export class SchedulesFormComponent  implements OnInit {
@@ -46,14 +47,17 @@ export class SchedulesFormComponent  implements OnInit {
   selectButtonOptions: any = [
     {id: 0, name: "No solvente", icon: 'pi pi-ban', color: 'red'},
     {id: 1, name: "Solvente", icon: 'pi pi-check', color: 'green'},
-
   ];
+
+  screenWidth: any;
 
   constructor(
     public adminService: AdminService,
     public validators: ValidatorsUtils,
     public message: MessageService
-  ) { }
+  ) {
+    this.screenWidth = window.innerWidth;
+  }
 
   ngOnInit() {
     this.initForm();
