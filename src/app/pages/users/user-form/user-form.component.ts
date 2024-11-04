@@ -45,6 +45,7 @@ export class UserFormComponent implements OnInit{
   cargo_usuario: String = "";
 
   onlyShow: boolean = false;
+  showSecurity: boolean = true;
 
   editValues: boolean = false;
   setNewPassword: boolean = false;
@@ -78,6 +79,8 @@ export class UserFormComponent implements OnInit{
           this.onlyShow = this.data.onlyShow;
           this.passwordValid = true;
           this.samePasswords = true;
+          this.showSecurity = this.data.showSecurity != undefined ? this.data.showSecurity : true;
+
         }
       },
       error: (e) => {
@@ -128,7 +131,7 @@ export class UserFormComponent implements OnInit{
 
     const _value = this.securityForm.get('pass')?.value.trim();
 
-    if (_value.length >= 8 && _value.length <= 16) {
+    if (_value.length >= 16 && _value.length <= 24) {
       if (!(/[A-Z]/.test(_value))) {
         this.passwordError = "Mínimo una letra en mayúscula";
         return;
@@ -144,7 +147,7 @@ export class UserFormComponent implements OnInit{
         return;
       }
     } else {
-      this.passwordError = _value.length < 8 ? "Mín 8 carácteres" : _value.length > 16 ? "Máx 16 carácteres" : "";
+      this.passwordError = _value.length < 16 ? "Mín 16 carácteres" : _value.length > 24 ? "Máx 16 carácteres" : "";
       return;
     }
 

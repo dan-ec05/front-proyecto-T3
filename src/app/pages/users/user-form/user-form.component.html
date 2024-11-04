@@ -82,7 +82,7 @@
       </form>
     }
   }
-  @else if (onlyShow) {
+  @else if (onlyShow && showSecurity) {
     @if (!nextStep) {
       <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
         <div class="d-flex flex-column align-items-start" style="width: 45%;">
@@ -115,6 +115,26 @@
         </div>
       </form>
     }
+  }
+  @else if (!showSecurity) {
+    <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+      <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <label class="label">Correo</label>
+        <input [readOnly]="true" formControlName="correo" type="text" class="form-control w-100 disabled">
+      </div>
+      <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <label class="label">Usuario</label>
+        <input [readOnly]="true" formControlName="usuario" type="text" class="form-control w-100 disabled">
+      </div>
+      <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <label class="label">Nombre</label>
+        <input [readOnly]="true" formControlName="nombre" type="text" class="form-control w-100 disabled">
+      </div>
+      <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <label class="label">Cargo</label>
+        <input [readOnly]="true" [value]="cargo_usuario" type="text" class="form-control w-100 disabled">
+      </div>
+    </form>
   }
   @else {
     @if (!nextStep) {
@@ -210,11 +230,19 @@
         </div>
       }
       @else {
-        <div class="d-flex flex-row justify-content-end w-100 gap-4">
-          <button class="button button--cancel" (click)="closeModal(false)">Cerrar</button>
-          <button class="button button--save button--blue"
-          (click)="next()">Siguiente</button>
-        </div>
+        @if (!showSecurity) {
+          <div class="d-flex flex-row justify-content-end w-100 gap-4">
+            <button class="button button--save button--blue"
+            (click)="closeModal(false)">Aceptar</button>
+          </div>
+        }
+        @else {
+          <div class="d-flex flex-row justify-content-end w-100 gap-4">
+            <button class="button button--cancel" (click)="closeModal(false)">Cerrar</button>
+            <button class="button button--save button--blue"
+            (click)="next()">Siguiente</button>
+          </div>
+        }
       }
     }
   </ng-template>

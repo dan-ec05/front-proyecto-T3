@@ -55,6 +55,7 @@ export class HeaderComponent implements OnInit{
   showForm(title: String = "Detalles del usuario"){
     this.userData.editUser = false;
     this.userData.onlyShow = true;
+    this.userData.showSecurity = false;
     this.titleForm = title;
     this.show = true;
   }
