@@ -54,6 +54,24 @@ export class AuthService {
     return this.http.post<commonResponse>(`${this.url_api}/auth/unlock-user/${id_user}`, auth);
   }
 
+  getSecurityQuestion(username: string): Observable<any>{
+    return this.http.get(`${this.url_api}/auth/security-question/${username}`);
+  }
+
+  checkAnswer(body: {
+    answer: string,
+    id_user: number
+  }): Observable<any>{
+    return this.http.post(`${this.url_api}/auth/check-answer`, body);
+  }
+
+  updatePassword(body: {
+    password: string,
+    id_user: number
+  }): Observable<any>{
+    return this.http.post(`${this.url_api}/auth/modify-password`, body);
+  }
+
   removeUserData(){
     sessionStorage.removeItem("userInfo");
   }

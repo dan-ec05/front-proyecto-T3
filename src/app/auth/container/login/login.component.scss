@@ -141,6 +141,31 @@
                     transform: scale(110%);
                 }
             }
+
+            .forgot-pass-option{
+                background-color: #fff;
+                border: none;
+                border-radius: 0.5rem;
+                padding: 0.5rem 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #1976D2;
+                font-weight: 500;
+                width: 90%;
+                font-family: "Poppins";
+                transition: .3s ease;
+                font-size: 19px;
+
+                span{
+                    font-size: 19px;
+                    color: #1976D2;
+                }
+            }
+
+            .forgot-pass-option:hover{
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+            }
         }
     }
 }

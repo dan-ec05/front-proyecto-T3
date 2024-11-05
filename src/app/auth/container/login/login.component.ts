@@ -3,9 +3,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import {ToastModule} from "primeng/toast";
@@ -22,7 +22,9 @@ import { commonResponse } from '../../../shared/interfaces/response.interface';
     NgClass,
     RouterModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    FormsModule,
+    NgStyle
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -30,7 +32,21 @@ import { commonResponse } from '../../../shared/interfaces/response.interface';
 export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
+  passwordForm!: FormGroup;
   hide: boolean = true;
+
+  forgotPassStep: boolean = false;
+  questionStep: number = 1;
+  questionStepInfo: any = {};
+  answer: any = "";
+  emailStep: boolean = false;
+  username: string = "";
+
+  showPass: boolean = false;
+  showPassRpted: boolean = false;
+  samePasswords: boolean = false;
+  passwordValid: boolean = false;
+  passwordError: String = "";
 
   n_tries: number;
 
@@ -44,6 +60,142 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  recoveryPassword(option: number){
+    if (option == 1){
+      this.questionStep = 1;
+      return;
+    }
+    else{
+      this.emailStep = true;
+      return;
+    }
+  }
+
+  sendUsername(){
+    this.authService.getSecurityQuestion(this.username).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (!(data.object.length)){
+          this.message.add({
+            severity: "error",
+            summary: "Usuario no encontrado",
+            detail: "Nombre de usuario incorrecto"
+          });
+          return;
+        }
+        this.questionStep = 2;
+        this.questionStepInfo = data.object[0];
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
+
+  checkAnswer(){
+    let body = {
+      id_user: this.questionStepInfo.user_id,
+      answer: this.answer
+    };
+    this.authService.checkAnswer(body).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (!(data.object.length)){
+          this.message.add({
+            severity: "error",
+            summary: "Respuesta incorrecta",
+            detail: "La respuesta introducida es incorrecta"
+          });
+          return;
+        }
+        this.questionStep = 3;
+
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
+
+  updatePassword(){
+    let body = {
+      password: this.passwordForm.get("pass")?.value,
+      id_user: this.questionStepInfo.user_id
+    };
+
+    this.authService.updatePassword(body).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (data.ok && data.object){
+          this.message.add({
+            severity: "success",
+            summary: "Contraseña actualizada",
+            detail: "La contraseña se ha actualizado correctamente"
+          });
+
+          this.forgotPassStep = false;
+        }
+      },
+      error: (e) => {
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Ha ocurrido un error al intentar actualizar la contraseña"
+        });
+      }
+    });
+  }
+
+  focusPassword(focus: boolean, index: number = 0){
+    const div = document.getElementsByClassName("form-control--password")[index];
+    if (focus) div.classList.add("form-control-active");
+    else div.classList.remove("form-control-active");
+  }
+
+  checkPasswords(){
+    let pass = this.passwordForm.get("pass")?.value;
+    let repeat_pass = this.passwordForm.get("pass_rpted")?.value;
+
+    if (String(pass) == String(repeat_pass)){
+      this.samePasswords = true;
+      return;
+    }
+    else{
+      this.samePasswords = false;
+      return;
+    }
+  }
+
+  validatePassword(){
+    this.passwordError = "";
+    this.passwordValid = false;
+
+    const _value = this.passwordForm.get('pass')?.value.trim();
+
+    if (_value.length >= 16 && _value.length <= 24) {
+      if (!(/[A-Z]/.test(_value))) {
+        this.passwordError = "Mínimo una letra en mayúscula";
+        return;
+      } 
+  
+      if (!(/[a-z]/.test(_value))) {
+        this.passwordError = "Mínimo una letra en minúscula";
+        return;
+      } 
+  
+      if (!(/[0-9]/.test(_value))) {
+        this.passwordError = "Mínimo un número";
+        return;
+      }
+    } else {
+      this.passwordError = _value.length < 16 ? "Mín 16 carácteres" : _value.length > 24 ? "Máx 16 carácteres" : "";
+      return;
+    }
+
+    this.passwordError = "";
+    this.passwordValid = true;
   }
 
   login(){
@@ -114,5 +266,10 @@ export class LoginComponent implements OnInit {
       username: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required)
     });
+
+    this.passwordForm = new FormGroup({
+      pass: new FormControl("", Validators.required),
+      pass_rpted: new FormControl("", Validators.required)
+    })
   }
 }
