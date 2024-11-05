@@ -90,7 +90,6 @@ export class HomeComponent  implements OnInit {
     public homeService: HomeService,
     public message: MessageService
   ) {
-    console.log(window.innerWidth);
     if (window.innerWidth <= 730 ) {
       this.legendPosition = 'bottom';
       this.size = [(window.innerWidth - 100), 300];

@@ -30,6 +30,7 @@ import { environment } from '../../../../environments/environment';
 export class HeaderComponent implements OnInit{
 
   sidebarVisible: boolean = true;
+  alwaysIcon: boolean = false;
   dialogVisible: boolean = false;
 
   userData!: userDataInterface | any;
@@ -41,9 +42,14 @@ export class HeaderComponent implements OnInit{
     public async: AsyncPipe,
     public authService: AuthService,
     public router: Router
-  ){}
+  ){
+    if (window.innerWidth <= 730) {
+      this.alwaysIcon = true;
+    }
+  }
 
   ngOnInit(): void {
+    this.sidebarVisible = this.async.transform(this.layoutService.showSidebar)!.valueOf();
     if(!(this.authService._getUserData == null)){
       this.userData = this.authService._getUserData;
     }

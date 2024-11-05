@@ -1,6 +1,6 @@
 <div class="header">
     <div class="buttons-section">
-        <i (click)="toggleSidebar()" [ngClass]="sidebarVisible ? 'pi-align-left' : 'pi-arrow-right'" 
+        <i (click)="toggleSidebar()" [ngClass]="sidebarVisible && !(alwaysIcon) ? 'pi-align-left' : 'pi-arrow-right'" 
         class="pi burger-btn-nav" style="font-size: 1.75rem"></i>
     </div>
 

@@ -43,6 +43,32 @@
                     </div>
                 }
                 @else {
+                    @if (emailStep == 1) {
+                        <span class="label" style="font-size: 18px;">Escribe el nombre del usuario</span>
+                        <div class="username-input">
+                            <label class="label">Usuario</label>
+                            <input [(ngModel)]="username" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+                        </div>
+                        <div class="btn-section d-flex gap-3">
+                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--save button--blue"
+                            [ngClass]="username.length ? '' : 'btn-disabled'"
+                            (click)="username.length ? sendUsernameEmailStep() : ''">Aceptar</button>
+                        </div>
+                    }
+                    @if (emailStep == 2) {
+                        <span class="label" style="font-size: 18px;">Escribe el código</span>
+                        <div class="username-input">
+                            <label class="label">Código enviado al correo {{emailStepInfo.correo}}</label>
+                            <input [(ngModel)]="code" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+                        </div>
+                        <div class="btn-section d-flex gap-3">
+                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--save button--blue"
+                            [ngClass]="code.length ? '' : 'btn-disabled'"
+                            (click)="code.length ? checkCode() : ''">Aceptar</button>
+                        </div>
+                    }
                     @if (questionStep == 1) {
                         <span class="label" style="font-size: 18px;">Escribe el nombre del usuario</span>
                         <div class="username-input">
@@ -69,7 +95,7 @@
                             (click)="answer.length ? checkAnswer() : ''">Aceptar</button>
                         </div>
                     }
-                    @if (questionStep == 3) {
+                    @if (questionStep == 3 || emailStep == 3) {
                         <span class="label" style="font-size: 20px;">Reestablezca su contraseña</span>
                         <form [formGroup]="passwordForm" class="d-flex flex-column align-items-center justify-content-between my-3 gap-2">
                             <div class="d-flex flex-column align-items-start" style="width: 100%;">
@@ -95,7 +121,7 @@
                             <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="(passwordForm.valid && samePasswords) ? '' : 'btn-disabled'"
-                            (click)="(passwordForm.valid && samePasswords) ? updatePassword() : ''">Aceptar</button>
+                            (click)="(passwordForm.valid && samePasswords) ? updatePassword(emailStep == 3 ? true: false) : ''">Aceptar</button>
                         </div>
                     }
                 }

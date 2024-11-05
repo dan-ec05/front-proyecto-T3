@@ -72,6 +72,17 @@ export class AuthService {
     return this.http.post(`${this.url_api}/auth/modify-password`, body);
   }
 
+  sendCodeByUsername(username: string): Observable<any>{
+    return this.http.get(`${this.url_api}/auth/send-code-by-username/${username}`);
+  }
+
+  checkCode(body: {
+    code: any,
+    id: number
+  }): Observable<any>{
+    return this.http.post(`${this.url_api}/auth/verify-code`, body);
+  }
+
   removeUserData(){
     sessionStorage.removeItem("userInfo");
   }

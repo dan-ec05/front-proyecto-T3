@@ -36,10 +36,13 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
 
   forgotPassStep: boolean = false;
-  questionStep: number = 1;
+  questionStep: number = 0;
   questionStepInfo: any = {};
   answer: any = "";
-  emailStep: boolean = false;
+
+  code: any = "";
+  emailStep: number = 0;
+  emailStepInfo: any = {};
   username: string = "";
 
   showPass: boolean = false;
@@ -68,9 +71,32 @@ export class LoginComponent implements OnInit {
       return;
     }
     else{
-      this.emailStep = true;
+      this.emailStep = 1;
       return;
     }
+  }
+
+  sendUsernameEmailStep(){
+    this.authService.sendCodeByUsername(this.username).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (data.ok){
+          this.emailStep = 2;
+          this.emailStepInfo = data.object;
+          return;
+        }
+        else{
+          this.message.add({
+            severity: "error",
+            summary: "Usuario no encontrado",
+            detail: "Nombre de usuario incorrecto"
+          });
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
   }
 
   sendUsername(){
@@ -92,6 +118,33 @@ export class LoginComponent implements OnInit {
         console.log(e);
       }
     });
+  }
+
+  checkCode(){
+    let body = {
+      id: this.emailStepInfo.id,
+      code: this.code
+    };
+
+    this.authService.checkCode(body).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (data.ok){
+          this.emailStep = 3;
+          return;
+        }
+        else{
+          this.message.add({
+            severity: "error",
+            summary: "Código incorrecto",
+            detail: "El código introducido es incorrecto"
+          });
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
   }
 
   checkAnswer(){
@@ -119,11 +172,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  updatePassword(){
+  updatePassword(emailStep: boolean = false){
     let body = {
       password: this.passwordForm.get("pass")?.value,
       id_user: this.questionStepInfo.user_id
     };
+
+    if (emailStep){
+      body.id_user = this.emailStepInfo.id
+    }
 
     this.authService.updatePassword(body).subscribe({
       next: (data: commonResponse) => {
