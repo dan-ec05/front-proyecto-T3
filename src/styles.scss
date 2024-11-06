@@ -254,7 +254,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     .p-dropdown-items{
         padding: 0.5rem 0px;
         width: 200px;
-        max-width: 250px;
+        // max-width: 250px;
     }
 
     &--schedule{
@@ -726,9 +726,24 @@ p-inputnumber{
                     align-items: center !important;
                     justify-content: space-between !important;
 
+                    .p-dropdown-items-wrapper > *{
+                        width: 100%;
+                    }
+
                     .p-dropdown-items{
+                        width: 100% !important;
+                        display: block;
+                        ul{
+                            display: block;
+                            .p-dropdownitem{
+                                display: block;
+                                background-color: blue;
+                                width: 160% !important;
+                            }
+                        }
                         li{
                             padding: 0.5rem;
+                            width: 100%;
                         }
                     }
 
