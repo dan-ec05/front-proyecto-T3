@@ -39,7 +39,7 @@
                         </button>
                     </div>
                     <div class="btn-section">
-                        <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                        <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                     </div>
                 }
                 @else {
@@ -50,7 +50,7 @@
                             <input [(ngModel)]="username" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
                         </div>
                         <div class="btn-section d-flex gap-3">
-                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="username.length ? '' : 'btn-disabled'"
                             (click)="username.length ? sendUsernameEmailStep() : ''">Aceptar</button>
@@ -63,7 +63,7 @@
                             <input [(ngModel)]="code" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
                         </div>
                         <div class="btn-section d-flex gap-3">
-                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="code.length ? '' : 'btn-disabled'"
                             (click)="code.length ? checkCode() : ''">Aceptar</button>
@@ -76,7 +76,7 @@
                             <input [(ngModel)]="username" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
                         </div>
                         <div class="btn-section d-flex gap-3">
-                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="username.length ? '' : 'btn-disabled'"
                             (click)="username.length ? sendUsername() : ''">Aceptar</button>
@@ -89,7 +89,7 @@
                             <input [(ngModel)]="answer" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
                         </div>
                         <div class="btn-section d-flex gap-3">
-                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="answer.length ? '' : 'btn-disabled'"
                             (click)="answer.length ? checkAnswer() : ''">Aceptar</button>
@@ -118,7 +118,7 @@
                         </form>
 
                         <div class="btn-section d-flex gap-3">
-                            <button class="button button--cancel" (click)="forgotPassStep = false">Volver</button>
+                            <button class="button button--cancel" (click)="backToLogin()">Volver</button>
                             <button class="button button--save button--blue"
                             [ngClass]="(passwordForm.valid && samePasswords) ? '' : 'btn-disabled'"
                             (click)="(passwordForm.valid && samePasswords) ? updatePassword(emailStep == 3 ? true: false) : ''">Aceptar</button>

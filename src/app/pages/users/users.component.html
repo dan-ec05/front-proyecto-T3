@@ -68,6 +68,10 @@
   <user-form (close)="closeForm($event)" [show]="show" [data]="dataForm" [title]="titleForm"></user-form>
 }
 
+@if (deleteUserModal) {
+  <delete-user (close)="closeForm($event)" [id_user]="idUserToDelete" [show]="deleteUserModal"></delete-user>
+}
+
 @if (unlockUserModal) {
   <unlock-user [show]="unlockUserModal" [id_user_to_unlock]="idUserToUnlock" (close)="closeForm(false)"></unlock-user>
 }

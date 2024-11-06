@@ -95,6 +95,11 @@ export class LoginComponent implements OnInit {
       },
       error: (e) => {
         console.log(e);
+        this.message.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al enviar el correo con el código"
+        });
       }
     });
   }
@@ -255,6 +260,14 @@ export class LoginComponent implements OnInit {
     this.passwordValid = true;
   }
 
+  backToLogin(){
+    this.forgotPassStep = false;
+    this.emailStep = 0;
+    this.questionStep = 0;
+    this.emailStepInfo = {};
+    this.questionStepInfo = {};
+  }
+
   login(){
     let data = {
       username: this.loginForm.get("username")?.value,
@@ -279,8 +292,6 @@ export class LoginComponent implements OnInit {
           });
           return;
         }
-
-        console.log(this.n_tries);
 
         if (this.n_tries >= 2){
           this.authService.blockSesion(this.loginForm.get("username")?.value).subscribe({

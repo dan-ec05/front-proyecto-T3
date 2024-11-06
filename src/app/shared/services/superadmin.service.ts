@@ -54,8 +54,12 @@ export class SuperadminService {
   }
 
   deleteUser(
-    id_user: number
+    id_user: number,
+    body: {
+      username: string,
+      pass: string
+    }
   ): Observable<any>{
-    return this.http.delete(`${this.url_api}/superadmin/delete-user/${id_user}`);
+    return this.http.post(`${this.url_api}/superadmin/delete-user/${id_user}`, body);
   }
 }

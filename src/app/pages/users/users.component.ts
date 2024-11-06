@@ -12,6 +12,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
 import { AuthService } from '../../auth/services/auth.service';
 import { UnlockUserComponent } from './unlock-user/unlock-user.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 @Component({
   selector: 'app-users',
@@ -25,7 +26,8 @@ import { UnlockUserComponent } from './unlock-user/unlock-user.component';
     ToastModule,
     ConfirmDialogModule,
     tooltipComponent,
-    UnlockUserComponent
+    UnlockUserComponent,
+    DeleteUserComponent
   ]
 })
 export class UsersComponent implements OnInit {
@@ -45,6 +47,9 @@ export class UsersComponent implements OnInit {
   
   unlockUserModal: boolean = false;
   idUserToUnlock: number = 0;
+
+  deleteUserModal: boolean = false;
+  idUserToDelete: number = 0;
 
   constructor(
     private superadminService: SuperadminService,
@@ -121,37 +126,8 @@ export class UsersComponent implements OnInit {
 
   deleteUser(id_user: number, e: any){
     console.log(id_user);
-    this.confirmationService.confirm({
-      target: e.target as EventTarget,
-      message: "¿Estás seguro de borrar el usuario?",
-      header: "Eliminar usuario",
-      icon: 'pi pi-exclamation-circle',
-      rejectButtonStyleClass: "btn-reject",
-      acceptButtonStyleClass: "btn-acept",
-      acceptLabel: "Aceptar",
-      rejectLabel: "Cancelar",
-      accept: () =>{
-        this.superadminService.deleteUser(id_user).subscribe({
-          next: (data: commonResponse) => {
-            this.message.add({
-              severity: "success",
-              summary: "Éxito",
-              detail: "El usuario se ha eliminado correctamente"
-            });
-            this.get();
-          },
-          error: (e) => {
-            console.log(e);
-            this.message.add({
-              severity: "error",
-              summary: "Error",
-              detail: "Ha ocurrido un error al eliminar el usuario"
-            });
-          }
-        })
-      },
-      
-    })
+    this.deleteUserModal = true;
+    this.idUserToDelete = id_user;
   }
 
   showForm(data: any = {}, title: String = "Crear nuevo usuario", edit: boolean = false, onlyShow: boolean = false){
@@ -165,6 +141,7 @@ export class UsersComponent implements OnInit {
   closeForm(e: any){
     this.show = false;
     this.unlockUserModal = false;
+    this.deleteUserModal = false;
     this.get();
   }
 
