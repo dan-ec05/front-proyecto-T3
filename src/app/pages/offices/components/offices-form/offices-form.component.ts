@@ -100,6 +100,15 @@ export class OfficesFormComponent  implements OnInit {
           }
         },
         error: (e) => {
+          console.log(e.error.message)  
+          if (e.message){
+            this.message.add({
+              severity: "error",
+              summary: "Error",
+              detail: e.error.message.toString().split("Error: ")[1]
+            });
+            return;
+          }
           this.message.add({
             severity: "error",
             summary: "Error",

@@ -81,47 +81,25 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  blockUser(usuario: any){
+    this.authService.blockSesion(usuario).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        this.get();
+      },
+      error: () => {
+        this.message.add({
+          severity: "error",
+          summary: "Error al bloquear usuario",
+          detail: "Ha ocurrido un error al bloquear el usuario"
+        })
+      }
+    })
+  }
+
   unlockUser(id_user: any){
     this.unlockUserModal = true;
     this.idUserToUnlock = id_user;
-
-    // let auth = {
-    //   password: '',
-    //   username: this.authService._getUserData.username
-    // };
-
-    // console.log(auth);
-    // this.confirmationService.confirm({
-    //   target: e.target as EventTarget,
-    //   // message: "Introduzca contraseña de superadmin",
-    //   header: "Desbloquear usuario",
-    //   icon: 'pi pi-exclamation-circle',
-    //   rejectButtonStyleClass: "btn-reject",
-    //   acceptButtonStyleClass: "btn-acept",
-    //   acceptLabel: "Aceptar",
-    //   rejectLabel: "Cancelar",
-    //   accept: () =>{
-    //     // this.superadminService.deleteUser(id_user).subscribe({
-    //     //   next: (data: commonResponse) => {
-    //     //     this.message.add({
-    //     //       severity: "success",
-    //     //       summary: "Éxito",
-    //     //       detail: "El usuario se ha eliminado correctamente"
-    //     //     });
-    //     //     this.get();
-    //     //   },
-    //     //   error: (e) => {
-    //     //     console.log(e);
-    //     //     this.message.add({
-    //     //       severity: "error",
-    //     //       summary: "Error",
-    //     //       detail: "Ha ocurrido un error al eliminar el usuario"
-    //     //     });
-    //     //   }
-    //     // })
-    //   },
-      
-    // })
   }
 
   deleteUser(id_user: number, e: any){

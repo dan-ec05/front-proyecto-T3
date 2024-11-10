@@ -35,7 +35,7 @@ export class UserFormComponent implements OnInit{
   rolesList: any = [
     {id: 0, name: "Superadmin", value: "superadmin"},
     {id: 1, name: "Admin", value: "admin"},
-    {id: 2, name: "Regular", value: "regular"}
+    // {id: 2, name: "Regular", value: "regular"}
   ];
   securityQList: any = [];
 

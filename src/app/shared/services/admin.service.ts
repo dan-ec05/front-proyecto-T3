@@ -68,7 +68,8 @@ export class AdminService {
     id_consultorios_medicos: Number,
     fecha_corte: String,
     fecha_pago: String,
-    monto: String
+    monto: String,
+    restante: string | 0
   }): Observable<any>{
     return this.http.post(`${this.url_api}/admin/add-new-payment`, body);
   };

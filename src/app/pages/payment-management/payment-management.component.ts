@@ -13,6 +13,7 @@ import moment from 'moment';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { tooltipComponent } from '../../shared/components/tooltip/tooltip.component';
+import { ValidatorsUtils } from '../../shared/utils/validators.utils';
 
 @Component({
   selector: 'app-payment-management',
@@ -65,7 +66,8 @@ export class PaymentManagementComponent  implements OnInit {
   constructor(
     public adminService: AdminService,
     public confirmationService: ConfirmationService,
-    public message: MessageService
+    public message: MessageService,
+    private validatorsUtils: ValidatorsUtils
   ) { }
 
   ngOnInit() {
@@ -80,7 +82,10 @@ export class PaymentManagementComponent  implements OnInit {
           item.fecha_corte_formatted = moment(item.fecha_corte).format("YYYY-MM-DD");
           item.fecha_pago_formatted = moment(item.fecha_pago).format("YYYY-MM-DD");
           item.monto = item.monto + "$";
-
+          item.hora_inicio_formatted = this.validatorsUtils.timeConversorToAM(item.hora_inicio);
+          item.hora_fin_formatted = this.validatorsUtils.timeConversorToAM(item.hora_fin);
+          item.abono_formatted = Boolean(Number(item.restante));
+          item.condicion_formatted = `(${item.condicion != 'not_used' ? item.condicion : 'SU'}) ${item.condicion == 'M' ? 'Mañana' : item.condicion == 'T' ? 'Tarde' : item.condicion == 'E' ? 'Exclusivo' : 'Sin uso'}`
         });
         this.paymentsList = data.object;
       },
@@ -148,6 +153,18 @@ export class PaymentManagementComponent  implements OnInit {
         textAlign: 'center'
       },
       {
+        key: "nombre_medico",
+        title: "Médico",
+        width: "200px",
+        textAlign: "center"
+      },
+      {
+        key: "condicion_formatted",
+        title: "Horario",
+        width: "150px",
+        textAlign: "center"
+      },
+      {
         key: "fecha_corte_formatted",
         title: "Fecha de corte",
         width: "150px",
@@ -163,6 +180,12 @@ export class PaymentManagementComponent  implements OnInit {
         key: "monto",
         title: "Monto",
         width: "100px",
+        textAlign: "center"
+      },
+      {
+        key: "abono_formatted",
+        title: "Tipo de pago",
+        width: "150px",
         textAlign: "center"
       },
       {

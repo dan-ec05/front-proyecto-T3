@@ -47,9 +47,20 @@
                 </button>
               </td>
             }
+            @else if (c.key == "abono_formatted") {
+              <td style="cursor: default;" class="td-tooltip" [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+                @if (item.abono_formatted) {
+                  <tooltip [tooltipText]="item.abono_formatted ? 'Restante: $' + item.restante : ''" [tooltipPosition]="'top'"></tooltip>
+                }
+                <span [ngClass]="!item[c.key] ? 'complete-label' : 'not-complete-label'">{{!item[c.key] ? 'Completo' : 'Abono'}}</span>
+              </td>
+            }
             @else {
-              <td [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
-                <span [style]="c.key == 'name' ? 'font-weight: 500;' : ''">
+              <td class="td-tooltip" [ngStyle]="c.key == 'condicion_formatted' || c.key == 'nombre_medico' || c.key == 'monto' ? {'font-weight': '700'} : {}" [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+                @if (c.key == 'condicion_formatted') {
+                  <tooltip [tooltipText]="'Inicio - ' + item.hora_inicio_formatted + '\nFin: - ' + item.hora_fin_formatted" [tooltipPosition]="(index + 1) === paymentsList.length ? 'top' : 'left'"></tooltip>
+                }
+                <span>
                   {{item[c.key]}}
                 </span>
               </td>

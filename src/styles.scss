@@ -92,6 +92,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     text-wrap: nowrap;
 }
 
+.complete-label, .not-complete-label{
+    font-family: "Poppins";
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    background-color: rgb(29, 211, 29);
+    color: #fff;
+}
+
+.not-complete-label{
+    background-color: rgb(246, 204, 17);
+    color: #000;
+}
+
 .row{
     width: 100%;
     display: flex;
@@ -400,6 +414,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 .td-tooltip:hover{
     position: relative;
     .capp-tooltip{
+        z-index: 9999999999;
         display: block;
     }
 }

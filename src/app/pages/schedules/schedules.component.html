@@ -41,8 +41,8 @@
             }
             @else if (c.key == 'solvente') {
               <td class="td-tooltip" [ngClass]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
-                <tooltip [tooltipText]="item[c.key] == 0 ? 'Sin pagar' : item[c.key] == 1 ? 'Pagado' : 'Abonado'" [tooltipPosition]="'top'"></tooltip>
-                <span [style]="'font-size: 20px; color: ' + (item[c.key] == 1 ? 'green' : (item[c.key] == 2) ? 'orange' : 'red')" [ngClass]="item[c.key] == 1 ? 'pi pi-check' : item[c.key] == 2 ? 'pi pi-exclamation-circle' : 'pi pi-ban'">
+                <tooltip [tooltipText]="!(item.solvente) && !(item.monto_pagado_formatted) ? 'Sin pagar' : item.solvente && !(item.monto_restante_formatted) ? 'Pagado' : 'Abonado: $' + item.monto_pagado_formatted" [tooltipPosition]="'top'"></tooltip>
+                <span [style]="'font-size: 20px; color: ' + (item.solvente && !(item.monto_restante_formatted) ? 'green' : !(item.solvente) && !(item.monto_pagado_formatted) ? 'red' : 'orange')" [ngClass]="(item.solvente) && !(item.monto_restante_formatted) ? 'pi pi-check' : !(item.solvente) && !(item.monto_pagado_formatted) ? 'pi pi-ban' : 'pi pi-exclamation-circle'">
                 </span>
               </td>
             }

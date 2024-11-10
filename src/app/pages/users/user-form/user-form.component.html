@@ -8,7 +8,7 @@
   </ng-template>
   @if (editValues) {
     @if (!nextStep) {
-      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+      <form [formGroup]="form" class="d-flex flex-row justify-content-start flex-wrap gap-4 row-gap-4">
         <div class="d-flex flex-column align-items-start" style="width: 45%;"
         [ngClass]="form.get('email')?.errors && form.get('email')?.touched ? 'no-valid' : ''">
           <label class="label">Correo
@@ -25,7 +25,7 @@
           <label class="label">Nombre</label>
           <input formControlName="nombre" type="text" class="form-control w-100">
         </div>
-        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <div class="d-flex flex-column align-items-start" style="width: 30%;">
           <label class="label">Cargo</label>
           <p-selectButton
           class="select-buttons select-buttons--role"
@@ -84,7 +84,7 @@
   }
   @else if (onlyShow && showSecurity) {
     @if (!nextStep) {
-      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+      <form [formGroup]="form" class="d-flex flex-row justify-content-start flex-wrap gap-4 row-gap-4">
         <div class="d-flex flex-column align-items-start" style="width: 45%;">
           <label class="label">Correo</label>
           <input [readOnly]="true" formControlName="correo" type="text" class="form-control w-100 disabled">
@@ -97,7 +97,7 @@
           <label class="label">Nombre</label>
           <input [readOnly]="true" formControlName="nombre" type="text" class="form-control w-100 disabled">
         </div>
-        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <div class="d-flex flex-column align-items-start" style="width: 30%;">
           <label class="label">Cargo</label>
           <input [readOnly]="true" [value]="cargo_usuario" type="text" class="form-control w-100 disabled">
         </div>
@@ -117,7 +117,7 @@
     }
   }
   @else if (!showSecurity) {
-    <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+    <form [formGroup]="form" class="d-flex flex-row justify-content-start flex-wrap gap-4 row-gap-4">
       <div class="d-flex flex-column align-items-start" style="width: 45%;">
         <label class="label">Correo</label>
         <input [readOnly]="true" formControlName="correo" type="text" class="form-control w-100 disabled">
@@ -130,7 +130,7 @@
         <label class="label">Nombre</label>
         <input [readOnly]="true" formControlName="nombre" type="text" class="form-control w-100 disabled">
       </div>
-      <div class="d-flex flex-column align-items-start" style="width: 45%;">
+      <div class="d-flex flex-column align-items-start" style="width: 30%;">
         <label class="label">Cargo</label>
         <input [readOnly]="true" [value]="cargo_usuario" type="text" class="form-control w-100 disabled">
       </div>
@@ -138,7 +138,7 @@
   }
   @else {
     @if (!nextStep) {
-      <form [formGroup]="form" class="d-flex flex-row justify-content-center flex-wrap gap-4 row-gap-4">
+      <form [formGroup]="form" class="d-flex flex-row justify-content-start flex-wrap gap-4 row-gap-4">
         <div class="d-flex flex-column align-items-start" style="width: 45%;">
           <label class="label">Correo
             <span [ngStyle]="form.get('correo')?.errors && form.get('correo')?.touched ? {'display': 'inline'} : {'display': 'none'}" class="no-valid--span"> - El correo es inválido</span>
@@ -154,7 +154,7 @@
           <label class="label">Nombre</label>
           <input formControlName="nombre" type="text" class="form-control w-100">
         </div>
-        <div class="d-flex flex-column align-items-start" style="width: 45%;">
+        <div class="d-flex flex-column align-items-start" style="width: 30%;">
           <label class="label">Cargo</label>
           <p-selectButton
           class="select-buttons select-buttons--role"

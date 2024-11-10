@@ -40,6 +40,12 @@
                     <span class="pi pi-lock-open"></span>
                   </button>
                 }
+                @if (authService._getUserData.cargo == 'superadmin' && (item.estado) && (item.cargo != 'superadmin')) {
+                  <button (click)="blockUser(item.usuario)" class="button button--icon">
+                  <tooltip [tooltipText]="'Bloquear usuario'" [tooltipPosition]="'left'"></tooltip>
+                    <span class="pi pi-lock"></span>
+                  </button>
+                }
                 @if (item.cargo != "superadmin") {
                   <button (click)="deleteUser(item.id, $event)" class="button button--icon">
                   <tooltip [tooltipText]="'Eliminar usuario'" [tooltipPosition]="'left'"></tooltip>

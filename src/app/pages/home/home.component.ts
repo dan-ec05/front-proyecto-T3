@@ -69,7 +69,7 @@ export class HomeComponent  implements OnInit {
     totalAmount: [
       {total: 0}
     ],
-    amountPastMonth: [
+    amountToday: [
       {total: 0}
     ],
     amountCurrentMonth: [

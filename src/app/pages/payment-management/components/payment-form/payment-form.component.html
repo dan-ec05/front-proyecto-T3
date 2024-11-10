@@ -29,6 +29,12 @@
       optionLabel="name"
       optionValue="id"></p-selectButton>
     </div>
+    @if (!(form.get('solvente')?.value)) {
+      <div class="d-flex justify-content-between gap-3 align-items-center">
+        <label class="label">Restante ($)</label>
+        <p-inputNumber formControlName="restante" styleClass="w-100"></p-inputNumber>
+      </div>
+    }
   </form>
   <ng-template pTemplate="footer">
     <div class="d-flex flex-row justify-content-end w-100 gap-4">

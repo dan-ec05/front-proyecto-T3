@@ -68,7 +68,7 @@ export class PaymentFormComponent  implements OnInit {
   allSchedules: any = [];
   typePayment: any = [
     {id: 1, name: "Completo"},
-    {id: 2, name: "Abono"}
+    {id: 0, name: "Abono"}
   ];
 
   conditions: any = {
@@ -94,7 +94,8 @@ export class PaymentFormComponent  implements OnInit {
       fecha_corte: new FormControl(moment().format("YYYY-MM-DD"), Validators.required),
       fecha_pago: new FormControl(moment().format("YYYY-MM-DD"), Validators.required),
       monto: new FormControl("", Validators.required),
-      solvente: new FormControl("", [Validators.required])
+      solvente: new FormControl(1, [Validators.required]),
+      restante: new FormControl("")
     });
   }
 
@@ -120,13 +121,18 @@ export class PaymentFormComponent  implements OnInit {
   setValues(){
     this.updateForm = true;
 
+    console.log(this.data);
+
     this.form.patchValue({
       horario: this.allSchedules.filter((item: any) => item.id == this.data.id_consultorios_medicos)[0],
       fecha_corte: this.data.fecha_corte_formatted,
       fecha_pago: this.data.fecha_pago_formatted,
       monto: Number(this.data.monto.split("$")[0]),
-      solvente: this.data.solvente
+      solvente: this.data.solvente,
+      restante: this.data.restante
     });
+
+    console.log(this.form.value);
   }
 
   save(){
@@ -135,8 +141,10 @@ export class PaymentFormComponent  implements OnInit {
       fecha_corte: this.form.get("fecha_corte")?.value,
       fecha_pago: this.form.get("fecha_pago")?.value,
       monto: this.form.get("monto")?.value,
-      solvente: this.form.get("solvente")?.value
+      solvente: this.form.get("solvente")?.value,
+      restante: !(this.form.get("solvente")?.value) ? this.form.get("restante")?.value : 0
     };
+
 
     if (this.updateForm){
 
@@ -145,7 +153,6 @@ export class PaymentFormComponent  implements OnInit {
       }
       body.id_payment = this.data.id;
       console.log(body);
-      
       this.adminService.editPayment(body).subscribe({
         next: (data: commonResponse) => {
           if (data.ok){

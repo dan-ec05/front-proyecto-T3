@@ -28,6 +28,20 @@ export class ValidatorsUtils {
         moment.locale('es');
     }
 
+    public timeConversorToAM(time: string){
+        let hour: any = Number(time.split(":")[0]);
+        let minutes = (time.split(":")[1]);
+        let am: boolean = true;
+
+        if (hour > 12) {
+            hour -= 12;
+            hour = `0${hour}`;
+            am = false;
+        };
+
+        return `${hour}:${minutes} ${am ? 'AM' : 'PM'}`;
+    }
+
     public dynamicColor(a: number = 100) {
         a = a / 100;
 

@@ -20,14 +20,14 @@
     <cards style="width: 32%;" 
     [border-color]="'#00ACC1'"
     [icon]="'dollar'"
-    [title]="'Ingresos mes pasado'"
-    [value]="(cardsValues.amountPastMonth[0].total || 0) + '$'"></cards>
+    [title]="'Ingresos mes actual'"
+    [value]="(cardsValues.amountCurrentMonth[0].total || 0) + '$'"></cards>
 
     <cards style="width: 32%;" 
     [border-color]="'#006064'"
     [icon]="'dollar'"
-    [title]="'Ingresos mes actual'"
-    [value]="(cardsValues.amountCurrentMonth[0].total || 0) + '$'"></cards>
+    [title]="'Ingresos de hoy'"
+    [value]="(cardsValues.amountToday[0].total || 0) + '$'"></cards>
   </div>
 
   <div class="separator"></div>
