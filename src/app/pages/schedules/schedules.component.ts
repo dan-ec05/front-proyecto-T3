@@ -54,10 +54,12 @@ export class SchedulesComponent  implements OnInit {
           item.condicion_formatted = `(${item.condicion != 'not_used' ? item.condicion : 'SU'}) ${item.condicion == 'M' ? 'Mañana' : item.condicion == 'T' ? 'Tarde' : item.condicion == 'E' ? 'Exclusivo' : 'Sin uso'}`
           item.hora_inicio_formatted = this.formatTime(item.hora_inicio);
           item.hora_fin_formatted = this.formatTime(item.hora_fin);
-          item.monto_pagado_formatted = Number((item.pagos).split(",")[(item.pagos).split(",").length - 1]);
-          item.monto_faltante_formatted = Number((item.monto_restantes).split(",")[(item.monto_restantes).split(",").length - 1]);
+          item.monto_pagado_formatted = Number(item.pagos.reduce((a: number, b: number) => Number(a) + Number(b), 0));
+          item.monto_faltante_formatted = Number(item.monto_restantes[item.monto_restantes.length - 1]);
+          item.solvente = Number(item.solvente);
         });
         this.schedulesList = data.object;
+        console.log(this.schedulesList);
       },
       error: (e: any) => {}
     })

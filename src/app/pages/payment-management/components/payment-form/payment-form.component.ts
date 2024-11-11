@@ -108,7 +108,9 @@ export class PaymentFormComponent  implements OnInit {
 
         this.allSchedules = data.object;
 
-        this.schedulesList = data.object.filter((item: any) => !(item.solvente));
+        this.schedulesList = data.object.filter((item: any) => !(Number(item.solvente)));
+
+        console.log(this.schedulesList);
 
         if(this.data.id != undefined){
           this.setValues();
