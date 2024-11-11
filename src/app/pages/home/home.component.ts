@@ -129,7 +129,8 @@ export class HomeComponent  implements OnInit {
             {name: "Sin pagar", value: data.object.notPaid[0].noPagados || 0}
           ];
 
-          console.log(this.summaryOfficesData[0].value && this.summaryOfficesData[1].value && this.summaryOfficesData[2].value)
+          console.log(this.summaryOfficesData[0].value && this.summaryOfficesData[1].value && this.summaryOfficesData[2].value);
+          console.log(!(this.summaryOfficesData[0].value || this.summaryOfficesData[1].value || this.summaryOfficesData[2].value));
         }
       },
       error: (e) => {
