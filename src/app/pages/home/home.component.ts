@@ -121,16 +121,12 @@ export class HomeComponent  implements OnInit {
   getSummaryOffices(){
     this.homeService.getSummaryOffices().subscribe({
       next: (data: commonResponse) => {
-        console.log(data);
         if (data.ok){
           this.summaryOfficesData = [
-            {name: "Pagados", value: data.object.paid[0].totalPagados || 0},
-            {name: "Abonados", value: data.object.halfPaid[0].totalAbonados || 0},
-            {name: "Sin pagar", value: data.object.notPaid[0].noPagados || 0}
+            {name: "Pagados", value: Number(data.object.paid[0].totalPagados) || 0},
+            {name: "Abonados", value: Number(data.object.halfPaid[0].totalAbonados) || 0},
+            {name: "Sin pagar", value: Number(data.object.notPaid[0].noPagados) || 0}
           ];
-
-          console.log(this.summaryOfficesData[0].value && this.summaryOfficesData[1].value && this.summaryOfficesData[2].value);
-          console.log(!(this.summaryOfficesData[0].value || this.summaryOfficesData[1].value || this.summaryOfficesData[2].value));
         }
       },
       error: (e) => {
