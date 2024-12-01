@@ -41,7 +41,7 @@ export class SchedulesFormComponent  implements OnInit {
     {id: 0, name: "Mañana", value: "M"},
     {id: 1, name: "Tarde", value: "T"},
     {id: 2, name: "Exclusivo", value: "E"},
-    {id: 3, name: "Sin uso", value: "not_used"},
+    // {id: 3, name: "Sin uso", value: "not_used"},
   ];
   doctorsList: any = [];
   selectButtonOptions: any = [
@@ -67,6 +67,45 @@ export class SchedulesFormComponent  implements OnInit {
   setHour(time: String){
     const date = new Date().setHours(Number(time.slice(0, 2)), Number(time.slice(3, 5)));
     return new Date(date);
+  }
+
+  changeCondition(e: any){
+    const start =  new Date();
+    const end = new Date();
+
+    window.scroll({
+      top: 100,
+      behavior: "smooth"
+    });
+
+    if (e.value.value == "M"){
+      start.setHours(7, 0, 0);
+      end.setHours(12, 0, 0);
+
+      this.form.patchValue({
+        hora_inicio: start,
+        hora_fin: end
+      });
+    }
+    if (e.value.value == "T"){
+      start.setHours(12, 0, 0);
+      end.setHours(18, 0, 0);
+
+      this.form.patchValue({
+        hora_inicio: start,
+        hora_fin: end
+      });
+    }
+
+    if (e.value.value == "E"){
+      start.setHours(7, 0, 0);
+      end.setHours(18, 0, 0);
+
+      this.form.patchValue({
+        hora_inicio: start,
+        hora_fin: end
+      });
+    }
   }
 
   setValues(){
@@ -133,6 +172,8 @@ export class SchedulesFormComponent  implements OnInit {
       id_consultorio: this.form.get("id_consultorio")?.value.id,
       hora_inicio: moment(this.form.get("hora_inicio")?.value).format("HH:mm"),
       hora_fin: moment(this.form.get("hora_fin")?.value).format("HH:mm"),
+
+      data: this.doctorsOffices.find((item: any) => Number(item.id) == this.form.get("id_consultorio")?.value.id)
     };
 
     console.log(this.updateForm);

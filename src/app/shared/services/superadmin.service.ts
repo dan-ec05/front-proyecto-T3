@@ -16,6 +16,10 @@ export class SuperadminService {
     this.url_api = `${environment.API}/api`;
   }
 
+  getAllLogbook(): Observable<any>{
+    return this.http.get(`${this.url_api}/superadmin/get-all-logbook`)
+  }
+
   getAllUsers(): Observable<any>{
     return this.http.get(`${this.url_api}/superadmin/get-all-users`);
   }

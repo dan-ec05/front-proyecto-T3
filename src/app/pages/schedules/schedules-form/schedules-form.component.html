@@ -17,7 +17,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center">
       <label class="label">Condición</label>
-      <p-dropdown [ngStyle]="screenWidth <= 730 ? {'width': '100%'} : {}" [options]="conditionList" formControlName="condicion" scrollHeight="150px" styleClass="input-dropdown input-dropdown--specialism" optionLabel="name"></p-dropdown>
+      <p-dropdown (onChange)="changeCondition($event)" [ngStyle]="screenWidth <= 730 ? {'width': '100%'} : {}" [options]="conditionList" formControlName="condicion" scrollHeight="150px" styleClass="input-dropdown input-dropdown--specialism" optionLabel="name"></p-dropdown>
     </div>
     <div class="d-flex justify-content-between align-items-center w-100">
       <label class="label">Hora de inicio</label>
@@ -27,14 +27,6 @@
       <label class="label">Hora fin</label>
       <p-calendar [ngStyle]="screenWidth <= 730 ? {'width': '100%'} : {}" [minDate]="form.get('hora_inicio')?.value" formControlName="hora_fin" inputId="calendar-timeonly" [hourFormat]="'12'" styleClass="input-calendar input-calendar--top" [timeOnly]="true"></p-calendar>
     </div>
-    <!-- <div class="d-flex justify-content-between align-items-center w-100">
-      <label class="label">Solvente</label>
-      <p-selectButton formControlName="solvente" [options]="selectButtonOptions" optionLabel="name">
-        <ng-template pTemplate let-item>
-          <i style="font-size: 20px;" [ngClass]="item.icon" [style]="'color: ' + item.color"></i>
-        </ng-template>
-      </p-selectButton>
-    </div> -->
   </form>
   <ng-template pTemplate="footer">
     <div class="d-flex flex-row justify-content-end w-100 gap-4">

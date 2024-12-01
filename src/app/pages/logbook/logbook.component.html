@@ -1,0 +1,33 @@
+<div class="logbook-body">
+  
+  <section>
+    <div class="header">
+      <h4>Bitácora</h4>
+      <p>Registro de todas las acciones realizadas por los usuarios</p>
+    </div>
+      <p-table [value]="logbookList" [columns]="columns" [rowHover]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            @for (c of columns; track c) {
+              <th [class]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''"
+              [style]="c.width ? 'min-width: ' + c.width + ';' : ''"
+              scope="col">
+                {{c.title}}
+              </th> 
+            }
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+          <tr>
+            @for (c of columns; track c) {
+              <td [class]="c.textAlign === 'center' ? 'text-center' : c.textAlign === 'right' ? 'text-right' : ''">
+                <span [style]="c.key == 'cargo_formatted' ? 'font-weight: 700' : c.key == 'accion' ? 'font-style: italic; font-weight: 500;' : ''">
+                  {{item[c.key]}}
+                </span>
+              </td>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
+  </section>
+</div>

@@ -31,34 +31,6 @@ export class PaymentFormComponent  implements OnInit {
   @Input("show") show: boolean = false;
   @Output("close") showOut: EventEmitter<boolean | any> = new EventEmitter();
 
-  doctorsList: any = [
-    {id: 0, name: "Cris Valencia"},
-    {id: 1, name: "Maria Antonieta"},
-    {id: 2, name: "Jake Colina"},
-    {id: 3, name: "Nathan Drake"},
-    {id: 4, name: "Joel Soto"},
-    {id: 5, name: "Pablo Polar"},
-    {id: 6, name: "Jesús Gozo"},
-    {id: 7, name: "Juan Riquelme"},
-    {id: 8, name: "Ángel María"},
-    {id: 9, name: "Mariano Closs"}
-  ];
-
-  monthsList: any = [
-    {id: 0, name: "Enero"},
-    {id: 1, name: "Febrero"},
-    {id: 2, name: "Marzo"},
-    {id: 3, name: "Abril"},
-    {id: 4, name: "Mayo"},
-    {id: 5, name: "Junio"},
-    {id: 6, name: "Julio"},
-    {id: 7, name: "Agosto"},
-    {id: 8, name: "Septiembre"},
-    {id: 9, name: "Octubre"},
-    {id: 10, name: "Noviembre"},
-    {id: 11, name: "Diciembre"},
-  ];
-
   form!: FormGroup;
   updateForm: boolean = false;
 
@@ -110,7 +82,6 @@ export class PaymentFormComponent  implements OnInit {
 
         this.schedulesList = data.object.filter((item: any) => !(Number(item.solvente)));
 
-        console.log(this.schedulesList);
 
         if(this.data.id != undefined){
           this.setValues();
@@ -122,8 +93,6 @@ export class PaymentFormComponent  implements OnInit {
 
   setValues(){
     this.updateForm = true;
-
-    console.log(this.data);
 
     this.form.patchValue({
       horario: this.allSchedules.filter((item: any) => item.id == this.data.id_consultorios_medicos)[0],
@@ -138,13 +107,16 @@ export class PaymentFormComponent  implements OnInit {
   }
 
   save(){
+    
     let body: any = {
       id_consultorios_medicos: this.form.get("horario")?.value.id,
       fecha_corte: this.form.get("fecha_corte")?.value,
       fecha_pago: this.form.get("fecha_pago")?.value,
       monto: this.form.get("monto")?.value,
       solvente: this.form.get("solvente")?.value,
-      restante: !(this.form.get("solvente")?.value) ? this.form.get("restante")?.value : 0
+      restante: !(this.form.get("solvente")?.value) ? this.form.get("restante")?.value : 0,
+
+      data: this.allSchedules.find((item: any) => Number(item.id) == Number(this.form.get("horario")?.value.id))
     };
 
 
@@ -154,7 +126,6 @@ export class PaymentFormComponent  implements OnInit {
         body.old_id_consultorios_medicos = this.data.id_consultorios_medicos;
       }
       body.id_payment = this.data.id;
-      console.log(body);
       this.adminService.editPayment(body).subscribe({
         next: (data: commonResponse) => {
           if (data.ok){

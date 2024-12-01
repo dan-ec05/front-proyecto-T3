@@ -134,7 +134,7 @@ export class UsersComponent implements OnInit {
       {
         key: "nombre",
         title: "Nombre",
-        width: "200px",
+        width: "350px",
         textAlign: "center"
       },
       {

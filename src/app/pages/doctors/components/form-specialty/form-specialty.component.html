@@ -1,15 +1,38 @@
 <p-dialog
-[(visible)]="show" [modal]="true" [style]="{'width': '20rem'}" [draggable]="false"
+[(visible)]="show" [modal]="true" [style]="{'width': adding ? '25rem' : '55rem'}" [draggable]="false"
 (onHide)="closeModal(false)">
-  <ng-template pTemplate="header">
-    <div class="d-flex align-items-center justify-content-between">
-      <span class="title">{{title}}</span>
-    </div>
-  </ng-template>
+<ng-template pTemplate="header">
+  <div class="d-flex align-items-center justify-content-between gap-2">
+    <span class="title">{{adding ? 'Agregar especialidad' : 'Especialidades'}}</span>
+    @if (!adding) {
+      <button (click)="startAdding()" class="button button--icon" style="color: #3B82F6;">
+        <span class="pi pi-plus"></span>
+        <tooltip [tooltipText]="'Agregar especialidad'" [tooltipPosition]="'right'"></tooltip>
+      </button>
+    }
+  </div>
+</ng-template>
+@if (!adding) {
   <form class="d-flex py-4 flex-row justify-content-around align-items-start flex-wrap gap-2">
-    <div class="d-flex flex-row flex-wrap justify-content-around gap-4 w-100">
+    <div class="d-flex flex-row flex-wrap justify-content-between gap-4 px-3 w-100">
       @for (specialty of list; track specialty.id) {
         <div [id]="'specialty_' + specialty.id" class="animate__animated animate__fadeInDown d-flex flex-column justify-content-start align-items-start gap-1">
+          <label class="label d-flex w-100 justify-content-between align-items-center">Especialidad
+            <button class="button button--icon" (click)="removeSpecialty(specialty.id)">
+              <span class="pi pi-trash"></span>
+            </button>
+          </label>
+          <input [(ngModel)]="specialty.descripcion" [ngModelOptions]="{'standalone': true}" type="text" class="form-control w-100">
+        </div>
+      }
+    </div>
+  </form>
+}
+@else {
+  <form class="d-flex py-4 flex-row justify-content-around align-items-start flex-wrap gap-2">
+    <div class="d-flex flex-row flex-wrap justify-content-between gap-4 px-3 w-100">
+      @for (specialty of emptyList; track specialty.id) {
+        <div [id]="'specialty_' + specialty.id" class="animate__animated animate__fadeInDown d-flex flex-column justify-content-start align-items-start gap-1 w-100">
           <label class="label d-flex w-100 justify-content-between align-items-center">Especialidad
             <button class="button button--icon" (click)="removeSpecialty(specialty.id)">
               <span class="pi pi-trash"></span>
@@ -23,12 +46,17 @@
       </button>
     </div>
   </form>
-  <ng-template pTemplate="footer">
-    <div class="d-flex flex-row justify-content-end w-100 gap-4">
-      <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
-      <button class="button button--save button--blue"
-      [ngClass]="!(listValidator()) ? 'btn-disabled' : ''"
-      (click)="listValidator() ? save() : ''">Guardar</button>
-    </div>
-  </ng-template>
+}
+<ng-template pTemplate="footer">
+  <div class="d-flex flex-row justify-content-end w-100 gap-4">
+    <button class="button button--cancel" (click)="closeModal(false)">Cancelar</button>
+
+    <button [style]="adding ? 'display: block;' : 'display: none;'" class="button button--save button--blue"
+    [ngClass]="listValidator() ? '' : 'btn-disabled'"
+    (click)="listValidator() ? save() : ''">Guardar</button>
+
+    <button [style]="adding ? 'display: none;' : 'display: block;'" class="button button--save button--blue"
+    (click)="closeModal(false)">Aceptar</button>
+  </div>
+</ng-template>
 </p-dialog>

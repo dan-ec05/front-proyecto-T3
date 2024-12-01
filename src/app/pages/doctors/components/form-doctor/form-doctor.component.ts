@@ -7,6 +7,7 @@ import { AdminService } from '../../../../shared/services/admin.service';
 import { commonResponse } from '../../../../shared/interfaces/response.interface';
 import { MessageService } from 'primeng/api';
 import { ValidatorsUtils } from '../../../../shared/utils/validators.utils';
+import { tooltipComponent } from "../../../../shared/components/tooltip/tooltip.component";
 
 @Component({
   selector: 'form-doctor',
@@ -18,8 +19,9 @@ import { ValidatorsUtils } from '../../../../shared/utils/validators.utils';
     DialogModule,
     ReactiveFormsModule,
     NgClass,
-    NgStyle
-  ]
+    NgStyle,
+    tooltipComponent
+]
 })
 export class FormDoctorComponent  implements OnInit {
 	public EMAIL_REGEX: RegExp = /^[a-zA-Z0-9.!#$'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
@@ -33,6 +35,14 @@ export class FormDoctorComponent  implements OnInit {
   edited: boolean = false;
 
   specialismList: any = [];
+  addingSpecialism: boolean = false;
+  nueva_especialidad: FormControl = new FormControl("", [Validators.required]);
+
+  disabledBtn: any = {
+    'cursor': 'not-allowed',
+    'color': '#716d6d79'
+  };
+
   screenWidth: any;
 
   constructor(
@@ -46,7 +56,40 @@ export class FormDoctorComponent  implements OnInit {
   ngOnInit() {
     this.initForm();
     this.getSpecialism();
+  }
 
+  addSpecialism(){
+    this.addingSpecialism = true;
+  }
+
+  saveSpecialism(){
+    let body = [];
+    let especialidad = this.nueva_especialidad.value;
+    console.log(this.specialismList);
+    let id = Number(this.specialismList[this.specialismList.length - 1].id) + 1;
+
+    body.push({descripcion: especialidad, id});
+    
+    this.adminService.addOrUpdateSpecialties(body).subscribe({
+      next: (data: commonResponse) => {
+        console.log(data);
+        if (data.ok && data.object){
+          this.message.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "Especialidad agregada correctamente"
+          });
+
+          this.specialismList = [];
+          this.addingSpecialism = false;
+          this.nueva_especialidad.setValue("");
+          this.getSpecialism();
+        }
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
   }
   
   getSpecialism(){

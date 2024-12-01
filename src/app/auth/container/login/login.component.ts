@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import {ToastModule} from "primeng/toast";
 import { commonResponse } from '../../../shared/interfaces/response.interface';
+import { LoaderButtonComponent } from '../../../shared/components/loader-button/loader-button.component';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ import { commonResponse } from '../../../shared/interfaces/response.interface';
     ReactiveFormsModule,
     ToastModule,
     FormsModule,
-    NgStyle
+    NgStyle,
+    LoaderButtonComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

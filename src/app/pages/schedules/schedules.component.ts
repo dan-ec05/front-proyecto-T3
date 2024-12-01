@@ -56,6 +56,7 @@ export class SchedulesComponent  implements OnInit {
           item.hora_fin_formatted = this.formatTime(item.hora_fin);
           item.monto_pagado_formatted = Number(item.pagos.reduce((a: number, b: number) => Number(a) + Number(b), 0));
           item.monto_faltante_formatted = Number(item.monto_restantes[item.monto_restantes.length - 1]);
+          // item.monto_pagado_formatted = Number(item.pagos.split(",").reduce((a: number, b: number) => Number(a) + Number(b), 0))
           item.solvente = Number(item.solvente);
         });
         this.schedulesList = data.object;

@@ -1,15 +1,27 @@
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import 'animate.css';
+// @import url("./assets/css/darkmode.scss");
 
 :root{
     --main-color: #fe6603;
 
     --animate-duration: 500ms;
+
+    // DARK MODE
+    --dm-deep-background: #121212;
+    --dm-text: white;
+    --dm-icon: white;
+    --dm-background: #121212;
+    --dm-lighter-background: #383839;
+    --dm-card-background: #1f1f1f;
+    --dm-active-route: #383839;
+    --dm-invert-img: 1;
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f3f3f9;}
+
 
 .separator{
     width: 100%;
@@ -290,11 +302,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     }
 
     &--specialism{
-        min-width: 220px;
+        // min-width: 220px;
         max-width: 220px;
 
         .p-dropdown-items{
-            width: 220px;
+            min-width: 200px;
         }
     }
 }
@@ -403,6 +415,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     background: #a09f9f !important;
     color: #4d4c4c !important;
     cursor: not-allowed !important;
+    // color: #716d6d79;
 }
 
 .btn-disabled:hover{
@@ -572,13 +585,13 @@ p-inputnumber{
     font-weight: 500;
     font-family: "Poppins";
     color: #3B82F6;
-    font-size: 18px;
+    font-size: 16px;
     padding: 1rem 0px;
     border-radius: 15px;
     transition: 0.3s ease;
 
     span{
-        font-size: 25px;
+        font-size: 20px;
     }
 }
 

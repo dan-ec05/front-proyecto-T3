@@ -1,0 +1,179 @@
+.header, .sidebar{
+    background-color: var(--dm-background) !important;
+
+    i{
+        color: var(--dm-text) !important;
+    }
+
+    .header{
+        span{
+            color: var(--dm-text) !important;
+        }
+    }
+
+    .section{
+        .subtitle{
+            color: var(--dm-text) !important;
+        }
+    }
+
+    .user-section{
+        background-color: var(--dm-lighter-background) !important;
+    }
+
+    .active-route{
+        background-color: var(--dm-active-route) !important;
+    }
+
+    li{
+        color: var(--dm-text) !important;
+
+        img{
+            filter: invert(var(--dm-invert-img)) !important;
+        }
+    }
+
+    li:hover{
+        background-color: var(--dm-active-route) !important;
+    }
+}
+
+.header{
+    .dialog-info-user{
+        background-color: var(--dm-card-background) !important;
+
+        .p-dialog-content{
+            background-color: var(--dm-card-background) !important;
+        }
+
+        .btn--profile{
+            color: var(--dm-text) !important;
+        }
+    }
+}
+
+.wrapper-layout{
+    .router-outlet{
+        background-color: var(--dm-deep-background) !important;
+    }
+}
+
+.home-body{
+    .wrapper{
+        background-color: var(--dm-card-background) !important;
+
+        .icon-circle{
+            background-color: var(--dm-deep-background) !important;
+        }
+        
+        span{
+            color: var(--dm-text) !important;
+        }
+    }
+
+    section{
+        background-color: var(--dm-card-background) !important;
+
+        h5, h4, span{
+            color: var(--dm-text) !important;
+        }
+
+        .header{
+            background-color: transparent !important;
+        }
+    }
+}
+
+.payment-body, .schedules-body, .doctors-body, .offices-body, .users-body, .logbook-body{
+    section{
+        background-color: var(--dm-card-background) !important;
+
+        .header{
+            background-color: transparent !important;
+
+            h4, span, p{
+                color: var(--dm-text) !important;
+            }
+        }
+
+        .p-button{
+            background-color: var(--dm-deep-background);
+        }
+
+        .p-datatable{
+
+            th, td{
+                background-color: var(--dm-deep-background) !important;
+                color: var(--dm-text);
+
+                button{
+                    span{
+                        color: var(--dm-text);
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.p-dialog{
+    .p-dialog-content, .p-dialog-header, .p-dialog-footer{
+        background-color: var(--dm-lighter-background) !important;
+
+        span, label, p{
+            color: var(--dm-text) !important;
+        }
+
+        textarea{
+            background-color: var(--dm-deep-background) !important;
+            color: var(--dm-text) !important;
+        }
+
+        .p-dialog-header-close{
+            background-color: var(--dm-deep-background) !important;
+            color: var(--dm-text) !important;
+            border: none !important;
+        }
+
+        .btn-add-specialty{
+            color: var(--dm-text) !important;
+        }
+
+        .btn-add-specialty:hover{
+            background-color: var(--dm-deep-background) !important;
+        }
+
+        .button--cancel, .button--save{
+            background-color: var(--dm-deep-background) !important;
+            color: var(--dm-text) !important;
+            border: none !important;
+        }
+
+
+        .btn-disabled{
+            opacity: 0.5 !important;
+        }
+
+        input, .p-dropdown{
+            background-color: var(--dm-active-route) !important;
+            color: var(--dm-text);
+
+            .p-dropdown-items{
+                background-color: var(--dm-deep-background) !important;
+
+                .p-focus{
+                    background-color: var(--dm-active-route) !important;
+                }
+
+                li:hover{
+                    background-color: var(--dm-active-route) !important;
+                }
+            }
+        }
+
+        .select-buttons .p-highlight{
+            background-color: var(--dm-deep-background) !important;
+        }
+    }
+}

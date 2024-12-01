@@ -40,7 +40,6 @@ export class OfficesFormComponent  implements OnInit {
   }
 
   setValues(){
-    console.log(this.data);
     this.modifyForm = true;
     this.form.patchValue({
       num_consultorio: this.data.num_consultorio,
@@ -100,7 +99,6 @@ export class OfficesFormComponent  implements OnInit {
           }
         },
         error: (e) => {
-          console.log(e.error.message)  
           if (e.message){
             this.message.add({
               severity: "error",

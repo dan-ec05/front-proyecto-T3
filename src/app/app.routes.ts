@@ -34,6 +34,10 @@ export const routes: Routes = [
             {
                 path: "horarios",
                 loadComponent: () => import("./pages/schedules/schedules.component").then((c) => c.SchedulesComponent)
+            },
+            {
+                path: "bitacora",
+                loadComponent: () => import("./pages/logbook/logbook.component").then((c) => c.LogbookComponent)
             }
         ]
     },

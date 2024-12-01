@@ -29,6 +29,8 @@ export class MaintenanceFormComponent implements OnInit {
   last_id!: number;
   currentDate: String = moment().format("YYYY-MM-DD");
 
+  update: boolean = true;
+
   constructor(
     public adminService: AdminService,
     public message: MessageService,
@@ -43,13 +45,11 @@ export class MaintenanceFormComponent implements OnInit {
   get(){
     this.adminService.getAllMaintenance(this.id).subscribe({
       next: (data: commonResponse) => {
-        console.log(data);
         data.object.forEach((item: any) => {
           item.ult_fecha_mantenimiento = item.ult_fecha_mantenimiento ? moment(item.ult_fecha_mantenimiento).format("YYYY-MM-DD") : '';
         });
         this.last_id = data.object[data.object.length - 1]?.id || 0;
         this.maintenanceList = data.object.filter((item: any) => item.id_consultorio == this.id);
-        console.log(this.last_id);
       },
       error: (e) => {
         console.log(e);
@@ -58,6 +58,8 @@ export class MaintenanceFormComponent implements OnInit {
   }
 
   add(){
+
+    this.update = false;
 
     this.last_id += 1;
     
@@ -70,6 +72,7 @@ export class MaintenanceFormComponent implements OnInit {
       id: this.last_id,
       observacion: ''
     });
+
     
   }
 
@@ -109,6 +112,7 @@ export class MaintenanceFormComponent implements OnInit {
   }
 
   save(){
+    if (this.update) this.maintenanceList.forEach((item: any) => item.update = this.update);
     let body = this.maintenanceList;
     this.adminService.addOrUpdateMaintenance(body).subscribe({
       next: (data: commonResponse) => {

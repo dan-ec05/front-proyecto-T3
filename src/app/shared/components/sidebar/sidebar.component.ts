@@ -28,4 +28,16 @@ export class SidebarComponent  implements OnInit {
     this.layoutService.showSidebar = of(!(this.async.transform(this.layoutService.showSidebar)));
   }
 
+  changeTheme(e: any){
+    const linkDM = document.getElementById("link-dark-mode");
+
+    if(e.srcElement.checked){
+      linkDM?.setAttribute("href", "./assets/css/darkmode.scss");
+    }
+    else{
+      linkDM?.removeAttribute("href");
+    }
+
+  }
+
 }

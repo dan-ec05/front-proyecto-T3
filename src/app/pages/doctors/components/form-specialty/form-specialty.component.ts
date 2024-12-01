@@ -5,6 +5,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AdminService } from '../../../../shared/services/admin.service';
 import { commonResponse } from '../../../../shared/interfaces/response.interface';
 import { MessageService } from 'primeng/api';
+import { tooltipComponent } from "../../../../shared/components/tooltip/tooltip.component";
 
 @Component({
   selector: 'form-specialty',
@@ -15,16 +16,20 @@ import { MessageService } from 'primeng/api';
     DialogModule,
     NgClass,
     ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+    tooltipComponent
+]
 })
 export class FormSpecialtyComponent  implements OnInit {
   @Input("show") show: boolean = false;
   @Input("title") title: String = "";
   @Output("close") close: EventEmitter<boolean> = new EventEmitter();
-
+  
   list: Array<any> = [];
   last_id!: number;
+  emptyList: Array<any> = [];
+  
+  adding: boolean = false;
 
   constructor(
     public adminService: AdminService,
@@ -41,7 +46,7 @@ export class FormSpecialtyComponent  implements OnInit {
         console.log(data);
         data.object = data.object.filter((item: any) => item.id != 4)
         this.list = data.object;
-        this.last_id = this.list[this.list.length - 1]?.id || 1;
+        this.last_id = Number(this.list[this.list.length - 1]?.id) || 1;
       },
       error: (error) => {
         console.log(error);
@@ -49,50 +54,78 @@ export class FormSpecialtyComponent  implements OnInit {
     });
   }
 
+  startAdding(){
+    this.adding = true;
+  }
+
   addSpecialty(){
     this.last_id += 1;
     if (this.last_id == 4) this.last_id += 1;
-    this.list.push({
+    this.emptyList.push({
       id: this.last_id,
       descripcion: ""
     });
   }
 
   removeSpecialty(id: Number){
-    document.getElementById('specialty_' + id)?.classList.add("animate__fadeOutUp");
-    setTimeout(() => {
-      this.list = this.list.filter(item => item.id != id);
-    }, 800);
+    if (this.adding){
+      document.getElementById('specialty_' + id)?.classList.add("animate__fadeOutUp");
+      setTimeout(() => {
+        this.emptyList = this.emptyList.filter(item => item.id != id);
+      }, 800);
+      this.adminService.deleteSpecialty(id).subscribe({
+        next: (data: commonResponse) => {
+          this.message.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "La especialidad se ha eliminado correctamente"
+          });
+        },
+        error: (e) => {
+          console.log(e);
+          this.message.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Ha ocurrido un error al eliminar la especialidad"
+          });
+        }
+      })
+    }
+    else{
+      document.getElementById('specialty_' + id)?.classList.add("animate__fadeOutUp");
+      setTimeout(() => {
+        this.list = this.list.filter(item => item.id != id);
+      }, 800);
+      this.adminService.deleteSpecialty(id).subscribe({
+        next: (data: commonResponse) => {
+          this.message.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "La especialidad se ha eliminado correctamente"
+          });
+        },
+        error: (e) => {
+          console.log(e);
+          this.message.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Ha ocurrido un error al eliminar la especialidad"
+          });
+        }
+      })
+    }
 
-    this.adminService.deleteSpecialty(id).subscribe({
-      next: (data: commonResponse) => {
-        this.message.add({
-          severity: "success",
-          summary: "Éxito",
-          detail: "La especialidad se ha eliminado correctamente"
-        });
-      },
-      error: (e) => {
-        console.log(e);
-        this.message.add({
-          severity: "error",
-          summary: "Error",
-          detail: "Ha ocurrido un error al eliminar la especialidad"
-        });
-      }
-    })
   }
 
   listValidator(){
-    if (this.list.length && this.list.every(item => item.descripcion)){
+    if (this.emptyList.length && this.emptyList.every(item => item.descripcion)){
       return true;
     }
     return false;
   }
 
   save(){
-    let body = this.list;
-
+    let body = this.emptyList;
     this.adminService.addOrUpdateSpecialties(body).subscribe({
       next: (data: commonResponse) => {
         if (data.ok){

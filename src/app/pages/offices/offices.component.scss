@@ -1,6 +1,9 @@
 .offices-body{
     padding: 2rem; 
-    font-family: "Poppins";   
+    font-family: "Poppins";  
+    height: 100%;
+    padding-bottom: 5rem; 
+    overflow-y: auto;
 
     section{
         padding: 1rem;

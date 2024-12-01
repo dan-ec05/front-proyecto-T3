@@ -7,16 +7,29 @@
     overflow: hidden;
     height: 100%;
     border-right: 1px solid #CFD8DC;
+    position: relative;
     
     .header{
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         width: 100%;
+        height: 60px;
         padding: 0.25rem;
+        gap: 0.5rem;
 
         img{
-            width: 85%;
+            width: 40px;
+            height: 40px;
+        }
+
+        span{
+            font-weight: 500;
+            font-family: "Poppins";
+            color: #555d62;
+            font-size: 15px;
+            line-height: 1rem;
         }
     }
 
@@ -78,6 +91,67 @@
 
         .active-route{
             background-color: #ECEFF1;
+        }
+    }
+
+    .footer{
+        top: 90%;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .toggle-theme span {
+            font-size: 16px;
+            color: #333333af;
+            margin-left: 10px; 
+        }
+        
+        #theme-toggle {
+            display: none;
+        }
+        
+        #theme-toggle + label {
+            width: 60px;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.4s ease;
+        }
+        
+        #theme-toggle + label::before {
+            content: '\2600';
+            width: 28px;
+            height: 28px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #000;
+            transition: transform 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+        }
+        
+        #theme-toggle:checked + label::before {
+            content: '\1F319'; 
+            transform: translateX(30px); 
+            background-color: #000; 
+            color: #fff; 
+        }
+        
+        #theme-toggle + label {
+            background-color: #f0f0f0;
+        }
+        
+        #theme-toggle:checked + label {
+            background-color: #333333d3;
         }
     }
 }

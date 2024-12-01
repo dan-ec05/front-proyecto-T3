@@ -69,7 +69,8 @@ export class AdminService {
     fecha_corte: String,
     fecha_pago: String,
     monto: String,
-    restante: string | 0
+    restante: string | 0,
+    data?: any
   }): Observable<any>{
     return this.http.post(`${this.url_api}/admin/add-new-payment`, body);
   };
@@ -101,7 +102,8 @@ export class AdminService {
     fecha_pago: String,
     monto: String,
     old_id_consultorios_medicos?: Number,
-    id_payment: Number
+    id_payment: Number,
+    data?: any
   }): Observable<any>{
     return this.http.post(`${this.url_api}/admin/edit-payment`, body);
   };
